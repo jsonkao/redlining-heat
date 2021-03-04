@@ -1,0 +1,31 @@
+---
+title: "Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(foreign)
+library(jsonlite)
+library(dplyr)
+library(ggplot2)
+```
+
+## Read in data
+
+```{r}
+data <- inner_join(
+  read.dbf('../fullshpfile/shapefile/holc_ad_data.dbf'),
+  fromJSON('../data/means.json'),
+  by = c('neighborho' = 'id')
+) %>% 
+  rename(vegetation = mean)
+```
+
+## Visualize data
+
+```{r}
+data %>% ggplot(aes(vegetation)) +
+  geom_density() +
+  facet_wrap(~ holc_grade)
+```
+
