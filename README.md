@@ -4,7 +4,9 @@ First, download `fullshpfile.zip` from the [Mapping Inequality](https://dsl.rich
 
 The USGS Landsat 8 Surface Reflectance Tier 1 data can be imported directly in GEE.
 
-Run `users/jasonkao/landsat/main` to compute and export the grouped NDVI calculation. It takes about 5 hours. The exported CSV is `means.csv`.
+Run `users/jasonkao/landsat/main` to compute and export the grouped NDVI calculation. It takes about 5 hours. The exported CSV is `means.csv`. The cleaned and formatted JSON data is `means.json`.
+
+## File organization
 
 ## Next Steps
 
