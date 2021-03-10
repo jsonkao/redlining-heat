@@ -18,7 +18,9 @@ data <- inner_join(
   fromJSON('../data/means.json'),
   by = c('neighborho' = 'id')
 ) %>% 
-  rename(vegetation = mean)
+  rename(vegetation = mean) %>% 
+  select(state, city, holc_grade, neighborho, vegetation) %>% 
+  filter(holc_grade != 'E')
 ```
 
 ## Visualize data
@@ -27,5 +29,23 @@ data <- inner_join(
 data %>% ggplot(aes(vegetation)) +
   geom_density() +
   facet_wrap(~ holc_grade)
+```
+
+## Statistical analysis
+
+```{r}
+data %>% 
+  group_by(city, state, holc_grade) %>% 
+  mutate(grade_veg = mean(vegetation)) %>% 
+  group_by(city, state) %>% 
+  mutate(city_veg = mean(vegetation), heat_gap = abs(min(grade_veg) - max(grade_veg))) %>% 
+  distinct(city, state, holc_grade, .keep_all = TRUE) %>% 
+  arrange(-heat_gap) %>% 
+  select(-heat_gap, -vegetation, -neighborho) %>% 
+  head(41) %>% 
+  mutate(diff = city_veg - grade_veg) %>% 
+  ggplot(aes(holc_grade, diff)) +
+  geom_col() +
+  facet_wrap(~ city)
 ```
 
