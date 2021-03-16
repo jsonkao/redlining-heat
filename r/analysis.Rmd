@@ -15,18 +15,18 @@ library(ggplot2)
 ```{r}
 data <- inner_join(
   read.dbf('../fullshpfile/shapefile/holc_ad_data.dbf'),
-  fromJSON('../data/means.json'),
+  fromJSON('../data/temperatures.json'),
   by = c('neighborho' = 'id')
 ) %>% 
-  rename(vegetation = mean) %>% 
-  select(state, city, holc_grade, neighborho, vegetation) %>% 
-  filter(holc_grade != 'E')
+  filter(holc_grade != 'E') %>% 
+  select(state, holc_grade, temperature)
+head(data)
 ```
 
 ## Visualize data
 
 ```{r}
-data %>% ggplot(aes(vegetation)) +
+data %>% ggplot(aes(temperature)) +
   geom_density() +
   facet_wrap(~ holc_grade)
 ```
