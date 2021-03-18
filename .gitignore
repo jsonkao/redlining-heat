@@ -6,3 +6,6 @@ fullshpfile/
 # R
 .Rproj.user
 .Rhistory
+
+# Node
+node_modules
