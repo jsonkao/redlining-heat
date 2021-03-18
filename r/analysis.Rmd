@@ -31,21 +31,9 @@ data %>% ggplot(aes(temperature)) +
   facet_wrap(~ holc_grade)
 ```
 
-## Statistical analysis
+## Tukey-Kramer test
 
 ```{r}
-data %>% 
-  group_by(city, state, holc_grade) %>% 
-  mutate(grade_veg = mean(vegetation)) %>% 
-  group_by(city, state) %>% 
-  mutate(city_veg = mean(vegetation), heat_gap = abs(min(grade_veg) - max(grade_veg))) %>% 
-  distinct(city, state, holc_grade, .keep_all = TRUE) %>% 
-  arrange(-heat_gap) %>% 
-  select(-heat_gap, -vegetation, -neighborho) %>% 
-  head(41) %>% 
-  mutate(diff = city_veg - grade_veg) %>% 
-  ggplot(aes(holc_grade, diff)) +
-  geom_col() +
-  facet_wrap(~ city)
+TukeyHSD(aov(temperature ~ holc_grade, data = data))
 ```
 
