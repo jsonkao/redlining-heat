@@ -1,8 +1,5 @@
 .DS_Store
 
-# Data by-products
-fullshpfile/
-
 # R
 .Rproj.user
 .Rhistory
