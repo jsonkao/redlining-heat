@@ -17,6 +17,8 @@
     "sass": "^1.26.5"
   },
   "dependencies": {
+    "@google/earthengine": "^0.1.257",
+    "ee-runner": "^0.0.36",
     "intersection-observer": "^0.10.0",
     "text-balancer": "^1.0.5"
   },

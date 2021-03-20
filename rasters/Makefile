@@ -6,16 +6,31 @@ OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
 
 OSM_DIR = osm-data
 RAS_DIR = geotiffs
+TEMP_DIR = temperatures
+REL_DIR = reliefs
 
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
-CITIES = Richmond Detroit # Baltimore
-TARGETS = $(CITIES:%=$(RAS_DIR)/%.tif)
+CITIES = Richmond # Detroit # Baltimore
+TARGETS = $(CITIES:%=$(REL_DIR)/%.png) $(CITIES:%=$(RAS_DIR)/%.tif)
 
 OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway]\;way[building]\;\)\;._\;out%20geom\;
 
 WIDTH = 2000
 
 all: folders $(TARGETS)
+
+# Transform temperature data into color reliefs
+$(REL_DIR)/%.png: $(TEMP_DIR)/%.tif Makefile
+	@echo $(patsubst %.png,%.tif,$@)
+	@echo $(hi.png:%.png=%.tif)
+	# gdaldem color-relief $< colors.txt $($@:%.png=%.tif) -alpha
+	# gdalwarp -ts $(WIDTH) 0 -of PNG $($@:%.png=%.tif) $@
+
+# Download temperature data
+$(TEMP_DIR)/%.tif: $(OSM_DIR)/%.topojson
+	node index.js $(shell jq -c '.bbox' $<) | xargs -n1 wget -O $@.zip
+	unzip -p $@.zip > $@
+	rm $@.zip
 
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
 # then calculate height with that.
@@ -44,11 +59,4 @@ $(OSM_DIR)/%.topojson:
 	-o $@ format=topojson bbox
 
 folders:
-	mkdir -p $(OSM_DIR) $(RAS_DIR)
-
-$(OSM_DIR)/%.osm:
-	$(eval BBOX = $(shell mapshaper $(SHAPEFILE) \
-		-filter 'city == "$(notdir $(basename $@))".replace("_", " ")' \
-		-o - bbox format=geojson \
-		| jq -r '.bbox | join(",")'))
-	wget -O $@ $(OVERPASS_QUERY)\&bbox=$(BBOX)
+	mkdir -p $(OSM_DIR) $(RAS_DIR) $(TEMP_DIR) $(REL_DIR)
