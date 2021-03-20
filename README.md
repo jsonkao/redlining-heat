@@ -6,6 +6,10 @@ The USGS Landsat Tier 1 raw data can be imported directly in GEE.
 
 Run the task at `users/jasonkao/landsat/main` to compute and export the grouped temperature calculation. It takes about a minute. The tasks exports a GeoJSON file called `meanTemperatureTask.json`. Properties are extracted with a make target to `temperatures.json`.
 
+## Rasters
+
+Raster generation is in `rasters/`. It involves downloading vector data from OSM via the Overpass API and burning it into a web-friendly raster image. It is used for city-level map base layers and temperature layers.
+
 ## Next Steps
 
 1. Statistical analysis
