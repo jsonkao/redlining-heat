@@ -1,4 +1,4 @@
-data/temperatures.json: data/meanTemperatureTask.json Makefile
+temperatures.json: meanTemperatureTask.json Makefile
 	cat $< \
 	| ndjson-split 'd.features' \
 	| ndjson-map 'd.properties' \

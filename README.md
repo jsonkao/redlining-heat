@@ -1,4 +1,4 @@
-## Data reproduction
+## Temperature means data (`data/`)
 
 The `data/fullshpfile.zip` file is from the [Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/#loc=11/40.809/-74.187&city=manhattan-ny&area=D3&text=intro) It is also unzipped. Import the shapefile `fullshpfile/shapefile` into GEE.
 
@@ -6,9 +6,9 @@ The USGS Landsat Tier 1 raw data can be imported directly in GEE.
 
 Run the task at `users/jasonkao/landsat/main` to compute and export the grouped temperature calculation. It takes about a minute. The tasks exports a GeoJSON file called `meanTemperatureTask.json`. Properties are extracted with a make target to `temperatures.json`.
 
-## Rasters
+## Rasters (`rasters/`)
 
-Raster generation is in `rasters/`. It involves downloading vector data from OSM via the Overpass API and burning it into a web-friendly raster image. It is used for city-level map base layers and temperature layers.
+I generate two rasters for each city. The city-level base layer requires downloading vector data from OSM via the Overpass API and burning it into a web-friendly raster. The temperature layer, I'm still trying to figure out how to clip to specific images.
 
 ## Next Steps
 

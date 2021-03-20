@@ -1,6 +1,6 @@
 # MAKEFLAGS += -j4
 
-SHAPEFILE = ../redlining-heat/data/fullshpfile/shapefile/holc_ad_data.shp
+SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
 
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
 

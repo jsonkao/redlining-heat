@@ -7,4 +7,6 @@
 # Node
 node_modules
 
+# Raster files
 rasters/osm-data
+rasters/privatekey.json
