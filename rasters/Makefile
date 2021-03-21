@@ -5,13 +5,14 @@ SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
 
 OSM_DIR = osm-data
-RAS_DIR = geotiffs
+GTIFF_DIR = geotiffs
+BASE_DIR = bases
 TEMP_DIR = temperatures
 REL_DIR = reliefs
 
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
 CITIES = Richmond # Detroit # Baltimore
-TARGETS = $(CITIES:%=$(REL_DIR)/%.png) $(CITIES:%=$(RAS_DIR)/%.tif)
+TARGETS = $(CITIES:%=$(REL_DIR)/%.png) $(CITIES:%=$(BASE_DIR)/%.png)
 
 OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway]\;way[building]\;\)\;._\;out%20geom\;
 
@@ -20,11 +21,9 @@ WIDTH = 2000
 all: folders $(TARGETS)
 
 # Transform temperature data into color reliefs
-$(REL_DIR)/%.png: $(TEMP_DIR)/%.tif Makefile
-	@echo $(patsubst %.png,%.tif,$@)
-	@echo $(hi.png:%.png=%.tif)
-	# gdaldem color-relief $< colors.txt $($@:%.png=%.tif) -alpha
-	# gdalwarp -ts $(WIDTH) 0 -of PNG $($@:%.png=%.tif) $@
+$(REL_DIR)/%.png: $(TEMP_DIR)/%.tif
+	gdaldem color-relief $< colors.txt $(patsubst %.png,%.tif,$@) -alpha
+	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
 
 # Download temperature data
 $(TEMP_DIR)/%.tif: $(OSM_DIR)/%.topojson
@@ -32,9 +31,12 @@ $(TEMP_DIR)/%.tif: $(OSM_DIR)/%.topojson
 	unzip -p $@.zip > $@
 	rm $@.zip
 
+$(BASE_DIR)/%.png: $(GTIFF_DIR)/%.tif
+	gdalwarp -ts $(WIDTH 0) -of PNG $< $@
+
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
 # then calculate height with that.
-$(RAS_DIR)/%.tif: $(OSM_DIR)/%.topojson
+$(GTIFF_DIR)/%.tif: $(OSM_DIR)/%.topojson
 	$(eval HEIGHT = $(shell jq '.bbox' $< | jq '$(WIDTH) * (.[3] - .[1]) / (.[2] - .[0])'))
 	gdal_rasterize -burn 177 -ot Byte -ts $(WIDTH) $(HEIGHT) \
 		-l lines -l polygons -a_nodata 255 $< $@
@@ -59,4 +61,4 @@ $(OSM_DIR)/%.topojson:
 	-o $@ format=topojson bbox
 
 folders:
-	mkdir -p $(OSM_DIR) $(RAS_DIR) $(TEMP_DIR) $(REL_DIR)
+	mkdir -p $(OSM_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR)
