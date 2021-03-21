@@ -32,8 +32,6 @@ basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 all: folders tempmaps basemaps holcmaps
 
-.PRECIOUS:
-
 #
 # GEE temperature reliefs
 #
@@ -45,7 +43,7 @@ $(REL_DIR)/%.png: $(TEMP_DIR)/%.tif
 
 # Download temperature data
 $(TEMP_DIR)/%.tif: $(VEC_DIR)/%.topojson
-	node index.js $(shell jq -c '.bbox' $<) | xargs -n1 wget -O $@.zip
+	node download-temperatures.js $(shell jq -c '.bbox' $<) | xargs -n1 wget -O $@.zip
 	unzip -p $@.zip > $@
 	rm $@.zip
 
@@ -106,5 +104,8 @@ city-bbox-index.json: Makefile
 ALL_FOLDERS = $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
+
 clean:
 	rm -rf $(ALL_FOLDERS)
+
+.PRECIOUS: $(TEMP_DIR)/%.tif $(GTIFF_DIR)/%.tif $(VEC_DIR)/%.topojson
