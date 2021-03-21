@@ -9,16 +9,21 @@ GTIFF_DIR = geotiffs
 BASE_DIR = bases
 TEMP_DIR = temperatures
 REL_DIR = reliefs
+HOLC_DIR = holc
 
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
-CITIES = Richmond # Detroit # Baltimore
-TARGETS = $(CITIES:%=$(REL_DIR)/%.png) $(CITIES:%=$(BASE_DIR)/%.png)
+CITIES = Richmond Detroit Baltimore Chicago Houston Philadelphia Minneapolis Portland
 
 OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway]\;way[building]\;\)\;._\;out%20geom\;
 
 WIDTH = 2000
 
-all: folders $(TARGETS)
+rasters: folders $(CITIES:%=$(REL_DIR)/%.png) $(CITIES:%=$(BASE_DIR)/%.png)
+vectors: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
+downloads: $(CITIES:%=$(OSM_DIR)/%.topojson)
+all: rasters vectors
+
+.PRECIOUS:
 
 # Transform temperature data into color reliefs
 $(REL_DIR)/%.png: $(TEMP_DIR)/%.tif
@@ -41,8 +46,6 @@ $(GTIFF_DIR)/%.tif: $(OSM_DIR)/%.topojson
 	gdal_rasterize -burn 177 -ot Byte -ts $(WIDTH) $(HEIGHT) \
 		-l lines -l polygons -a_nodata 255 $< $@
 
-.PRECIOUS: $(OSM_DIR)/%.topojson
-
 # Download streets and building polygons from OSM using Overpass.
 # Convert to TopoJSON (NDJSON first to remove unnecessary properties).
 $(OSM_DIR)/%.topojson:
@@ -54,11 +57,16 @@ $(OSM_DIR)/%.topojson:
 	| $(OSMTOGEOJSON) -f osm --ndjson \
 	| ndjson-map 'd.properties = {highway: d.properties.tags.highway}, d' \
 	| ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' \
-	| mapshaper - \
+	| mapshaper-xl - \
 	-rename-layers lines,polygons \
 	-clean \
 	-clip bbox=$(BBOX) \
 	-o $@ format=topojson bbox
 
+$(HOLC_DIR)/%.svg:
+	mapshaper $(SHAPEFILE) \
+	-filter 'city == "$(notdir $(basename $@))".replace("_", " ")' \
+	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1
+
 folders:
-	mkdir -p $(OSM_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR)
+	mkdir -p $(OSM_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)

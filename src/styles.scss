@@ -2,3 +2,31 @@
 
 // Uncomment the following line before publishing a News story
 // @import "styles/news-ellipsis";
+
+.map {
+  margin: 30px 0;
+
+  img {
+    width: 100%;
+
+    &:not(:last-child) {
+      position: absolute;
+    }
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    position: absolute;
+
+    path {
+      fill: none;
+      stroke: black;
+      stroke-width: 2px;
+
+      &[data-holc_grade="A"] { stroke: green; }
+      &[data-holc_grade="D"] { stroke: red; }
+    }
+  }
+}

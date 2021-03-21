@@ -14,11 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <script src="./scripts/svg-inject.min.js"></script>
   </head>
 
   <body>
-    <include src="partials/navbar.html"></include>
-
     <div class="story-top">
       <each loop="item in top">
         <switch expression="item.type">
@@ -44,6 +43,7 @@
     </else>
 
     <div class="story">
+      <include src="map.html"></include>
       <each loop="item in body">
         <switch expression="item.type">
           <case n="'text'">
