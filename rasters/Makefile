@@ -1,27 +1,35 @@
-# MAKEFLAGS += -j4
-
-SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
-
-OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
-
-VEC_DIR = osm-topojson
-OSM_DIR = osm-raw
-GTIFF_DIR = osm-geotiff
-BASE_DIR = basemaps
-TEMP_DIR = gee-temperatures
-REL_DIR = gee-reliefs
-HOLC_DIR = holc
+MAKEFLAGS += -j4
 
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
-CITIES = Richmond Detroit Baltimore Chicago Houston Philadelphia Minneapolis Portland
+CITIES = Richmond Minneapolis Philadelphia # Detroit Baltimore Chicago Houston Portland
+
+SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
+OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
+
+#
+# Directories
+#
+
+# OSM maps
+OSM_DIR = osm-raw
+VEC_DIR = osm-topojson
+GTIFF_DIR = osm-geotiff
+BASE_DIR = basemaps
+
+# GEE-derived maps
+TEMP_DIR = gee-temperatures
+REL_DIR = gee-reliefs
+
+# HOLC maps
+HOLC_DIR = holc
 
 OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 WIDTH = 2000
 
-tempmaps: $(CITIES:%=$(REL_DIR)/%.png)
-basemaps: $(CITIES:%=$(BASE_DIR)/%.png)
-holcmaps: $(CITIES:%=$(HOLC_DIR)/%.svg)
+tempmaps: folders $(CITIES:%=$(REL_DIR)/%.png)
+basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
+holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 all: folders tempmaps basemaps holcmaps
 
 .PRECIOUS:
@@ -63,7 +71,7 @@ $(VEC_DIR)/%.topojson: $(OSM_DIR)/%.osm
 	| mapshaper-xl - \
 	-rename-layers lines,polygons \
 	-clean \
-	-clip bbox=$(BBOX) \
+	-clip bbox=$(shell jq -r ".\"$(subst _, ,$(notdir $(basename $<))\" | join(\",\"))" city-bbox-index.json) \
 	-o $@ format=topojson bbox
 
 #
@@ -95,5 +103,8 @@ city-bbox-index.json: Makefile
 # Utilities
 #
 
+ALL_FOLDERS = $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)
 folders:
-	mkdir -p $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)
+	mkdir -p $(ALL_FOLDERS)
+clean:
+	rm -rf $(ALL_FOLDERS)
