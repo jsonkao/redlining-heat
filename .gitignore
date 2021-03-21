@@ -4,9 +4,10 @@
 .Rproj.user
 .Rhistory
 
-# Node
+# Node and Parcel
 node_modules
+.cache
 
-# Raster files
-rasters/osm-data
+# Mapping files
+rasters/osm
 rasters/privatekey.json

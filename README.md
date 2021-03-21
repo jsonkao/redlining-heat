@@ -2,9 +2,13 @@
 
 `rasters/` generates two image layers for each city. The city-level base layer requires downloading vector data from OSM via the Overpass API and burning it into a web-friendly raster. The temperature layer, I'm still trying to figure out how to clip to specific images.
 
-`OSM_DIR` contains raw OSM data turned into a TopoJSON. `GTIFF_DIR` contains the vector streets/buildings burned into rasters. `BASE_DIR` contains the web PNG assets of the burned rasters. `TEMP_DIR` contains the temperature data from GEE for a certain bounding box. `REL_DIR` contains the color reliefs and web PNG assets of temperature data.
+`OSM_DIR` contains raw OSM data. `VEC_DIR` contains the OSM data turned into a TopoJSON. `GTIFF_DIR` contains the vector streets/buildings burned into rasters. `BASE_DIR` contains the web PNG assets of the burned rasters.
 
-`HOLC_DIR` contains TopoJSONs for individual cities. I should probably rename `rasters/`.
+`TEMP_DIR` contains the temperature data from GEE for a certain bounding box. `REL_DIR` contains the color reliefs and web PNG assets of temperature data.
+
+`HOLC_DIR` contains the HOLC boundaries for individual cities in SVG format.
+
+I should probably rename the `rasters/` directory.
 
 ## Neighborhood-level temperature means
 

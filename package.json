@@ -20,7 +20,9 @@
     "@google/earthengine": "^0.1.257",
     "ee-runner": "^0.0.36",
     "intersection-observer": "^0.10.0",
+    "mapshaper": "^0.5.39",
     "parcel-plugin-inlinesvg": "^0.1.1",
+    "request-progress": "^3.0.0",
     "text-balancer": "^1.0.5"
   },
   "browserslist": [

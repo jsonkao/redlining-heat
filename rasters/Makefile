@@ -4,7 +4,8 @@ SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
 
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
 
-OSM_DIR = osm-data
+VEC_DIR = vectors
+OSM_DIR = osm
 GTIFF_DIR = geotiffs
 BASE_DIR = bases
 TEMP_DIR = temperatures
@@ -14,13 +15,14 @@ HOLC_DIR = holc
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
 CITIES = Richmond Detroit Baltimore Chicago Houston Philadelphia Minneapolis Portland
 
-OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway]\;way[building]\;\)\;._\;out%20geom\;
+OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 WIDTH = 2000
 
 rasters: folders $(CITIES:%=$(REL_DIR)/%.png) $(CITIES:%=$(BASE_DIR)/%.png)
 vectors: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
-downloads: $(CITIES:%=$(OSM_DIR)/%.topojson)
+downloads:
+	zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
 all: rasters vectors
 
 .PRECIOUS:
@@ -31,7 +33,7 @@ $(REL_DIR)/%.png: $(TEMP_DIR)/%.tif
 	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
 
 # Download temperature data
-$(TEMP_DIR)/%.tif: $(OSM_DIR)/%.topojson
+$(TEMP_DIR)/%.tif: $(VEC_DIR)/%.topojson
 	node index.js $(shell jq -c '.bbox' $<) | xargs -n1 wget -O $@.zip
 	unzip -p $@.zip > $@
 	rm $@.zip
@@ -41,20 +43,14 @@ $(BASE_DIR)/%.png: $(GTIFF_DIR)/%.tif
 
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
 # then calculate height with that.
-$(GTIFF_DIR)/%.tif: $(OSM_DIR)/%.topojson
+$(GTIFF_DIR)/%.tif: $(VEC_DIR)/%.topojson
 	$(eval HEIGHT = $(shell jq '.bbox' $< | jq '$(WIDTH) * (.[3] - .[1]) / (.[2] - .[0])'))
-	gdal_rasterize -burn 177 -ot Byte -ts $(WIDTH) $(HEIGHT) \
+	gdal_rasterize -burn 200 -ot Byte -ts $(WIDTH) $(HEIGHT) \
 		-l lines -l polygons -a_nodata 255 $< $@
 
-# Download streets and building polygons from OSM using Overpass.
 # Convert to TopoJSON (NDJSON first to remove unnecessary properties).
-$(OSM_DIR)/%.topojson:
-	$(eval BBOX = $(shell mapshaper $(SHAPEFILE) \
-		-filter 'city == "$(notdir $(basename $@))".replace("_", " ")' \
-		-o - bbox format=geojson \
-		| jq -r '.bbox | join(",")'))
-	wget -O - $(OVERPASS_QUERY)\&bbox=$(BBOX) \
-	| $(OSMTOGEOJSON) -f osm --ndjson \
+$(VEC_DIR)/%.topojson: $(OSM_DIR)/%.osm
+	$(OSMTOGEOJSON) -f osm --ndjson $< \
 	| ndjson-map 'd.properties = {highway: d.properties.tags.highway}, d' \
 	| ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' \
 	| mapshaper-xl - \
@@ -68,5 +64,14 @@ $(HOLC_DIR)/%.svg:
 	-filter 'city == "$(notdir $(basename $@))".replace("_", " ")' \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1
 
+city-bbox-index.json: Makefile
+	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='trash'
+	rm *.trash
+	cat bbox-index.json \
+	| ndjson-split \
+	| ndjson-reduce 'p[d.name] = d.bbox, p' '{}' \
+	> $@
+	rm bbox-index.json
+
 folders:
-	mkdir -p $(OSM_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)
+	mkdir -p $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)
