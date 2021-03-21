@@ -9,5 +9,5 @@ node_modules
 .cache
 
 # Mapping files
-rasters/osm
+rasters/osm-raw
 rasters/privatekey.json

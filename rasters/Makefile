@@ -4,12 +4,12 @@ SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
 
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
 
-VEC_DIR = vectors
-OSM_DIR = osm
-GTIFF_DIR = geotiffs
-BASE_DIR = bases
-TEMP_DIR = temperatures
-REL_DIR = reliefs
+VEC_DIR = osm-topojson
+OSM_DIR = osm-raw
+GTIFF_DIR = osm-geotiff
+BASE_DIR = basemaps
+TEMP_DIR = gee-temperatures
+REL_DIR = gee-reliefs
 HOLC_DIR = holc
 
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
@@ -19,13 +19,16 @@ OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[high
 
 WIDTH = 2000
 
-rasters: folders $(CITIES:%=$(REL_DIR)/%.png) $(CITIES:%=$(BASE_DIR)/%.png)
-vectors: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
-downloads:
-	zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
-all: rasters vectors
+tempmaps: $(CITIES:%=$(REL_DIR)/%.png)
+basemaps: $(CITIES:%=$(BASE_DIR)/%.png)
+holcmaps: $(CITIES:%=$(HOLC_DIR)/%.svg)
+all: folders tempmaps basemaps holcmaps
 
 .PRECIOUS:
+
+#
+# GEE temperature reliefs
+#
 
 # Transform temperature data into color reliefs
 $(REL_DIR)/%.png: $(TEMP_DIR)/%.tif
@@ -37,6 +40,10 @@ $(TEMP_DIR)/%.tif: $(VEC_DIR)/%.topojson
 	node index.js $(shell jq -c '.bbox' $<) | xargs -n1 wget -O $@.zip
 	unzip -p $@.zip > $@
 	rm $@.zip
+
+#
+# Basemaps
+#
 
 $(BASE_DIR)/%.png: $(GTIFF_DIR)/%.tif
 	gdalwarp -ts $(WIDTH 0) -of PNG $< $@
@@ -59,10 +66,21 @@ $(VEC_DIR)/%.topojson: $(OSM_DIR)/%.osm
 	-clip bbox=$(BBOX) \
 	-o $@ format=topojson bbox
 
+#
+# HOLC vector layer
+#
+
 $(HOLC_DIR)/%.svg:
 	mapshaper $(SHAPEFILE) \
 	-filter 'city == "$(notdir $(basename $@))".replace("_", " ")' \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1
+
+#
+# Downloading OSM data for each city
+#
+
+downloads: city-bbox-index.json
+	zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
 
 city-bbox-index.json: Makefile
 	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='trash'
@@ -72,6 +90,10 @@ city-bbox-index.json: Makefile
 	| ndjson-reduce 'p[d.name] = d.bbox, p' '{}' \
 	> $@
 	rm bbox-index.json
+
+#
+# Utilities
+#
 
 folders:
 	mkdir -p $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)
