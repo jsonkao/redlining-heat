@@ -107,5 +107,7 @@ folders:
 
 clean:
 	rm -rf $(ALL_FOLDERS)
+clean_temperatures:
+	rm -rf $(TEMP_DIR) $(REL_DIR)
 
 .PRECIOUS: $(TEMP_DIR)/%.tif $(GTIFF_DIR)/%.tif $(VEC_DIR)/%.topojson

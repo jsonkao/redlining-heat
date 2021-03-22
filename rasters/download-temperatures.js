@@ -11,11 +11,11 @@ var runAnalysis = function () {
 };
 
 function main() {
-  var l8_raw = ee.ImageCollection('LANDSAT/LC08/C01/T1');
+  var l8 = ee.ImageCollection('LANDSAT/LC08/C01/T1');
 
   // Filter images by time and cloud cover
   const bounds = ee.Geometry.Rectangle(eval(process.argv[2]));
-  var images = l8_raw
+  var images = l8
     .filterBounds(bounds)
     .filterDate('2020-06-01', '2020-08-31')
     .sort('CLOUD_COVER')
@@ -31,9 +31,14 @@ function main() {
         .add(32);
     })
     .mean();
+
+  var mask = ee.Image('JRC/GSW1_2/GlobalSurfaceWater').select('max_extent').eq(0);
   console.log(
-    composite_computed.getDownloadURL({ scale: 100, region: bounds }),
-  );
+    composite_computed.mask(mask).getDownloadURL({
+      scale: 30,
+      region: bounds,
+    })
+  )
 }
 
 // Authenticate using a service account.
