@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
-CITIES = Richmond Minneapolis Philadelphia # Detroit Baltimore Chicago Houston Portland
+CITIES = Richmond Minneapolis Philadelphia Detroit Baltimore # Chicago Houston Portland
 
 SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
@@ -76,8 +76,8 @@ $(VEC_DIR)/%.topojson: $(OSM_DIR)/%.osm
 # HOLC vector layer
 #
 
-$(HOLC_DIR)/%.svg:
-	mapshaper $(SHAPEFILE) \
+$(HOLC_DIR)/%.svg: $(SHAPEFILE)
+	mapshaper $< \
 	-filter 'city == "$(notdir $(basename $@))".replace("_", " ")' \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1
 
@@ -86,9 +86,10 @@ $(HOLC_DIR)/%.svg:
 #
 
 downloads: city-bbox-index.json
-	zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
+	# zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
+	zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) Philadelphia
 
-city-bbox-index.json: Makefile
+city-bbox-index.json:
 	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='trash'
 	rm *.trash
 	cat bbox-index.json \

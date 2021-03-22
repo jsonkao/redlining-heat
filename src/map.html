@@ -1,5 +1,7 @@
+{{ city = 'Philadelphia' }}
+
 <div class="map">
-  <img src="../rasters/holc/Baltimore.svg" onload="SVGInject(this)"/>
-  <img src="../rasters/reliefs/Baltimore.png"/>
-  <img src="../rasters/bases/Baltimore.png"/>
+  <img src="../rasters/holc/{{ city }}.svg" onload="SVGInject(this)"/>
+  <img src="../rasters/gee-reliefs/{{ city }}.png"/>
+  <img src="../rasters/basemaps/{{ city }}.png"/>
 </div>

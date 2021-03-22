@@ -7,6 +7,7 @@
 # Node and Parcel
 node_modules
 .cache
+dist
 
 # Mapping files
 rasters/osm-raw

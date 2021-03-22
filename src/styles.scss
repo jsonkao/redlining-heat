@@ -22,11 +22,11 @@
 
     path {
       fill: none;
-      stroke: black;
-      stroke-width: 2px;
+      stroke: none;
+      stroke-width: 3px;
 
-      &[data-holc_grade="A"] { stroke: green; }
-      &[data-holc_grade="D"] { stroke: red; }
+      &[data-holc_grade="A"] { stroke: rgb(73, 161, 73); }
+      &[data-holc_grade="D"] { stroke: rgb(207, 20, 20); }
     }
   }
 }
