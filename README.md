@@ -5,6 +5,8 @@
 `OSM_DIR` contains raw OSM data. `VEC_DIR` contains the OSM data turned into a TopoJSON. `GTIFF_DIR` contains the vector streets/buildings burned into rasters. `BASE_DIR` contains the web PNG assets of the burned rasters.
 
 `TEMP_DIR` contains the temperature data from GEE for a certain bounding box. `REL_DIR` contains the color reliefs and web PNG assets of temperature data.
+* Finally figured out how to mask water
+* It'd be nice to only account for HOLC areas when creaing scales in color-relief. Can take ugly shortcuts because deadline is close
 
 `HOLC_DIR` contains the HOLC boundaries for individual cities in SVG format.
 
