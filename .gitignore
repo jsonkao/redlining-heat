@@ -10,5 +10,5 @@ node_modules
 dist
 
 # Mapping files
-rasters/osm-raw
-rasters/privatekey.json
+osm-raw/
+privatekey.json
