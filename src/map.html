@@ -1,7 +1,14 @@
-{{ city = 'Philadelphia' }}
+<div id="map-container">
+  <p class="g-body paragraph">
+    Select a city:
+    <span id="city-selector-container">
+      <select id="city-selector"></select>
+    </span>
+  </p>
 
-<div class="map">
-  <img src="../rasters/holc/{{ city }}.svg" onload="SVGInject(this)"/>
-  <img src="../rasters/gee-reliefs/{{ city }}.png"/>
-  <img src="../rasters/basemaps/{{ city }}.png"/>
+  <div id="map">
+    <img />
+    <img />
+    <img />
+  </div>
 </div>

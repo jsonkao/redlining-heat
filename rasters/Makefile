@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate base maps for. Replaces any spaces in city names with underscore.
-CITIES = Richmond Minneapolis Philadelphia Detroit Baltimore # Chicago Houston Portland
+CITIES = Richmond Minneapolis Philadelphia # Detroit Baltimore # Chicago Houston Portland
 
 SHAPEFILE = ../data/fullshpfile/shapefile/holc_ad_data.shp
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
@@ -37,7 +37,8 @@ all: folders tempmaps basemaps holcmaps
 #
 
 # Transform temperature data into color reliefs
-$(REL_DIR)/%.png: $(TEMP_DIR)/%.tif
+$(REL_DIR)/%.png: $(TEMP_DIR)/%.tif colors.txt
+	rm -f $@
 	gdaldem color-relief $< colors.txt $(patsubst %.png,%.tif,$@) -alpha
 	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
 
@@ -52,6 +53,7 @@ $(TEMP_DIR)/%.tif: $(VEC_DIR)/%.topojson
 #
 
 $(BASE_DIR)/%.png: $(GTIFF_DIR)/%.tif
+	rm -f $@
 	gdalwarp -ts $(WIDTH 0) -of PNG $< $@
 
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
@@ -86,8 +88,7 @@ $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 #
 
 downloads: city-bbox-index.json
-	# zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
-	zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) Philadelphia
+	zsh download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
 
 city-bbox-index.json:
 	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='trash'
