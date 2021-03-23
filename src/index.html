@@ -43,22 +43,21 @@
     </else>
 
     <div class="story">
-      <include src="map.html"></include>
       <each loop="item in body">
         <switch expression="item.type">
           <case n="'text'">
             <include src="partials/paragraph.html"></include>
           </case>
-          <case n="'subhed'">
-            <include src="partials/subhed.html"></include>
+          <case n="'html'">
+            {{{ item.value }}}
           </case>
           <case n="'image'">
             <include src="partials/image.html"></include>
           </case>
           <case n="'graphic'">
             <div class="graphic">
-              <if condition="item.value.asset === 'graphic-name.html'">
-                <include src="graphic-name.html"></include>
+              <if condition="item.value.asset === 'map.html'">
+                <include src="map.html"></include>
               </if>
             </div>
           </case>
