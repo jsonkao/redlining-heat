@@ -11,10 +11,11 @@ var runAnalysis = function () {
 };
 
 function main() {
+  const bbox = eval(process.argv[2]);
   var l8 = ee.ImageCollection('LANDSAT/LC08/C01/T1');
 
   // Filter images by time and cloud cover
-  const bounds = ee.Geometry.Rectangle(eval(process.argv[2]));
+  const bounds = ee.Geometry.Rectangle(bbox);
   var images = l8
     .filterBounds(bounds)
     .filterDate('2020-06-01', '2020-08-31')

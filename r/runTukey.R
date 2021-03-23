@@ -4,9 +4,12 @@ suppressPackageStartupMessages(library(dplyr))
 
 # Read in data
 
+args <- commandArgs(trailingOnly = TRUE)
+cities <- args[-1]
+
 data <- inner_join(
   read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
-  fromJSON('../data/temperatures.json'),
+  fromJSON(args[1]),
   by = c('neighborho' = 'id')
 ) %>%
   rename(holc_grade = holc_grade.x) %>%
@@ -24,7 +27,7 @@ runTukey <- function(arg) {
 # Apply tests to named list of dataframes; output JSON
 
 toJSON(sapply(
-  gsub('_', ' ', commandArgs(trailingOnly = TRUE)),
+  gsub('_', ' ', cities),
   runTukey,
   simplify = FALSE,
   USE.NAMES = TRUE

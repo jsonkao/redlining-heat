@@ -4,7 +4,22 @@ import reliefs from '../data/reliefs/*.png';
 import basemaps from '../data/basemaps/*.png';
 import boundaries from '../data/boundaries/*.svg';
 
-function setCity(city) {
+import tukeyResults from '../data/tukey-results.json';
+
+const cities = Object.keys(reliefs).map(filename => filename.split('.')[0])
+
+/* Dropdown setup */
+
+const citySelector = document.getElementById('city-selector');
+cities.forEach(city => {
+  const option = document.createElement('option');
+  option.value = option.innerHTML = city;
+  citySelector.append(option);
+});
+
+/* Map logic */
+
+function setCityMap(city) {
   const map = document.getElementById('map');
   const [boundarySvg, basemapImg, reliefImg] = map.children;
   const boundaryImg = document.createElement('img');
@@ -15,13 +30,18 @@ function setCity(city) {
   basemapImg.src = basemaps[city];
 }
 
-const citySelector = document.getElementById('city-selector');
-const cities = Object.keys(reliefs).map(filename => filename.split('.')[0])
-cities.forEach(city => {
-  const option = document.createElement('option');
-  option.value = option.innerHTML = city;
-  citySelector.append(option);
-});
+/* Statistical table */
+
+function setCityTable(city) {
+  const results = tukeyResults[city]
+}
+
+/* Dropdown listeners */
+
+function setCity(city) {
+  setCityMap(city);
+  setCityTable(city);
+}
 
 citySelector.addEventListener('change', function () {
   setCity(this.value);

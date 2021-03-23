@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Minneapolis # Richmond Philadelphia # Detroit Baltimore # Chicago Los_Angeles
+CITIES = Philadelphia # Minneapolis # Richmond Philadelphia # Detroit Baltimore # Chicago Los_Angeles
 
 SHAPEFILE = holc-shapefile/holc_ad_data.shp
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
@@ -121,9 +121,13 @@ clean_temperatures:
 # Temperature mean formatting and statistics
 #
 
-tempstats: temperatures.json tukey-results.json
+YEARS = 2000 2020
+tempstats: $(YEARS:%=tukeyResults-%.json)
 
-temperatures.json: $(TASK_DIR)/meanTemperatureTask.json
+tukeyResults-%.json: $(TASK_DIR)/temperatures-%.json ../r/runTukey.r
+	Rscript ../r/runTukey.r $< $(CITIES) | jq '.' > $@
+
+$(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.json
 	cat $< \
 	| ndjson-split 'd.features' \
 	| ndjson-map 'd.properties' \
@@ -131,6 +135,3 @@ temperatures.json: $(TASK_DIR)/meanTemperatureTask.json
 	| ndjson-map 'd.temperature = +(Math.round(d.temperature + "e+2") + "e-2"), d' \
 	| ndjson-reduce \
 	> $@
-
-tukey-results.json: ../r/runTukey.r temperatures.json
-	Rscript $< $(CITIES) > $@
