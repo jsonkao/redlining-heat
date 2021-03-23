@@ -1,0 +1,39 @@
+{
+  "headline": "Title",
+  "date": "March 25, 2021",
+  "byline": "Jason Kao",
+  "top": [],
+  "body": [
+    {
+      "type": "text",
+      "value": "What follows is a map showing the city of <span id=\"select-wrap\"><select id=\"city-select\"></select></span>. Temperature data is overlaid on the map: bluer means colder; redder means hotter. HOLC boundaries are also drawn onto the map. Red polygons are neighborhoods that were rated “D”."
+    },
+    {
+      "type": "graphic",
+      "value": {
+        "asset": "map.html"
+      }
+    },
+    {
+      "type": "text",
+      "value": "Below is a density plot of temperature values shown in the map above based on neighborhood HOLC grade for both 2000 and 2020."
+    },
+    {
+      "type": "html",
+      "value": "<img class=\"chart\" id=\"chart\" />"
+    },
+    {
+      "type": "text",
+      "value": "After running a Tukey’s Honestly Significant Differences Test at a 95% confidence interval, we can observe in both years which HOLC grades’ neighborhoods were significantly cooler or hotter than neighborhoods in other grades."
+    },
+    {
+      "type": "html",
+      "value": "<img class=\"chart chart-tky\" id=\"chart-tky\" />"
+    },
+    {
+      "type": "text",
+      "value": "Click <a href=\"#select\">here</a> to choose another city."
+    }
+  ],
+  "footer": ""
+}

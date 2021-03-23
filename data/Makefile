@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Philadelphia # Minneapolis # Richmond Philadelphia # Detroit Baltimore # Chicago Los_Angeles
+CITIES = Philadelphia Richmond Detroit # Baltimore # Chicago Los_Angeles
 
 SHAPEFILE = holc-shapefile/holc_ad_data.shp
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
@@ -33,7 +33,7 @@ WIDTH = 2000
 tempmaps: folders $(CITIES:%=$(REL_DIR)/%.png)
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
-all: folders tempmaps basemaps holcmaps tukey-results.json
+all: folders tempmaps basemaps holcmaps tukeyResults.json
 
 #
 # GEE temperature reliefs
@@ -67,13 +67,13 @@ $(GTIFF_DIR)/%.tif: $(VEC_DIR)/%.topojson
 		-l lines -l polygons -a_nodata 255 $< $@
 
 # Convert to TopoJSON (NDJSON first to remove unnecessary properties).
+# Removed -clean because it takes a long time and I don't see how it makes life better
 $(VEC_DIR)/%.topojson: $(OSM_DIR)/%.osm
 	$(OSMTOGEOJSON) -f osm --ndjson $< \
 	| ndjson-map 'd.properties = {highway: d.properties.tags.highway}, d' \
 	| ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' \
 	| mapshaper-xl - \
 	-rename-layers lines,polygons \
-	-clean \
 	-clip bbox=$(shell jq -r ".\"$(subst _, ,$(notdir $(basename $<))\" | join(\",\"))" city-bbox-index.json) \
 	-o $@ format=topojson bbox
 
@@ -122,16 +122,17 @@ clean_temperatures:
 #
 
 YEARS = 2000 2020
-tempstats: $(YEARS:%=tukeyResults-%.json)
 
-tukeyResults-%.json: $(TASK_DIR)/temperatures-%.json ../r/runTukey.r
-	Rscript ../r/runTukey.r $< $(CITIES) | jq '.' > $@
+tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) tukeyResults.json
 
-$(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.json
+tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json)
+	Rscript ../r/runTukey.r $(CITIES) | jq '.' > $@
+
+$(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	cat $< \
 	| ndjson-split 'd.features' \
 	| ndjson-map 'd.properties' \
-	| ndjson-map '{id: d.neighborho, temperature: d.mean, holc_grade: d.holc_grade}' \
+	| ndjson-map '{id: d.neighborho, temperature: d.mean, holc_grade: d.holc_grade, year: $(patsubst $(TASK_DIR)/temperatures-%.json,%,$@)}' \
 	| ndjson-map 'd.temperature = +(Math.round(d.temperature + "e+2") + "e-2"), d' \
 	| ndjson-reduce \
 	> $@

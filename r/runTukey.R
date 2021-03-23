@@ -1,27 +1,79 @@
 library(foreign)
 library(jsonlite)
+library(ggplot2)
+library(cowplot)
 suppressPackageStartupMessages(library(dplyr))
 
 # Read in data
 
-args <- commandArgs(trailingOnly = TRUE)
-cities <- args[-1]
+cities <- commandArgs(trailingOnly = TRUE)
 
 data <- inner_join(
   read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
-  fromJSON(args[1]),
+  rbind(fromJSON('../data/task-exports/temperatures-2020.json'), fromJSON('../data/task-exports/temperatures-2000.json')),
   by = c('neighborho' = 'id')
 ) %>%
   rename(holc_grade = holc_grade.x) %>%
   filter(holc_grade != 'E') %>%
-  select(state, city, holc_grade, temperature)
+  select(state, city, holc_grade, temperature, year)
 
 # Define function for outputting test result as dataframe
 
 runTukey <- function(arg) {
-  as.data.frame(TukeyHSD(aov(
-    temperature ~ holc_grade, data = data %>% filter(city == arg)
-  ))$holc_grade)
+  output <- list()
+  tkyPlots <- list()
+  for (theYear in c(2000, 2020)) {
+    tky <- as.data.frame(TukeyHSD(aov(
+      temperature ~ holc_grade, data = data %>% filter(city == arg & year == theYear)
+    ))$holc_grade)
+    tky$pair <- rownames(tky)
+    tkyPlots[[ (theYear-2000)/20 + 1 ]] <- ggplot(tky, aes(colour=cut(`p adj`, c(0, 0.01, 0.05, 1), 
+                                          label=c("p < 0.01","p < 0.05","Non-Sig")))) +
+      geom_hline(yintercept=0, lty="11", colour="grey30") +
+      geom_errorbar(aes(pair, ymin=lwr, ymax=upr), width=0.2) +
+      geom_point(aes(pair, diff)) +
+      labs(colour="") +
+      coord_flip() +
+      theme_minimal_vgrid(12) +
+      labs(y = 'Difference in temperature', x = 'Pair')
+    output[[as.character(theYear)]] <- tky
+  }
+  tkyPlot <- plot_grid(tkyPlots[[1]], tkyPlots[[2]], labels = c('2000', '2020'))
+  
+  plot <- data %>%
+    filter(city == arg) %>%
+    ggplot(aes(temperature, fill = holc_grade)) +
+    geom_density(alpha = 0.6) +
+    facet_grid(holc_grade ~ year, switch = "y", scales = "free_y") +
+    theme_minimal_vgrid(12) +
+    scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+    guides(fill = FALSE) +
+    scale_fill_manual(values = c(
+      "#76a865", "#7cb5bd", "#ffff00", "#d9838d"
+    )) +
+    theme(axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank(), strip.text.y.left = element_text(angle = 0)) +
+    labs(y = 'Mean summertime temperature')
+  ggsave(
+    paste0(arg, '.png'),
+    plot,
+    device = 'png',
+    path = 'charts/',
+    width = 6.7,
+    height = 5.5,
+    units = 'in',
+    dpi = 300
+  )
+  ggsave(
+    paste0(arg, '-tky.png'),
+    tkyPlot,
+    device = 'png',
+    path = 'charts/',
+    width = 9,
+    height = 4.5,
+    units = 'in'
+  )
+  write(paste("Completed", arg), stderr())
+  output
 }
 
 # Apply tests to named list of dataframes; output JSON

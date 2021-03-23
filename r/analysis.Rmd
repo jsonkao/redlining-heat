@@ -14,14 +14,14 @@ library(ggplot2)
 
 ```{r}
 data <- inner_join(
-  read.dbf('../data/fullshpfile/shapefile/holc_ad_data.dbf'),
-  fromJSON('../data/temperatures.json'),
+  read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
+  rbind(fromJSON('../data/task-exports/temperatures-2020.json'), fromJSON('../data/task-exports/temperatures-2000.json')),
   by = c('neighborho' = 'id')
 ) %>% 
   rename(holc_grade = holc_grade.x) %>% 
   filter(holc_grade != 'E') %>% 
-  select(state, city, holc_grade, temperature)
-head(data)
+  select(state, city, holc_grade, temperature, year)
+str(data)
 ```
 
 ## Visualize data
@@ -37,27 +37,30 @@ data %>% ggplot(aes(temperature)) +
 ```{r}
 as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago')))$holc_grade)
 
+plot <- data %>%
+  filter(city == "Chicago") %>%
+  ggplot(aes(temperature, fill = holc_grade)) +
+  geom_density(alpha = 0.6) +
+  facet_grid(holc_grade ~ year, switch = "y") +
+  theme_minimal_vgrid(12) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+  #theme(text = element_text(size = 12), axis.text = element_text(size = 9.2)) +
+  guides(fill = FALSE) +
+  scale_fill_manual(values = c(
+    "#76a865", "#7cb5bd", "#ffff00", "#d9838d"
+  )) +
+  theme(axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank(), strip.text.y.left = element_text(angle = 0)) +
+  labs(y = 'Mean summertime temperature')
+plot
+
 ggsave(
   'test.png',
-  data %>%
-    filter(city == "Chicago") %>%
-    ggplot(aes(temperature, fill = holc_grade)) +
-    geom_density(alpha = 0.6) +
-    facet_wrap( ~ holc_grade, ncol = 1) +
-    theme_minimal_vgrid(12) +
-    scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-    #panel_border() +
-    theme(text = element_text(size = 12), axis.text = element_text(size = 9.2)) +
-    guides(fill = FALSE) +
-    scale_fill_manual(values = c(
-      "#76a865", "#7cb5bd", "#ffff00", "#d9838d"
-    )) +
-    theme(axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank()),
+  plot,
   device = 'png',
-  width = 3,
-  height = 6,
+  width = 6.7,
+  height = 5.5,
   units = 'in',
-  dpi = 600
+  dpi = 300
   )
 ```
 
