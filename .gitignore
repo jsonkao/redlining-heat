@@ -12,3 +12,6 @@ dist
 # Mapping files
 osm-raw/
 privatekey.json
+
+data/osm-*
+data/gee-*
