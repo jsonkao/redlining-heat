@@ -18,6 +18,7 @@ data <- inner_join(
   fromJSON('../data/temperatures.json'),
   by = c('neighborho' = 'id')
 ) %>% 
+  rename(holc_grade = holc_grade.x) %>% 
   filter(holc_grade != 'E') %>% 
   select(state, city, holc_grade, temperature)
 head(data)

@@ -1,8 +1,8 @@
 import SVGInject from '@iconfu/svg-inject';
 
-import reliefs from '../rasters/gee-reliefs/*.png';
-import basemaps from '../rasters/basemaps/*.png';
-import boundaries from '../rasters/holc/*.svg';
+import reliefs from '../data/reliefs/*.png';
+import basemaps from '../data/basemaps/*.png';
+import boundaries from '../data/boundaries/*.svg';
 
 function setCity(city) {
   const map = document.getElementById('map');
@@ -16,11 +16,10 @@ function setCity(city) {
 }
 
 const citySelector = document.getElementById('city-selector');
-Object.keys(reliefs).forEach(filename => {
+const cities = Object.keys(reliefs).map(filename => filename.split('.')[0])
+cities.forEach(city => {
   const option = document.createElement('option');
-  const city = filename.split('.')[0];
-  option.value = city;
-  option.innerHTML = city;
+  option.value = option.innerHTML = city;
   citySelector.append(option);
 });
 
@@ -29,5 +28,5 @@ citySelector.addEventListener('change', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  setCity('Minneapolis');
+  setCity(cities[0]);
 });
