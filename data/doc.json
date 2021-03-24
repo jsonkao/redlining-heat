@@ -1,9 +1,29 @@
 {
-  "headline": "Title",
+  "headline": "Redlining’s Legacy in Heat Segregation: An Exploratory Data Analysis",
   "date": "March 25, 2021",
   "byline": "Jason Kao",
   "top": [],
   "body": [
+    {
+      "type": "text",
+      "value": "Nationwide, the distribution of temperatures for each HOLC grade shows that formerly redlined neighborhoods experience hotter summers, both in 2000 and 2020."
+    },
+    {
+      "type": "text",
+      "value": "<img class=\"chart\" id=\"nation-chart\" />"
+    },
+    {
+      "type": "text",
+      "value": "Applying Tukey’s Honestly Significant Differences Test at a 95% confidence interval gets us the results below."
+    },
+    {
+      "type": "html",
+      "value": "<img class=\"chart chart-tky\" id=\"nation-chart-tky\" />"
+    },
+    {
+      "type": "text",
+      "value": "We can inspect the extent of this trend within individual cities as well."
+    },
     {
       "type": "text",
       "value": "The following map shows temperatures in <span id=\"select-wrap\"><select id=\"city-select\"></select></span> in <span id=\"select-wrap\"><select id=\"year-select\"></select></span> during the summer. Bluer areas are colder than average; redder areas are warmer. HOLC boundaries are also drawn onto the map. Red polygons are neighborhoods that were rated “D”."
@@ -19,7 +39,7 @@
       "value": "If we group the mean temperature of the neighborhoods by their HOLC grade, we would see the density plot below. The plot also shows Below is a density plot of temperature values shown in the map above based on neighborhood HOLC grade for both 2000 and 2020."
     },
     {
-      "type": "html",
+      "type": "text",
       "value": "<img class=\"chart\" id=\"chart\" />"
     },
     {

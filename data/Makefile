@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Philadelphia Richmond Detroit Baltimore Chicago # Los_Angeles
+CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland
 YEARS = 2000 2020
 
 SHAPEFILE = holc-shapefile/holc_ad_data.shp

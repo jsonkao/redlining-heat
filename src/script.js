@@ -3,8 +3,6 @@ import basemaps from '../data/basemaps/*.png';
 import boundaries from '../data/boundaries/*.svg';
 import charts from '../data/charts/*.png';
 
-import tukeyResults from '../data/tukeyResults.json';
-
 const cities = [...new Set(Object.keys(reliefs).map(f => f.split('-')[0]))];
 const map = document.getElementById('map');
 
@@ -50,9 +48,13 @@ function setCityMap(city, year) {
 
 /* Chart */
 
-function setCityChart(city) {
-  document.getElementById('chart').src = charts[city];
-  document.getElementById('chart-tky').src = charts[city + '-tky'];
+function setCityChart(
+  city,
+  chartImg = document.getElementById('chart'),
+  chartTkyImg = document.getElementById('chart-tky'),
+) {
+  chartImg.src = charts[city];
+  chartTkyImg.src = charts[city + '-tky'];
 }
 
 /* Dropdown listeners */
@@ -67,4 +69,11 @@ yearSelector.addEventListener('change', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   setCity(cities[0], 2000);
+
+  // Nation chart stuff
+  setCityChart(
+    'nation',
+    document.getElementById('nation-chart'),
+    document.getElementById('nation-chart-tky'),
+  );
 });

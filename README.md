@@ -10,6 +10,7 @@ The Makefile handles all data processing. It has the following functions.
 
 4. It takes the GEE task export and uses an R script in `SCRIPT_DIR` to run the Tukey HSD test on all cities.
 
+Step 1 requests too much from both OSM and GEE for the city of Los Angeles.
 ## Next Steps
 
 * Statistical analysis
