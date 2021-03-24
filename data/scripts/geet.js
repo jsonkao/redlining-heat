@@ -1,5 +1,7 @@
 const ee = require('@google/earthengine');
 
+/* Modified by Jason to remove getInfo from landsat 7 lst calculation to be mapping/server-compatible */
+
 /** 
  * Google Earth Engine Toolbox (GEET)
  * Description: Lib to write small EE apps or big/complex apps with a lot less code.
@@ -1556,13 +1558,13 @@ var toa_radiance = function (image, band) {
 
     // Landsat 7 special case
     if (band === 6) {
-      var id = ee.String(image.get('LANDSAT_PRODUCT_ID'))
-      var id_split = id.split("_")
-      if (ee.String(id_split.get(0)).getInfo() === "LE07") {
+      //var id = ee.String(image.get('LANDSAT_PRODUCT_ID'))
+      //var id_split = id.split("_")
+      //if (ee.String(id_split.get(0)).getInfo() === "LE07") {
         band_to_toa = image.select('B6_VCID_1');
         radiance_multi_band = ee.Number(image.get('RADIANCE_MULT_BAND_6_VCID_1')); // Ml
         radiance_add_band = ee.Number(image.get('RADIANCE_ADD_BAND_6_VCID_1')); // Al
-      }
+      //}
     }
     
     var toa_radiance = band_to_toa.expression(

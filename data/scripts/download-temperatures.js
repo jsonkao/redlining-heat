@@ -10,36 +10,52 @@ var runAnalysis = function () {
   });
 };
 
+const parameters = {
+  2020: []
+}
+
 function main() {
-  const bbox = eval(process.argv[2]);
-  var l8 = ee.ImageCollection('LANDSAT/LC08/C01/T1');
+  const bbox = ee.Geometry.Rectangle(eval(process.argv[2]));
+  const year = process.argv[3]
 
   // Filter images by time and cloud cover
-  const bounds = ee.Geometry.Rectangle(bbox);
-  var images = l8
-    .filterBounds(bounds)
-    .filterDate('2020-06-01', '2020-08-31')
-    .sort('CLOUD_COVER')
-    .filter(ee.Filter.lte('CLOUD_COVER', 20));
-
   // Map LST computation across images. Take the mean for overlaps
-  var composite_computed = images
-    .map(function (image) {
-      return geet
-        .lst_calc_ls8(image)
-        .select('LST')
-        .multiply(9 / 5)
-        .add(32);
-    })
-    .mean();
+  const retrieveTemperatures = year => {
+    const [ collection, lst_calc ] = {
+      '2020': [ee.ImageCollection('LANDSAT/LC08/C01/T1'), geet.lst_calc_ls8],
+      '2000': [ee.ImageCollection('LANDSAT/LE07/C01/T1'), geet.lst_calc_ls7],
+    }[year]
+    return collection
+      .filterBounds(bbox)
+      .filterDate(year + '-06-01', year + '-08-31')
+      .sort('CLOUD_COVER')
+      .filter(ee.Filter.lte('CLOUD_COVER', 30))
+      .map(image =>
+        lst_calc(image)
+          .select('LST')
+          .multiply(9 / 5)
+          .add(32)
+          .rename(year),
+      )
+      .mean();}
 
-  var mask = ee.Image('JRC/GSW1_2/GlobalSurfaceWater').select('max_extent').eq(0);
+  // Stack all years into one image
+  // const temporalTemperatures = retrieveTemperatures(2020).addBands(retrieveTemperatures(2000))
+  const temporalTemperatures = retrieveTemperatures(year)
+
+  // Mask the image
+  var mask = ee
+    .Image('JRC/GSW1_2/GlobalSurfaceWater')
+    .select('max_extent')
+    .eq(0);
+
+  // Output download URL
   console.log(
-    composite_computed.mask(mask).getDownloadURL({
+    temporalTemperatures.mask(mask).getDownloadURL({
       scale: 30,
-      region: bounds,
-    })
-  )
+      region: bbox,
+    }),
+  );
 }
 
 // Authenticate using a service account.

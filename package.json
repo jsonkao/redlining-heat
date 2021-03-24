@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@google/earthengine": "^0.1.257",
-    "@iconfu/svg-inject": "^1.2.3",
     "intersection-observer": "^0.10.0",
     "mapshaper": "^0.5.39",
     "request-progress": "^3.0.0",
