@@ -10,7 +10,7 @@
         "body": [
           {
             "type": "text",
-            "value": "What follows is a map showing the city of <span id=\"select-wrap\"><select id=\"city-select\"></select></span>. Temperature data is overlaid on the map: bluer means colder; redder means hotter. HOLC boundaries are also drawn onto the map. Red polygons are neighborhoods that were rated “D”."
+            "value": "The following map shows temperatures in <span id=\"select-wrap\"><select id=\"city-select\"></select></span> in <span id=\"select-wrap\"><select id=\"year-select\"></select></span> during the summer. Bluer areas are colder than average; redder areas are warmer. HOLC boundaries are also drawn onto the map. Red polygons are neighborhoods that were rated “D”."
           },
           {
             "type": "graphic",
@@ -20,7 +20,7 @@
           },
           {
             "type": "text",
-            "value": "Below is a density plot of temperature values shown in the map above based on neighborhood HOLC grade for both 2000 and 2020."
+            "value": "If we group the mean temperature of the neighborhoods by their HOLC grade, we would see the density plot below. The plot also shows Below is a density plot of temperature values shown in the map above based on neighborhood HOLC grade for both 2000 and 2020."
           },
           {
             "type": "html",

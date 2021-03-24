@@ -35,20 +35,40 @@ data %>% ggplot(aes(temperature)) +
 ## Tukey-Kramer test
 
 ```{r}
-as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago')))$holc_grade)
+plot(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago'))), las = 1, tcl = -.4)
+tky = as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago')))$holc_grade)
+tky$pair = rownames(tky)
 
+# Plot pairwise TukeyHSD comparisons and color by significance level
+tkyPlot <- ggplot(tky, aes(colour=cut(`p adj`, c(0, 0.01, 0.05, 1), 
+                           label=c("p < 0.01","p < 0.05","Non-Sig")))) +
+  geom_hline(yintercept=0, lty="11", colour="grey30") +
+  geom_errorbar(aes(pair, ymin=lwr, ymax=upr), width=0.2) +
+  geom_point(aes(pair, diff)) +
+  labs(colour="") +
+  coord_flip() +
+  theme_minimal_vgrid(12) +
+  labs(y = 'Difference in temperature', x = 'Pair')
+ggsave(
+  'test.png',
+  plot,
+  device = 'png',
+  width = 6.7,
+  height = 5.5,
+  units = 'in',
+  dpi = 300
+  )
 plot <- data %>%
   filter(city == "Chicago") %>%
   ggplot(aes(temperature, fill = holc_grade)) +
   geom_density(alpha = 0.6) +
-  facet_grid(holc_grade ~ year, switch = "y") +
-  theme_minimal_vgrid(12) +
+  facet_grid(holc_grade ~ year, switch = "y", scales="free_y") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
-  #theme(text = element_text(size = 12), axis.text = element_text(size = 9.2)) +
   guides(fill = FALSE) +
   scale_fill_manual(values = c(
     "#76a865", "#7cb5bd", "#ffff00", "#d9838d"
   )) +
+  theme_minimal_vgrid(12) +
   theme(axis.line.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.title.y = element_blank(), strip.text.y.left = element_text(angle = 0)) +
   labs(y = 'Mean summertime temperature')
 plot

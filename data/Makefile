@@ -1,10 +1,12 @@
 MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Philadelphia Richmond Detroit # Baltimore # Chicago Los_Angeles
+CITIES = Philadelphia Richmond Detroit Baltimore Chicago # Los_Angeles
+YEARS = 2000 2020
 
 SHAPEFILE = holc-shapefile/holc_ad_data.shp
 OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
+
 
 #
 # Directories
@@ -23,14 +25,15 @@ BASE_DIR = basemaps
 TEMP_DIR = gee-temperatures
 REL_DIR = reliefs
 
-# HOLC maps
+# Others
 HOLC_DIR = boundaries
+CHART_DIR = charts
 
 OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 WIDTH = 2000
 
-tempmaps: folders $(CITIES:%=$(REL_DIR)/%.png)
+tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(REL_DIR)/$C-$Y.png))
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 all: folders tempmaps basemaps holcmaps tukeyResults.json
@@ -45,9 +48,13 @@ $(REL_DIR)/%.png: $(TEMP_DIR)/%.tif colors.txt
 	gdaldem color-relief $< colors.txt $(patsubst %.png,%.tif,$@) -alpha
 	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
 
-# Download temperature data
-$(TEMP_DIR)/%.tif: $(VEC_DIR)/%.topojson
-	node $(SCRIPT_DIR)/download-temperatures.js $(shell jq -c '.bbox' $<) | xargs -n1 wget -O $@.zip
+# Download temperature data. Haven't figured out how to do the double wildcard on years yet
+$(TEMP_DIR)/%-2000.tif: $(VEC_DIR)/%.topojson
+	node $(SCRIPT_DIR)/download-temperatures.js $(shell jq -c '.bbox' $<) 2000 | xargs -n1 wget -O $@.zip
+	unzip -p $@.zip > $@
+	rm $@.zip
+$(TEMP_DIR)/%-2020.tif: $(VEC_DIR)/%.topojson
+	node $(SCRIPT_DIR)/download-temperatures.js $(shell jq -c '.bbox' $<) 2020 | xargs -n1 wget -O $@.zip
 	unzip -p $@.zip > $@
 	rm $@.zip
 
@@ -106,27 +113,25 @@ city-bbox-index.json:
 # Utilities
 #
 
-ALL_FOLDERS = $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR)
+ALL_FOLDERS = $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 
 clean:
-	rm -rf $(ALL_FOLDERS) tukey-results.json
+	rm -rf $(ALL_FOLDERS) tukeyResults.json
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(REL_DIR)
 
-.PRECIOUS: $(TEMP_DIR)/%.tif $(GTIFF_DIR)/%.tif $(VEC_DIR)/%.topojson
+.PRECIOUS: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(GTIFF_DIR)/%.tif $(VEC_DIR)/%.topojson
 
 #
 # Temperature mean formatting and statistics
 #
 
-YEARS = 2000 2020
-
 tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) tukeyResults.json
 
 tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json)
-	Rscript ../r/runTukey.r $(CITIES) | jq '.' > $@
+	Rscript ../r/runTukey.r $(CITIES) nation | jq '.' > $@
 
 $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	cat $< \

@@ -17,3 +17,9 @@ The Makefile handles all data processing. It has the following functions.
 * Presentationn
 
 * It'd be nice to only account for HOLC areas when creaing scales in color-relief. Can take ugly shortcuts because deadline is close
+
+## Setup/prerequisites
+
+Tools: gdal, jq, mapshaper, ndjson-cli, R, Node
+
+Files: [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account)
