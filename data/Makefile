@@ -130,7 +130,7 @@ clean_temperatures:
 
 tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) tukeyResults.json
 
-tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json)
+tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) Makefile ../r/runTukey.r
 	Rscript ../r/runTukey.r $(CITIES) nation | jq '.' > $@
 
 $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson

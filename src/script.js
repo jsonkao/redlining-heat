@@ -16,7 +16,8 @@ const yearSelector = document.getElementById('year-select');
 ].forEach(([selector, options]) => {
   options.forEach(value => {
     const option = document.createElement('option');
-    option.value = option.innerHTML = value;
+    option.value = value;
+    option.innerHTML = ('' + value).replace('_', ' ');
     selector.append(option);
   });
 });
@@ -68,7 +69,9 @@ yearSelector.addEventListener('change', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-  setCity(cities[0], 2000);
+  citySelector.value = 'Baltimore';
+  yearSelector.value = 2020;
+  citySelector.dispatchEvent(new Event('change'));
 
   // Nation chart stuff
   setCityChart(

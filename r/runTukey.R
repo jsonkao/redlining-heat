@@ -78,7 +78,7 @@ runTukey <- function(arg) {
     ) +
     labs(x = 'Mean summertime temperature')
   ggsave(
-    paste0(arg, '.png'),
+    paste0(gsub(' ', '_', arg), '.png'),
     plot,
     device = 'png',
     path = 'charts/',
@@ -88,7 +88,7 @@ runTukey <- function(arg) {
     dpi = 300
   )
   ggsave(
-    paste0(arg, '-tky.png'),
+    paste0(gsub(' ', '_', arg), '-tky.png'),
     tkyPlot,
     device = 'png',
     path = 'charts/',
