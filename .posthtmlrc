@@ -40,7 +40,7 @@
           },
           {
             "type": "text",
-            "value": "If we group the mean temperature of the neighborhoods by their HOLC grade, we would see the density plot below. The plot also shows Below is a density plot of temperature values shown in the map above based on neighborhood HOLC grade for both 2000 and 2020."
+            "value": "If we group the mean temperatures of the neighborhoods above by their HOLC grade, we would see the following density plot."
           },
           {
             "type": "text",
@@ -48,7 +48,7 @@
           },
           {
             "type": "text",
-            "value": "After running a Tukey’s Honestly Significant Differences Test at a 95% confidence interval, we can observe in both years which HOLC grades’ neighborhoods were significantly cooler or hotter than neighborhoods in other grades."
+            "value": "After running Tukey’s Test at a 95% confidence interval for this city, we can observe in both years which HOLC grades’ neighborhoods were significantly cooler or hotter than neighborhoods in other grades."
           },
           {
             "type": "html",
@@ -59,7 +59,7 @@
             "value": "Click <a href=\"#select\">here</a> to choose another city."
           }
         ],
-        "headline": "Redlining’s Legacy in Heat Segregation: An Exploratory Data Analysis",
+        "headline": "Redlining’s Legacy in Heat Inequality: Exploratory Page",
         "date": "March 25, 2021",
         "byline": "Jason Kao",
         "footer": "",
