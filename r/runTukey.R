@@ -28,14 +28,14 @@ runTukey <- function(arg) {
   output <- list()
   tkyPlots <- list()
   for (theYear in c(2000, 2020)) {
-    filteredData <- data %>% filter(year == theYear) %>% filter(if (arg == WILDCARD) T else city == arg)
+    filteredData <- data %>% filter(year == theYear) %>% filter(if (arg == WILDCARD) T else city == arg) %>% filter(!is.na(temperature))
     if (nrow(filteredData) == 0)
       next
     tky <- as.data.frame(TukeyHSD(aov(
       temperature ~ holc_grade, data = filteredData
     ))$holc_grade)
     tky$pair <- rownames(tky)
-    tkyPlots[[(theYear - 2000) / 20 + 1]] <-
+    tkyPlots[[length(tkyPlots) + 1]] <-
       ggplot(tky, aes(colour = cut(
         `p adj`,
         c(0, 0.01, 0.05, 1),

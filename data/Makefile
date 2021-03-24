@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland
+CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco
 YEARS = 2000 2020
 
 SHAPEFILE = holc-shapefile/holc_ad_data.shp
@@ -97,8 +97,9 @@ $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 # Downloading OSM data for each city
 #
 
+# TODO: Only download city if date of the .osm > date of the query (maybe w/ a flag)
 downloads: city-bbox-index.json
-	zsh $(SCRIP_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
+	zsh $(SCRIPT_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
 
 city-bbox-index.json:
 	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='trash'

@@ -29,7 +29,7 @@ function main() {
       .filterBounds(bbox)
       .filterDate(year + '-06-01', year + '-08-31')
       .sort('CLOUD_COVER')
-      .filter(ee.Filter.lte('CLOUD_COVER', 30))
+      .filter(ee.Filter.lte('CLOUD_COVER', 80))
       .map(image =>
         lst_calc(image)
           .select('LST')

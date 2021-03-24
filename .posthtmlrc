@@ -30,7 +30,7 @@
           },
           {
             "type": "text",
-            "value": "The following map shows temperatures in <span id=\"select-wrap\"><select id=\"city-select\"></select></span> in <span id=\"select-wrap\"><select id=\"year-select\"></select></span> during the summer. Bluer areas are colder than average; redder areas are warmer. HOLC boundaries are also drawn onto the map. Red polygons are neighborhoods that were rated “D”."
+            "value": "<a name=\"select\">The</a> following map shows temperatures in <span id=\"select-wrap\"><select id=\"city-select\"></select></span> in <span id=\"select-wrap\"><select id=\"year-select\"></select></span> during the summer. Bluer areas are colder than average; redder areas are warmer. HOLC boundaries are also drawn onto the map. Red polygons are neighborhoods that were rated “D”."
           },
           {
             "type": "graphic",
@@ -56,7 +56,7 @@
           },
           {
             "type": "text",
-            "value": "Click <a href=\"#select\">here</a> to choose another city."
+            "value": "<a href=\"#select\">Go back up</a> to choose another city."
           }
         ],
         "headline": "Redlining’s Legacy in Heat Inequality: Exploratory Page",
