@@ -1,4 +1,6 @@
-parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"f1GN":[function(require,module,exports) {
+parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"IOwx":[function(require,module,exports) {
+"use strict";function t(t,n){return i(t)||o(t,n)||e(t,n)||r()}function r(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function e(t,r){if(t){if("string"==typeof t)return n(t,r);var e=Object.prototype.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?n(t,r):void 0}}function n(t,r){(null==r||r>t.length)&&(r=t.length);for(var e=0,n=new Array(r);e<r;e++)n[e]=t[e];return n}function o(t,r){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(t)){var e=[],n=!0,o=!1,i=void 0;try{for(var a,u=t[Symbol.iterator]();!(n=(a=u.next()).done)&&(e.push(a.value),!r||e.length!==r);n=!0);}catch(c){o=!0,i=c}finally{try{n||null==u.return||u.return()}finally{if(o)throw i}}return e}}function i(t){if(Array.isArray(t))return t}function a(r){var e=r.node,n=r.onEnter,o=r.onExit;new IntersectionObserver(function(r){var e=t(r,1)[0],i=e.isIntersecting,a=e.boundingClientRect.top;!i&&a<0?n():i&&a<window.innerHeight/2&&o()},{threshold:1}).observe(e)}Object.defineProperty(exports,"__esModule",{value:!0}),exports.intersectTop=a;
+},{}],"f1GN":[function(require,module,exports) {
 module.exports="Atlanta-2000.8f9d2946.png";
 },{}],"XvR1":[function(require,module,exports) {
 module.exports="Atlanta-2020.4f1257fa.png";
@@ -86,6 +88,8 @@ module.exports="Cleveland.312f6562.png";
 module.exports="Detroit.a1722c1d.png";
 },{}],"GJh8":[function(require,module,exports) {
 module.exports="Houston.b45be159.png";
+},{}],"vAEI":[function(require,module,exports) {
+module.exports="Milwaukee_Co..cae7381a.png";
 },{}],"AAGZ":[function(require,module,exports) {
 module.exports="New_Orleans.41754b71.png";
 },{}],"yU9g":[function(require,module,exports) {
@@ -100,11 +104,9 @@ module.exports="Richmond.d8c17bd8.png";
 module.exports="San_Francisco.9652249e.png";
 },{}],"Ydvc":[function(require,module,exports) {
 module.exports="St._Louis.5a5d6220.png";
-},{}],"vAEI":[function(require,module,exports) {
-module.exports="Milwaukee_Co..cae7381a.png";
 },{}],"oRTp":[function(require,module,exports) {
-module.exports={Atlanta:require("./Atlanta.png"),Austin:require("./Austin.png"),Baltimore:require("./Baltimore.png"),"Bergen_Co.":require("./Bergen_Co..png"),Birmingham:require("./Birmingham.png"),Chicago:require("./Chicago.png"),Cleveland:require("./Cleveland.png"),Detroit:require("./Detroit.png"),Houston:require("./Houston.png"),New_Orleans:require("./New_Orleans.png"),Oakland:require("./Oakland.png"),Philadelphia:require("./Philadelphia.png"),Portland:require("./Portland.png"),Richmond:require("./Richmond.png"),San_Francisco:require("./San_Francisco.png"),"St._Louis":require("./St._Louis.png"),"Milwaukee_Co.":require("./Milwaukee_Co..png")};
-},{"./Atlanta.png":"t2Js","./Austin.png":"RzKN","./Baltimore.png":"TNfA","./Bergen_Co..png":"KXyB","./Birmingham.png":"Ioxa","./Chicago.png":"kHpz","./Cleveland.png":"JwS7","./Detroit.png":"Ppq2","./Houston.png":"GJh8","./New_Orleans.png":"AAGZ","./Oakland.png":"yU9g","./Philadelphia.png":"yxfC","./Portland.png":"XOb4","./Richmond.png":"IwRW","./San_Francisco.png":"Wzru","./St._Louis.png":"Ydvc","./Milwaukee_Co..png":"vAEI"}],"wqQY":[function(require,module,exports) {
+module.exports={Atlanta:require("./Atlanta.png"),Austin:require("./Austin.png"),Baltimore:require("./Baltimore.png"),"Bergen_Co.":require("./Bergen_Co..png"),Birmingham:require("./Birmingham.png"),Chicago:require("./Chicago.png"),Cleveland:require("./Cleveland.png"),Detroit:require("./Detroit.png"),Houston:require("./Houston.png"),"Milwaukee_Co.":require("./Milwaukee_Co..png"),New_Orleans:require("./New_Orleans.png"),Oakland:require("./Oakland.png"),Philadelphia:require("./Philadelphia.png"),Portland:require("./Portland.png"),Richmond:require("./Richmond.png"),San_Francisco:require("./San_Francisco.png"),"St._Louis":require("./St._Louis.png")};
+},{"./Atlanta.png":"t2Js","./Austin.png":"RzKN","./Baltimore.png":"TNfA","./Bergen_Co..png":"KXyB","./Birmingham.png":"Ioxa","./Chicago.png":"kHpz","./Cleveland.png":"JwS7","./Detroit.png":"Ppq2","./Houston.png":"GJh8","./Milwaukee_Co..png":"vAEI","./New_Orleans.png":"AAGZ","./Oakland.png":"yU9g","./Philadelphia.png":"yxfC","./Portland.png":"XOb4","./Richmond.png":"IwRW","./San_Francisco.png":"Wzru","./St._Louis.png":"Ydvc"}],"wqQY":[function(require,module,exports) {
 module.exports="Atlanta.93bedc43.svg";
 },{}],"sA22":[function(require,module,exports) {
 module.exports="Austin.97b11d3b.svg";
@@ -142,10 +144,10 @@ module.exports="St._Louis.63bdfb28.svg";
 module.exports={Atlanta:require("./Atlanta.svg"),Austin:require("./Austin.svg"),Baltimore:require("./Baltimore.svg"),"Bergen_Co.":require("./Bergen_Co..svg"),Birmingham:require("./Birmingham.svg"),Chicago:require("./Chicago.svg"),Cleveland:require("./Cleveland.svg"),Detroit:require("./Detroit.svg"),Houston:require("./Houston.svg"),"Milwaukee_Co.":require("./Milwaukee_Co..svg"),New_Orleans:require("./New_Orleans.svg"),Oakland:require("./Oakland.svg"),Philadelphia:require("./Philadelphia.svg"),Portland:require("./Portland.svg"),Richmond:require("./Richmond.svg"),San_Francisco:require("./San_Francisco.svg"),"St._Louis":require("./St._Louis.svg")};
 },{"./Atlanta.svg":"wqQY","./Austin.svg":"sA22","./Baltimore.svg":"gpS0","./Bergen_Co..svg":"RxVP","./Birmingham.svg":"IPfR","./Chicago.svg":"Qr5k","./Cleveland.svg":"EsVd","./Detroit.svg":"iV1Y","./Houston.svg":"Y6Tr","./Milwaukee_Co..svg":"xvhv","./New_Orleans.svg":"jB2x","./Oakland.svg":"LoOL","./Philadelphia.svg":"oWG7","./Portland.svg":"UsGl","./Richmond.svg":"EufJ","./San_Francisco.svg":"Ili4","./St._Louis.svg":"ZOWs"}],"KdYd":[function(require,module,exports) {
 module.exports="Atlanta-tky.3a16b468.png";
-},{}],"nc54":[function(require,module,exports) {
-module.exports="Austin-tky.9856140b.png";
 },{}],"y7qZ":[function(require,module,exports) {
 module.exports="Atlanta.9c28dda6.png";
+},{}],"nc54":[function(require,module,exports) {
+module.exports="Austin-tky.9856140b.png";
 },{}],"yzta":[function(require,module,exports) {
 module.exports="Austin.ba71d0c1.png";
 },{}],"bN6B":[function(require,module,exports) {
@@ -154,56 +156,56 @@ module.exports="Baltimore-tky.9f8502b1.png";
 module.exports="Baltimore.8c012ec6.png";
 },{}],"XYgp":[function(require,module,exports) {
 module.exports="Bergen_Co.-tky.e45c3611.png";
-},{}],"FwGZ":[function(require,module,exports) {
-module.exports="Birmingham-tky.5887e38f.png";
 },{}],"rHyG":[function(require,module,exports) {
 module.exports="Bergen_Co..df07e471.png";
+},{}],"FwGZ":[function(require,module,exports) {
+module.exports="Birmingham-tky.5887e38f.png";
 },{}],"gPgq":[function(require,module,exports) {
 module.exports="Birmingham.e0fa5194.png";
-},{}],"GJhw":[function(require,module,exports) {
-module.exports="Chicago.3d6f2a99.png";
 },{}],"WEXj":[function(require,module,exports) {
 module.exports="Chicago-tky.b9746462.png";
+},{}],"GJhw":[function(require,module,exports) {
+module.exports="Chicago.3d6f2a99.png";
 },{}],"l6w5":[function(require,module,exports) {
 module.exports="Cleveland-tky.657740f3.png";
 },{}],"A9FM":[function(require,module,exports) {
 module.exports="Cleveland.190687ec.png";
 },{}],"tY3G":[function(require,module,exports) {
 module.exports="Detroit-tky.5515faaf.png";
-},{}],"aFku":[function(require,module,exports) {
-module.exports="Houston-tky.f31577b8.png";
 },{}],"YYpL":[function(require,module,exports) {
 module.exports="Detroit.47ba0c48.png";
+},{}],"aFku":[function(require,module,exports) {
+module.exports="Houston-tky.f31577b8.png";
 },{}],"ndRX":[function(require,module,exports) {
 module.exports="Houston.16368566.png";
 },{}],"ofeA":[function(require,module,exports) {
 module.exports="Milwaukee_Co.-tky.546d1c64.png";
 },{}],"XOLG":[function(require,module,exports) {
 module.exports="Milwaukee_Co..a4898de4.png";
-},{}],"nsfZ":[function(require,module,exports) {
-module.exports="New_Orleans.37f903d7.png";
 },{}],"wW0I":[function(require,module,exports) {
 module.exports="New_Orleans-tky.5f56f75a.png";
+},{}],"nsfZ":[function(require,module,exports) {
+module.exports="New_Orleans.37f903d7.png";
 },{}],"wUll":[function(require,module,exports) {
 module.exports="Oakland-tky.743e053b.png";
 },{}],"JWwB":[function(require,module,exports) {
 module.exports="Oakland.89bcb85d.png";
 },{}],"imLN":[function(require,module,exports) {
 module.exports="Philadelphia-tky.2b3c7727.png";
-},{}],"YvqV":[function(require,module,exports) {
-module.exports="Portland-tky.11a8c3f3.png";
 },{}],"i1ug":[function(require,module,exports) {
 module.exports="Philadelphia.a7dd2a72.png";
+},{}],"YvqV":[function(require,module,exports) {
+module.exports="Portland-tky.11a8c3f3.png";
 },{}],"IOKP":[function(require,module,exports) {
 module.exports="Portland.d7486471.png";
 },{}],"J8OG":[function(require,module,exports) {
 module.exports="Richmond-tky.7fcb0bc4.png";
 },{}],"AXGM":[function(require,module,exports) {
 module.exports="Richmond.2dd7ebfb.png";
-},{}],"rarh":[function(require,module,exports) {
-module.exports="San_Francisco.7a885628.png";
 },{}],"hoKN":[function(require,module,exports) {
 module.exports="San_Francisco-tky.c72ef0a1.png";
+},{}],"rarh":[function(require,module,exports) {
+module.exports="San_Francisco.7a885628.png";
 },{}],"REgd":[function(require,module,exports) {
 module.exports="St._Louis-tky.7384ee81.png";
 },{}],"PED9":[function(require,module,exports) {
@@ -213,8 +215,8 @@ module.exports="nation-tky.ffe379e4.png";
 },{}],"JUXX":[function(require,module,exports) {
 module.exports="nation.b74660ae.png";
 },{}],"eSI4":[function(require,module,exports) {
-module.exports={"Atlanta-tky":require("./Atlanta-tky.png"),"Austin-tky":require("./Austin-tky.png"),Atlanta:require("./Atlanta.png"),Austin:require("./Austin.png"),"Baltimore-tky":require("./Baltimore-tky.png"),Baltimore:require("./Baltimore.png"),"Bergen_Co.-tky":require("./Bergen_Co.-tky.png"),"Birmingham-tky":require("./Birmingham-tky.png"),"Bergen_Co.":require("./Bergen_Co..png"),Birmingham:require("./Birmingham.png"),Chicago:require("./Chicago.png"),"Chicago-tky":require("./Chicago-tky.png"),"Cleveland-tky":require("./Cleveland-tky.png"),Cleveland:require("./Cleveland.png"),"Detroit-tky":require("./Detroit-tky.png"),"Houston-tky":require("./Houston-tky.png"),Detroit:require("./Detroit.png"),Houston:require("./Houston.png"),"Milwaukee_Co.-tky":require("./Milwaukee_Co.-tky.png"),"Milwaukee_Co.":require("./Milwaukee_Co..png"),New_Orleans:require("./New_Orleans.png"),"New_Orleans-tky":require("./New_Orleans-tky.png"),"Oakland-tky":require("./Oakland-tky.png"),Oakland:require("./Oakland.png"),"Philadelphia-tky":require("./Philadelphia-tky.png"),"Portland-tky":require("./Portland-tky.png"),Philadelphia:require("./Philadelphia.png"),Portland:require("./Portland.png"),"Richmond-tky":require("./Richmond-tky.png"),Richmond:require("./Richmond.png"),San_Francisco:require("./San_Francisco.png"),"San_Francisco-tky":require("./San_Francisco-tky.png"),"St._Louis-tky":require("./St._Louis-tky.png"),"St._Louis":require("./St._Louis.png"),"nation-tky":require("./nation-tky.png"),nation:require("./nation.png")};
-},{"./Atlanta-tky.png":"KdYd","./Austin-tky.png":"nc54","./Atlanta.png":"y7qZ","./Austin.png":"yzta","./Baltimore-tky.png":"bN6B","./Baltimore.png":"kEga","./Bergen_Co.-tky.png":"XYgp","./Birmingham-tky.png":"FwGZ","./Bergen_Co..png":"rHyG","./Birmingham.png":"gPgq","./Chicago.png":"GJhw","./Chicago-tky.png":"WEXj","./Cleveland-tky.png":"l6w5","./Cleveland.png":"A9FM","./Detroit-tky.png":"tY3G","./Houston-tky.png":"aFku","./Detroit.png":"YYpL","./Houston.png":"ndRX","./Milwaukee_Co.-tky.png":"ofeA","./Milwaukee_Co..png":"XOLG","./New_Orleans.png":"nsfZ","./New_Orleans-tky.png":"wW0I","./Oakland-tky.png":"wUll","./Oakland.png":"JWwB","./Philadelphia-tky.png":"imLN","./Portland-tky.png":"YvqV","./Philadelphia.png":"i1ug","./Portland.png":"IOKP","./Richmond-tky.png":"J8OG","./Richmond.png":"AXGM","./San_Francisco.png":"rarh","./San_Francisco-tky.png":"hoKN","./St._Louis-tky.png":"REgd","./St._Louis.png":"PED9","./nation-tky.png":"X6JI","./nation.png":"JUXX"}],"mpVp":[function(require,module,exports) {
-"use strict";var e=a(require("../data/reliefs/*.png")),t=a(require("../data/basemaps/*.png")),n=a(require("../data/boundaries/*.svg")),r=a(require("../data/charts/*.png"));function a(e){return e&&e.__esModule?e:{default:e}}function o(e,t){return c(e)||u(e,t)||f(e,t)||i()}function i(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function u(e,t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e)){var n=[],r=!0,a=!1,o=void 0;try{for(var i,u=e[Symbol.iterator]();!(r=(i=u.next()).done)&&(n.push(i.value),!t||n.length!==t);r=!0);}catch(c){a=!0,o=c}finally{try{r||null==u.return||u.return()}finally{if(a)throw o}}return n}}function c(e){if(Array.isArray(e))return e}function l(e){return m(e)||s(e)||f(e)||d()}function d(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function f(e,t){if(e){if("string"==typeof e)return y(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?y(e,t):void 0}}function s(e){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e))return Array.from(e)}function m(e){if(Array.isArray(e))return y(e)}function y(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,r=new Array(t);n<t;n++)r[n]=e[n];return r}var v=l(new Set(Object.keys(e.default).map(function(e){return e.split("-")[0]}))),h=document.getElementById("map"),p=document.getElementById("city-select"),b=document.getElementById("year-select");function g(e,t){I(e,t),S(e)}function E(t){h.children[2].src=e.default[p.value+"-"+t]}function I(r,a){var i=o(h.children,3),u=i[0],c=i[1],l=i[2],d=document.createElement("img");d.setAttribute("onload","SVGInject(this)"),d.src=n.default[r],h.replaceChild(d,u),l.src=e.default[r+"-"+a],c.src=t.default[r]}function S(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:document.getElementById("chart"),n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:document.getElementById("chart-tky");t.src=r.default[e],n.src=r.default[e+"-tky"]}[[p,v],[b,[2e3,2020]]].forEach(function(e){var t=o(e,2),n=t[0];t[1].forEach(function(e){var t=document.createElement("option");t.value=e,t.innerHTML=(""+e).replace("_"," "),n.append(t)})}),p.addEventListener("change",function(){g(this.value,b.value)}),b.addEventListener("change",function(){E(this.value)}),document.addEventListener("DOMContentLoaded",function(){p.value="Baltimore",b.value=2020,p.dispatchEvent(new Event("change")),S("nation",document.getElementById("nation-chart"),document.getElementById("nation-chart-tky"))});
-},{"../data/reliefs/*.png":"RrJH","../data/basemaps/*.png":"oRTp","../data/boundaries/*.svg":"fH6a","../data/charts/*.png":"eSI4"}]},{},["mpVp"], "script")
+module.exports={"Atlanta-tky":require("./Atlanta-tky.png"),Atlanta:require("./Atlanta.png"),"Austin-tky":require("./Austin-tky.png"),Austin:require("./Austin.png"),"Baltimore-tky":require("./Baltimore-tky.png"),Baltimore:require("./Baltimore.png"),"Bergen_Co.-tky":require("./Bergen_Co.-tky.png"),"Bergen_Co.":require("./Bergen_Co..png"),"Birmingham-tky":require("./Birmingham-tky.png"),Birmingham:require("./Birmingham.png"),"Chicago-tky":require("./Chicago-tky.png"),Chicago:require("./Chicago.png"),"Cleveland-tky":require("./Cleveland-tky.png"),Cleveland:require("./Cleveland.png"),"Detroit-tky":require("./Detroit-tky.png"),Detroit:require("./Detroit.png"),"Houston-tky":require("./Houston-tky.png"),Houston:require("./Houston.png"),"Milwaukee_Co.-tky":require("./Milwaukee_Co.-tky.png"),"Milwaukee_Co.":require("./Milwaukee_Co..png"),"New_Orleans-tky":require("./New_Orleans-tky.png"),New_Orleans:require("./New_Orleans.png"),"Oakland-tky":require("./Oakland-tky.png"),Oakland:require("./Oakland.png"),"Philadelphia-tky":require("./Philadelphia-tky.png"),Philadelphia:require("./Philadelphia.png"),"Portland-tky":require("./Portland-tky.png"),Portland:require("./Portland.png"),"Richmond-tky":require("./Richmond-tky.png"),Richmond:require("./Richmond.png"),"San_Francisco-tky":require("./San_Francisco-tky.png"),San_Francisco:require("./San_Francisco.png"),"St._Louis-tky":require("./St._Louis-tky.png"),"St._Louis":require("./St._Louis.png"),"nation-tky":require("./nation-tky.png"),nation:require("./nation.png")};
+},{"./Atlanta-tky.png":"KdYd","./Atlanta.png":"y7qZ","./Austin-tky.png":"nc54","./Austin.png":"yzta","./Baltimore-tky.png":"bN6B","./Baltimore.png":"kEga","./Bergen_Co.-tky.png":"XYgp","./Bergen_Co..png":"rHyG","./Birmingham-tky.png":"FwGZ","./Birmingham.png":"gPgq","./Chicago-tky.png":"WEXj","./Chicago.png":"GJhw","./Cleveland-tky.png":"l6w5","./Cleveland.png":"A9FM","./Detroit-tky.png":"tY3G","./Detroit.png":"YYpL","./Houston-tky.png":"aFku","./Houston.png":"ndRX","./Milwaukee_Co.-tky.png":"ofeA","./Milwaukee_Co..png":"XOLG","./New_Orleans-tky.png":"wW0I","./New_Orleans.png":"nsfZ","./Oakland-tky.png":"wUll","./Oakland.png":"JWwB","./Philadelphia-tky.png":"imLN","./Philadelphia.png":"i1ug","./Portland-tky.png":"YvqV","./Portland.png":"IOKP","./Richmond-tky.png":"J8OG","./Richmond.png":"AXGM","./San_Francisco-tky.png":"hoKN","./San_Francisco.png":"rarh","./St._Louis-tky.png":"REgd","./St._Louis.png":"PED9","./nation-tky.png":"X6JI","./nation.png":"JUXX"}],"mpVp":[function(require,module,exports) {
+"use strict";var e=require("./scripts/utils"),t=o(require("../data/reliefs/*.png")),n=o(require("../data/basemaps/*.png")),r=o(require("../data/boundaries/*.svg")),a=o(require("../data/charts/*.png"));function o(e){return e&&e.__esModule?e:{default:e}}function i(e,t){return l(e)||u(e,t)||f(e,t)||c()}function c(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function u(e,t){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e)){var n=[],r=!0,a=!1,o=void 0;try{for(var i,c=e[Symbol.iterator]();!(r=(i=c.next()).done)&&(n.push(i.value),!t||n.length!==t);r=!0);}catch(u){a=!0,o=u}finally{try{r||null==c.return||c.return()}finally{if(a)throw o}}return n}}function l(e){if(Array.isArray(e))return e}function d(e){return y(e)||m(e)||f(e)||s()}function s(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function f(e,t){if(e){if("string"==typeof e)return h(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?h(e,t):void 0}}function m(e){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e))return Array.from(e)}function y(e){if(Array.isArray(e))return h(e)}function h(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,r=new Array(t);n<t;n++)r[n]=e[n];return r}var v=d(new Set(Object.keys(t.default).map(function(e){return e.split("-")[0]}))),p=document.getElementById("map"),g=document.getElementById("variable-city"),b=document.getElementById("city-select"),E=document.getElementById("year-select");function I(e,t){S(e,t),w(e),g.innerHTML=e.replace("_"," ")}function B(e){p.children[2].src=t.default[b.value+"-"+e]}function S(e,a){var o=i(p.children,3),c=o[0],u=o[1],l=o[2],d=document.createElement("img");d.setAttribute("onload","SVGInject(this)"),d.src=r.default[e],p.replaceChild(d,c),l.src=t.default[e+"-"+a],u.src=n.default[e]}function w(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:document.getElementById("chart"),n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:document.getElementById("chart-tky");t.src=a.default[e],n.src=a.default[e+"-tky"]}[[b,v],[E,[2e3,2020]]].forEach(function(e){var t=i(e,2),n=t[0];t[1].forEach(function(e){var t=document.createElement("option");t.value=e,t.innerHTML=(""+e).replace("_"," "),n.append(t)})}),b.addEventListener("change",function(){I(this.value,E.value)}),E.addEventListener("change",function(){B(this.value)}),document.addEventListener("DOMContentLoaded",function(){b.value="Baltimore",E.value=2020,b.dispatchEvent(new Event("change")),w("nation",document.getElementById("nation-chart"),document.getElementById("nation-chart-tky"))});var A=document.getElementById("selectors"),j=document.getElementById("top-intersect"),L=window.getComputedStyle(A).top;j.style.height=L,(0,e.intersectTop)({node:j,onEnter:function(){A.classList.add("fixed");var e=A.getBoundingClientRect(),t=e.height,n=e.top;j.style.height=t+n+"px"},onExit:function(){A.classList.remove("fixed"),j.style.height=L}});
+},{"./scripts/utils":"IOwx","../data/reliefs/*.png":"RrJH","../data/basemaps/*.png":"oRTp","../data/boundaries/*.svg":"fH6a","../data/charts/*.png":"eSI4"}]},{},["mpVp"], "script")
 //# sourceMappingURL=script.75da7f30.js.map
