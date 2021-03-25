@@ -35,6 +35,11 @@ data %>% ggplot(aes(temperature)) +
 ## Tukey-Kramer test
 
 ```{r}
+TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(year == 2020)))
+```
+
+
+```{r}
 plot(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago'))), las = 1, tcl = -.4)
 tky = as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago')))$holc_grade)
 tky$pair = rownames(tky)
