@@ -1,3 +1,5 @@
+import { intersectTop } from './scripts/utils';
+
 import reliefs from '../data/reliefs/*.png';
 import basemaps from '../data/basemaps/*.png';
 import boundaries from '../data/boundaries/*.svg';
@@ -5,6 +7,7 @@ import charts from '../data/charts/*.png';
 
 const cities = [...new Set(Object.keys(reliefs).map(f => f.split('-')[0]))];
 const map = document.getElementById('map');
+const variableCityName = document.getElementById('variable-city');
 
 /* Dropdown setup */
 
@@ -27,6 +30,7 @@ const yearSelector = document.getElementById('year-select');
 function setCity(city, year) {
   setCityMap(city, year);
   setCityChart(city);
+  variableCityName.innerHTML = city.replace('_', ' ');
 }
 
 // Just change the temperature layer of the current map
@@ -79,4 +83,23 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('nation-chart'),
     document.getElementById('nation-chart-tky'),
   );
+});
+
+/* Selector intersection stuff */
+
+const selectors = document.getElementById('selectors');
+const topIntersect = document.getElementById('top-intersect');
+const selectorsTop = window.getComputedStyle(selectors).top;
+topIntersect.style.height = selectorsTop;
+intersectTop({
+  node: topIntersect,
+  onEnter: () => {
+    selectors.classList.add('fixed');
+    const { height, top } = selectors.getBoundingClientRect();
+    topIntersect.style.height = height + top + 'px';
+  },
+  onExit: () => {
+    selectors.classList.remove('fixed');
+    topIntersect.style.height = selectorsTop;
+  },
 });

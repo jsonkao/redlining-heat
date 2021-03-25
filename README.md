@@ -11,11 +11,17 @@ The Makefile handles all data processing. It has the following functions.
 4. It takes the GEE task export and uses an R script in `SCRIPT_DIR` to run the Tukey HSD test on all cities.
 
 Step 1 requests too much from both OSM and GEE for the city of Los Angeles.
+
+Latest benchmark for building all 16 cities:
+```
+make all  1710.72s user 748.96s system 112% cpu 36:24.79 total
+```
+
 ## Next Steps
 
 * Statistical analysis
 
-* Presentationn
+* Presentation
 
 * It'd be nice to only account for HOLC areas when creaing scales in color-relief. Can take ugly shortcuts because deadline is close
 

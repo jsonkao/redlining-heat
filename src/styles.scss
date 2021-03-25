@@ -4,10 +4,19 @@
 // @import "styles/news-ellipsis";
 
 #map-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   margin: 30px 0;
+}
+
+#selectors {
+  display: flex;
+  justify-content: center;
+  top: 13px;
+}
+
+#selectors.fixed {
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
 }
 
 #select-wrap {
@@ -15,10 +24,10 @@
   position: relative;
   height: 20px;
   background: white;
-  box-shadow: 0 2px 3px 0 rgb(0 0 0 / 20%);
-  padding: 6px 0;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 30%);
+  padding: 11px 0;
   border-radius: 2px;
-  margin: 0 2px 0 4px;
+  // margin: 0 2px 0 4px;
 
   &:after {
     content: "";
@@ -35,13 +44,15 @@
     pointer-events: none;
     transition: border-color 0.3s ease-out;
   }
+
+  &:first-child {
+    margin-right: 10px;
+  }
 }
 
 select {
   font-family: $graphik;
-  border-radius: 5px;
-  padding: 5px;
-  font-size: 15px;
+  font-size: 18px;
   border: 1px solid white;
   border-radius: 2px;
   box-shadow: none;
@@ -51,7 +62,7 @@ select {
   line-height: 20px;
   max-width: 160px;
   outline: none;
-  padding: 0 35px 0 10px;
+  padding: 0 35px 0 12px;
   width: 100%;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -111,4 +122,19 @@ select {
 
 a[name] {
   color: #121212;
+}
+
+hr {
+  margin: 45px auto;
+  border: none;
+  border-bottom: 1px solid #bbb;
+  width: 140px;
+}
+
+#variable-city {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: $graphik;
 }
