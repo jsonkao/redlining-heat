@@ -14,11 +14,15 @@
 
   <body>
 
+    <include src="partials/header.html"></include>
+
     <div class="story">
       <each loop="item in body">
         <switch expression="item.type">
           <case n="'text'">
-            <include src="partials/paragraph.html"></include>
+            <p class="g-body paragraph {{ item.value === '***' ? 'dinkus' : '' }}">
+              {{{ item.value }}}
+            </p>
           </case>
           <case n="'html'">
             {{{ item.value }}}
