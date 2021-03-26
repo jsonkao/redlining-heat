@@ -1,5 +1,4 @@
 import { intersectTop } from './scripts/utils';
-import './styles.scss';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.globEager('../data/**/*.{png,svg}');
@@ -16,7 +15,6 @@ const [reliefs, basemaps, boundaries, charts] = [
       return acc;
     }, {}),
 );
-console.log(reliefs, basemaps);
 
 const cities = [...new Set(Object.keys(reliefs).map(f => f.split('-')[0]))];
 const map = document.getElementById('map');
