@@ -516,34 +516,45 @@ select {
 }
 #map svg path {
   fill: none;
-  stroke: none;
-  stroke-width: 2.3px;
+  stroke-width: 1.7px;
   vector-effect: non-scaling-stroke;
 }
-#map svg path[data-holc_grade=A] {
+
+path[data-holc_grade=A], .grade-a {
   stroke: #49a149;
+  background: #49a149;
 }
-#map svg path[data-holc_grade=D] {
-  stroke: #cf1414;
-}
-#map svg path[data-holc_grade=A] {
-  stroke: #444;
-}
-#map svg path[data-holc_grade=B] {
+
+path[data-holc_grade=B], .grade-b {
   stroke: #7cb5bd;
+  background: #7cb5bd;
 }
-#map svg path[data-holc_grade=C] {
+
+path[data-holc_grade=C], .grade-c {
   stroke: #ffff00;
+  background: #ffff00;
+}
+
+path[data-holc_grade=D], .grade-d {
+  stroke: #cf1414;
+  background: #cf1414;
+}
+
+span[class^=grade-] {
+  padding: 2px 4px;
+  border-radius: 2.5px;
 }
 
 .chart {
   max-width: 700px;
+  width: calc(100% - 40px);
   margin: 25px auto;
   display: block;
 }
 
 .chart-tky {
   max-width: 1200px;
+  width: calc(100% - 40px);
 }
 
 a[name] {
