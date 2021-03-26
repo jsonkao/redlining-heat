@@ -13,7 +13,6 @@
   </head>
 
   <body>
-    <include src="partials/header.html"></include>
 
     <div class="story">
       <each loop="item in body">
@@ -23,9 +22,6 @@
           </case>
           <case n="'html'">
             {{{ item.value }}}
-          </case>
-          <case n="'image'">
-            <include src="partials/image.html"></include>
           </case>
           <case n="'graphic'">
             <div class="graphic">

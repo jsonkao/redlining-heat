@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "parcel src/index.html --global script",
-    "starts": "snowpack dev",
-    "build": "parcel build src/index.html --global script --public-url . --no-content-hash",
+    "start": "snowpack dev",
+    "build": "snowpack build"
   },
   "devDependencies": {
     "@snowpack/plugin-sass": "^1.4.0",
