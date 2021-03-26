@@ -92,38 +92,44 @@ select {
 
     path {
       fill: none;
-      stroke: none;
-      stroke-width: 2.3px;
+      stroke-width: 1.7px;
       vector-effect: non-scaling-stroke;
-
-      &[data-holc_grade="A"] {
-        stroke: rgb(73, 161, 73);
-      }
-      &[data-holc_grade="D"] {
-        stroke: rgb(207, 20, 20);
-      }
-      &[data-holc_grade="A"] {
-        stroke: #444;
-      }
-      &[data-holc_grade="B"] {
-        stroke: #7cb5bd;
-      }
-      &[data-holc_grade="C"] {
-        stroke: #ffff00;
-      }
-      // "#76a865" "#d9838d"
     }
   }
 }
 
+path[data-holc_grade="A"], .grade-a {
+  stroke: rgb(73, 161, 73);
+  background: rgb(73, 161, 73);
+}
+path[data-holc_grade="B"], .grade-b {
+  stroke: #7cb5bd;
+  background: #7cb5bd;
+}
+path[data-holc_grade="C"], .grade-c {
+  stroke: #ffff00;
+  background: #ffff00;
+}
+path[data-holc_grade="D"], .grade-d {
+  stroke: rgb(207, 20, 20);
+  background: rgb(207, 20, 20);
+}
+
+span[class^="grade-"] {
+  padding: 2px 4px;
+  border-radius: 2.5px;
+}
+
 .chart {
   max-width: $gbody-width;
+  width: calc(100% - 40px);
   margin: 25px auto;
   display: block;
 }
 
 .chart-tky {
   max-width: 1200px;
+  width: calc(100% - 40px);
 }
 
 a[name] {

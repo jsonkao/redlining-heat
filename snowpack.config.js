@@ -8,4 +8,7 @@ module.exports = {
     '/Users/jasonkao/Development/redlining-heat/data/Makefile',
     '/Users/jasonkao/Development/redlining-heat/src/partials/*.html',
   ],
+  buildOptions: {
+    metaUrlPath: 'underscore_snowpack'
+  }
 };

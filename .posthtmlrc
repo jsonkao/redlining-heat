@@ -10,7 +10,7 @@
         "body": [
           {
             "type": "text",
-            "value": "<a name=\"select\">In the</a> following map, see how summertime temperatures affect neighborhoods of different HOLC grades in various cities and decades. Bluer areas are colder than average; redder areas are warmer. HOLC boundaries are also drawn onto the map. Red polygons are neighborhoods that were rated “D”."
+            "value": "<a name=\"select\">In the</a> following map, see how summertime temperatures affect neighborhoods of different HOLC grades in various cities and decades. Bluer areas are colder than average; redder areas are warmer. HOLC boundaries are also drawn onto the map, colored by their grade: <span class=\"grade-a\">A</span>, <span class=\"grade-b\">B</span>, <span class=\"grade-c\">C</span>, or <span class=\"grade-d\">D</span>."
           },
           {
             "type": "graphic",

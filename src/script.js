@@ -11,7 +11,7 @@ const [reliefs, basemaps, boundaries, charts] = [
   Object.keys(assets)
     .filter(k => k.includes(dir))
     .reduce((acc, k) => {
-      acc[k.split('/')[3].slice(0, -4)] = assets[k].default;
+      acc[k.split('/')[3].slice(0, -4)] = '.' + assets[k].default;
       return acc;
     }, {}),
 );
