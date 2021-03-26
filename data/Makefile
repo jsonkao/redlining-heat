@@ -90,7 +90,7 @@ $(VEC_DIR)/%.topojson: $(OSM_DIR)/%.osm
 
 $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 	mapshaper $< \
-	-filter 'city == "$(notdir $(basename $@))".replace("_", " ")' \
+	-filter 'city == "$(notdir $(basename $@))".replace("_", " ") && holc_grade != "E"' \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1
 
 #

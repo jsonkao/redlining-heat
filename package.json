@@ -1,26 +1,27 @@
 {
-  "name": "d",
+  "name": "redlining-heat",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "parcel src/index.html --global script",
+    "starts": "snowpack dev",
     "build": "parcel build src/index.html --global script --public-url . --no-content-hash",
-    "postinstall": "patch-package"
   },
   "devDependencies": {
+    "@snowpack/plugin-sass": "^1.4.0",
     "cssnano": "^4.1.10",
     "eslint": "^7.0.0",
-    "parcel-bundler": "^1.12.3",
-    "patch-package": "^6.2.2",
     "posthtml-expressions": "^1.4.0",
     "posthtml-include": "^1.4.3",
-    "sass": "^1.26.5"
+    "sass": "^1.26.5",
+    "snowpack-plugin-posthtml": "^0.1.0"
   },
   "dependencies": {
     "@google/earthengine": "^0.1.257",
     "intersection-observer": "^0.10.0",
     "mapshaper": "^0.5.39",
     "request-progress": "^3.0.0",
+    "snowpack": "file:../snowpack/snowpack",
     "text-balancer": "^1.0.5"
   },
   "browserslist": [
