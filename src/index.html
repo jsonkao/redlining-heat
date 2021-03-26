@@ -20,9 +20,7 @@
       <each loop="item in body">
         <switch expression="item.type">
           <case n="'text'">
-            <p class="g-body paragraph {{ item.value === '***' ? 'dinkus' : '' }}">
-              {{{ item.value }}}
-            </p>
+            <include src="partials/paragraph.html"></include>
           </case>
           <case n="'html'">
             {{{ item.value }}}
