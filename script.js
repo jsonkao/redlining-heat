@@ -102,7 +102,7 @@ import * as __glob__0_100 from './reliefs/San_Francisco-2000.png.proxy.js';
 import * as __glob__0_101 from './reliefs/San_Francisco-2020.png.proxy.js';
 import * as __glob__0_102 from './reliefs/St._Louis-2000.png.proxy.js';
 import * as __glob__0_103 from './reliefs/St._Louis-2020.png.proxy.js';
-import * as __SNOWPACK_ENV__ from './_snowpack/env.js';
+import * as __SNOWPACK_ENV__ from './underscore_snowpack/env.js';
 import.meta.env = __SNOWPACK_ENV__;
 
 import { intersectTop } from './scripts/utils.js';
