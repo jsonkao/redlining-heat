@@ -106,7 +106,6 @@ import * as __SNOWPACK_ENV__ from './_snowpack/env.js';
 import.meta.env = __SNOWPACK_ENV__;
 
 import { intersectTop } from './scripts/utils.js';
-import './styles.css.proxy.js';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = {
@@ -228,7 +227,6 @@ const [reliefs, basemaps, boundaries, charts] = [
       return acc;
     }, {}),
 );
-console.log(reliefs, basemaps);
 
 const cities = [...new Set(Object.keys(reliefs).map(f => f.split('-')[0]))];
 const map = document.getElementById('map');
