@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco
+CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco Manhattan,Bronx,Queens,Brooklyn
 YEARS = 2000 2020
 
 SHAPEFILE = holc-shapefile/holc_ad_data.shp
@@ -91,7 +91,7 @@ $(OSM_TOPO_DIR)/%.topojson: $(OSM_DIR)/%.osm
 
 $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 	mapshaper $< \
-	-filter 'city == "$(notdir $(basename $@))".replace("_", " ") && holc_grade != "E"' \
+	-filter '("$(notdir $(basename $@))".split(",").map(c => c.replace("_", " ")).includes(city)) && holc_grade != "E"' \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1
 
 #
@@ -101,14 +101,16 @@ $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 # TODO: Only download city if date of the .osm > date of the query (maybe w/ a flag)
 # Download OSM data for each city
 downloads: city-bbox-index.json
-	zsh $(SCRIPT_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
+	zsh $(SCRIPT_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) Manhattan,Bronx,Queens,Brooklyn
+	# $(CITIES)
 
-city-bbox-index.json:
-	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='trash'
-	rm *.trash
+city-bbox-index.json: Makefile
+	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='tmp'
+	rm *.tmp
 	cat bbox-index.json \
 	| ndjson-split \
 	| ndjson-reduce 'p[d.name] = d.bbox, p' '{}' \
+	| node $(SCRIPT_DIR)/custom-merges.js $(CITIES) \
 	> $@
 	rm bbox-index.json
 

@@ -28,7 +28,12 @@ runTukey <- function(arg) {
   output <- list()
   tkyPlots <- list()
   for (theYear in c(2000, 2020)) {
-    filteredData <- data %>% filter(year == theYear) %>% filter(if (arg == WILDCARD) T else city == arg) %>% filter(!is.na(temperature))
+    filteredData <- data %>%
+      filter(year == theYear) %>%
+      filter(if (arg == WILDCARD) T else city %in% strsplit(arg, ',')[[1]]) %>%
+      filter(!is.na(temperature)) %>%
+      mutate(city = arg)
+    print(head(filteredData))
     if (nrow(filteredData) == 0)
       next
     tky <- as.data.frame(TukeyHSD(aov(
@@ -61,7 +66,8 @@ runTukey <- function(arg) {
   }
   
   plot <- data %>%
-    filter(if (arg == WILDCARD) T else city == arg) %>%
+    filter(if (arg == WILDCARD) T else city %in% strsplit(arg, ',')[[1]]) %>%
+    filter(!is.na(temperature)) %>%
     ggplot(aes(temperature, fill = holc_grade)) +
     geom_density(alpha = 0.6) +
     facet_grid(holc_grade ~ year, switch = "y", scales = "free_y") +
