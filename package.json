@@ -11,7 +11,6 @@
   "devDependencies": {
     "@jsonkao/snowpack-plugin-posthtml": "^0.3.0",
     "@snowpack/plugin-sass": "^1.4.0",
-    "cssnano": "^4.1.10",
     "eslint": "^7.0.0",
     "gh-pages": "^3.1.0",
     "posthtml-expressions": "^1.4.0",
@@ -21,10 +20,7 @@
   "dependencies": {
     "@google/earthengine": "^0.1.257",
     "intersection-observer": "^0.10.0",
-    "mapshaper": "^0.5.39",
-    "request-progress": "^3.0.0",
-    "snowpack": "file:../snowpack/snowpack",
-    "text-balancer": "^1.0.5"
+    "snowpack": "file:../snowpack/snowpack"
   },
   "browserslist": [
     "defaults"

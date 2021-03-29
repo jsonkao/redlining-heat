@@ -21,7 +21,7 @@ data <- inner_join(
   rename(holc_grade = holc_grade.x) %>% 
   filter(holc_grade != 'E') %>% 
   select(state, city, holc_grade, temperature, year)
-str(data)
+data
 ```
 
 ## Visualize data

@@ -77,6 +77,10 @@ runTukey <- function(arg) {
       strip.text.y.left = element_text(angle = 0)
     ) +
     labs(x = 'Mean summertime temperature')
+  if (arg == WILDCARD) {
+    plot <- plot + coord_cartesian(xlim = c(40, 120))
+  }
+
   ggsave(
     paste0(gsub(' ', '_', arg), '.png'),
     plot,
