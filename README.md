@@ -2,7 +2,7 @@
 
 The Makefile handles all data processing. It has the following functions.
 
-1. It generates two image layers for each city. The city-level base layer requires downloading vector data from OSM via the Overpass API. Raw OSM data is stored in `OSM_DIR`. That data is converted into TopoJSON (`VEC_DIR`) and burned it into a web-friendly raster (`GTIFF_DIR`). The temperature layer is downloaded from GEE into `TEMP_DIR` and converted using `gdaldem color-relief` into a colored relief (`REL_DIR`). The scripts that download OSM and temperature data are in `SCRIPT_DIR`.
+1. It generates two image layers for each city. The city-level base layer requires downloading vector data from OSM via the Overpass API. Raw OSM data is stored in `OSM_DIR`. That data is converted into TopoJSON (`OSM_TOPO_DIR`) and burned it into a web-friendly raster (`OSM_BURNED_DIR`). The temperature layer is downloaded from GEE into `TEMP_DIR` and converted using `gdaldem color-relief` into a colored relief (`RELIEF_DIR`). The scripts that download OSM and temperature data are in `SCRIPT_DIR`.
 
 2. It generates city-level HOLC boundary SVGs into `HOLC_DIR` using the Mapping Inequality shapefile (I downloaded the compressed data from [Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/#loc=11/40.809/-74.187&city=manhattan-ny&area=D3&text=intro), unzipped it, and kept only the `shapefile` directory, which I renamed to `holc-shapefile`).
 

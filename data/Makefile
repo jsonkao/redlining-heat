@@ -17,13 +17,13 @@ TASK_DIR = task-exports
 
 # OSM maps
 OSM_DIR = osm-raw
-VEC_DIR = osm-topojson
-GTIFF_DIR = osm-burned
+OSM_TOPO_DIR = osm-topojson
+OSM_BURNED_DIR = osm-burned
 BASE_DIR = basemaps
 
 # GEE-derived maps
 TEMP_DIR = gee-temperatures
-REL_DIR = reliefs
+RELIEF_DIR = reliefs
 
 # Others
 HOLC_DIR = boundaries
@@ -33,7 +33,7 @@ OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[high
 
 WIDTH = 2000
 
-tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(REL_DIR)/$C-$Y.png))
+tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 all: folders tempmaps basemaps holcmaps tukeyResults.json
@@ -43,17 +43,18 @@ all: folders tempmaps basemaps holcmaps tukeyResults.json
 #
 
 # Transform temperature data into color reliefs
-$(REL_DIR)/%.png: $(TEMP_DIR)/%.tif colors.txt
+$(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif colors.txt
 	rm -f $@
 	gdaldem color-relief $< colors.txt $(patsubst %.png,%.tif,$@) -alpha
 	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
 
-# Download temperature data. Haven't figured out how to do the double wildcard on years yet
-$(TEMP_DIR)/%-2000.tif: $(VEC_DIR)/%.topojson
+# Download temperature data for 2000
+$(TEMP_DIR)/%-2000.tif: $(OSM_TOPO_DIR)/%.topojson
 	node $(SCRIPT_DIR)/download-temperatures.js $(shell jq -c '.bbox' $<) 2000 | xargs -n1 wget -O $@.zip
 	unzip -p $@.zip > $@
 	rm $@.zip
-$(TEMP_DIR)/%-2020.tif: $(VEC_DIR)/%.topojson
+# Haven't figured out how to do the double wildcard on years yet
+$(TEMP_DIR)/%-2020.tif: $(OSM_TOPO_DIR)/%.topojson
 	node $(SCRIPT_DIR)/download-temperatures.js $(shell jq -c '.bbox' $<) 2020 | xargs -n1 wget -O $@.zip
 	unzip -p $@.zip > $@
 	rm $@.zip
@@ -62,20 +63,20 @@ $(TEMP_DIR)/%-2020.tif: $(VEC_DIR)/%.topojson
 # Basemaps
 #
 
-$(BASE_DIR)/%.png: $(GTIFF_DIR)/%.tif
+$(BASE_DIR)/%.png: $(OSM_BURNED_DIR)/%.tif
 	rm -f $@
 	gdalwarp -ts $(WIDTH 0) -of PNG $< $@
 
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
 # then calculate height with that.
-$(GTIFF_DIR)/%.tif: $(VEC_DIR)/%.topojson
+$(OSM_BURNED_DIR)/%.tif: $(OSM_TOPO_DIR)/%.topojson
 	$(eval HEIGHT = $(shell jq '.bbox' $< | jq '$(WIDTH) * (.[3] - .[1]) / (.[2] - .[0])'))
 	gdal_rasterize -burn 200 -ot Byte -ts $(WIDTH) $(HEIGHT) \
 		-l lines -l polygons -a_nodata 255 $< $@
 
 # Convert to TopoJSON (NDJSON first to remove unnecessary properties).
 # Removed -clean because it takes a long time and I don't see how it makes life better
-$(VEC_DIR)/%.topojson: $(OSM_DIR)/%.osm
+$(OSM_TOPO_DIR)/%.topojson: $(OSM_DIR)/%.osm
 	$(OSMTOGEOJSON) -f osm --ndjson $< \
 	| ndjson-map 'd.properties = {highway: d.properties.tags.highway}, d' \
 	| ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' \
@@ -98,6 +99,7 @@ $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 #
 
 # TODO: Only download city if date of the .osm > date of the query (maybe w/ a flag)
+# Download OSM data for each city
 downloads: city-bbox-index.json
 	zsh $(SCRIPT_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
 
@@ -114,16 +116,16 @@ city-bbox-index.json:
 # Utilities
 #
 
-ALL_FOLDERS = $(VEC_DIR) $(GTIFF_DIR) $(TEMP_DIR) $(REL_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR)
+ALL_FOLDERS = $(OSM_TOPO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 
 clean:
 	rm -rf $(ALL_FOLDERS) tukeyResults.json
 clean_temperatures:
-	rm -rf $(TEMP_DIR) $(REL_DIR)
+	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-.PRECIOUS: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(GTIFF_DIR)/%.tif $(VEC_DIR)/%.topojson
+.PRECIOUS: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(OSM_BURNED_DIR)/%.tif $(OSM_TOPO_DIR)/%.topojson
 
 #
 # Temperature mean formatting and statistics
