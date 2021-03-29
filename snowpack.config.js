@@ -1,6 +1,11 @@
 module.exports = {
-  mount: { src: '/', data: '/'},
-  plugins: ['snowpack-plugin-posthtml', '@snowpack/plugin-sass'],
+  mount: { src: '/', data: '/', '.' : '/' },
+  plugins: ['@snowpack/plugin-sass',[
+    '@jsonkao/snowpack-plugin-posthtml',
+    {
+      root: '/src'
+    },
+  ],],
   exclude: [
     '/Users/jasonkao/Development/redlining-heat/data/**/*.{tif,topojson,osm,json,geojson}*',
     '/Users/jasonkao/Development/redlining-heat/data/scripts/*',
@@ -10,5 +15,5 @@ module.exports = {
   ],
   buildOptions: {
     metaUrlPath: 'underscore_snowpack'
-  }
+  },
 };
