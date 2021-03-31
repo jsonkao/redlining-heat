@@ -1,5 +1,9 @@
 import { intersectTop } from './scripts/utils';
 
+const cityNameMods = {
+  'Manhattan,Bronx,Queens,Brooklyn': 'New York',
+};
+
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.globEager('../data/**/*.{png,svg}');
 const [reliefs, basemaps, boundaries, charts] = [
@@ -18,7 +22,7 @@ const [reliefs, basemaps, boundaries, charts] = [
 
 const cities = [...new Set(Object.keys(reliefs).map(f => f.split('-')[0]))];
 const map = document.getElementById('map');
-const variableCityName = document.getElementById('variable-city');
+const variableCitySpans = document.getElementsByClassName('variable-city');
 
 /* Dropdown setup */
 
@@ -31,17 +35,23 @@ const yearSelector = document.getElementById('year-select');
   options.forEach(value => {
     const option = document.createElement('option');
     option.value = value;
-    option.innerHTML = ('' + value).replace('_', ' ');
+    option.innerHTML = getName(value);
     selector.append(option);
   });
 });
+
+// Get pretty name from a city value
+function getName(rawValue) {
+  const value = ('' + rawValue).replace('_', ' ');
+  return cityNameMods[value] || value;
+}
 
 /* Primary change function */
 
 function setCity(city, year) {
   setCityMap(city, year);
   setCityChart(city);
-  variableCityName.innerHTML = city.replace('_', ' ');
+  for (const el of variableCitySpans) el.innerHTML = getName(city);
 }
 
 // Just change the temperature layer of the current map

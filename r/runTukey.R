@@ -33,7 +33,7 @@ runTukey <- function(arg) {
       filter(if (arg == WILDCARD) T else city %in% strsplit(arg, ',')[[1]]) %>%
       filter(!is.na(temperature)) %>%
       mutate(city = arg)
-    print(head(filteredData))
+
     if (nrow(filteredData) == 0)
       next
     tky <- as.data.frame(TukeyHSD(aov(

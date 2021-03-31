@@ -20,7 +20,7 @@
           },
           {
             "type": "text",
-            "value": "The temperature distribution in <span id=\"variable-city\"></span> by HOLC grade is visualized in the density plot below."
+            "value": "The temperature distribution in <span class=\"variable-city\"></span> by HOLC grade is visualized in the density plot below."
           },
           {
             "type": "text",
@@ -28,7 +28,7 @@
           },
           {
             "type": "text",
-            "value": "After running Tukey’s Test at a 95% confidence interval for <span id=\"variable-city\"></span>, we can observe in both years which HOLC grades’ neighborhoods were significantly cooler or hotter than neighborhoods in other grades."
+            "value": "After running Tukey’s Test at a 95% confidence interval for <span class=\"variable-city\"></span>, we can observe in both years which HOLC grades’ neighborhoods were significantly cooler or hotter than neighborhoods in other grades."
           },
           {
             "type": "html",
