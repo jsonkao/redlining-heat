@@ -36,29 +36,26 @@ function retrieveTemperatures(bbox, boundary, year) {
     .filterDate(year + '-06-01', year + '-08-31')
     .map(function (image) {
       var bqa = getQABits(image.select('BQA'), 4, 4, 'cloud');
-      var imageWithArea = image.set({
-        cloudArea: bqa
-          .reduceRegion({
-            reducer: ee.Reducer.sum(),
-            geometry: boundary,
-            scale: 30,
-          })
-          .get('cloud'),
-        area: bqa
-          .reduceRegion({
-            reducer: ee.Reducer.count(),
-            geometry: boundary,
-            scale: 30,
-          })
-          .get('cloud'),
+      var reducers = ee.Reducer.sum().combine({
+        reducer2: ee.Reducer.count(),
+        sharedInputs: true,
       });
-      return imageWithArea.set({
+      var stats = bqa.reduceRegion({
+        reducer: reducers,
+        geometry: holc_vectors.filterBounds(
+          ee.Geometry.Polygon(
+            ee.Geometry(image.get('system:footprint')).coordinates(),
+          ),
+        ),
+        scale: 30,
+      });
+      return image.set({
         proportionCloud: ee
-          .Number(imageWithArea.get('cloudArea'))
-          .divide(ee.Number(imageWithArea.get('area'))),
+          .Number(stats.get('cloud_count'))
+          .divide(ee.Number(stats.get('cloud_sum'))),
       });
     })
-    .filter(ee.Filter.lte('proportionCloud', 0.4));
+    .filter(ee.Filter.lte('proportionCloud', 0.3));
   console.error(filtered.size().getInfo());
   return filtered
     .map(image =>
