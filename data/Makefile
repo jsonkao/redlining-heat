@@ -1,7 +1,7 @@
 MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco Manhattan,Bronx,Queens,Brooklyn hi,hi
+CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco Manhattan,Bronx,Queens,Brooklyn
 YEARS = 2000 2020
 
 SHAPEFILE = holc-shapefile/holc_ad_data.shp
@@ -35,6 +35,7 @@ OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[high
 WIDTH = 2000
 
 tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
+tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 all: folders tempmaps basemaps holcmaps tukeyResults.json
@@ -55,14 +56,14 @@ $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif city-boundaries.json
 
 # Download temperature data for 2000
 $(TEMP_DIR)/%-2000.tif: $(OSM_TOPO_DIR)/%.topojson
-	node $(SCRIPT_DIR)/download-temperatures.js $^ city-boundaries.json 2000 \
+	node $(SCRIPT_DIR)/download-temperatures.js $^ city-bbox-index.json city-boundaries.json 2000 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
 
 # Haven't figured out how to do the double wildcard on years yet
 $(TEMP_DIR)/%-2020.tif: $(OSM_TOPO_DIR)/%.topojson
-	node $(SCRIPT_DIR)/download-temperatures.js $^ city-boundaries.json 2020 \
+	node $(SCRIPT_DIR)/download-temperatures.js $^ city-bbox-index.json city-boundaries.json 2020 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
@@ -147,7 +148,7 @@ city-boundaries.json:
 # Utilities
 #
 
-ALL_FOLDERS = $(OSM_TOPO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR)
+ALL_FOLDERS = $(OSM_TOPO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 
@@ -156,7 +157,7 @@ clean:
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-keep: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(OSM_BURNED_DIR)/%.tif $(OSM_TOPO_DIR)/%.topojson $(COLOR_DIR)/%.txt
+keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_TOPO_DIR)/%.topojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt))
 
 #
 # Temperature mean formatting and statistics
