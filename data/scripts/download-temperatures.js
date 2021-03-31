@@ -78,7 +78,7 @@ function main() {
   const bbox = ee.Geometry.Rectangle(topoFile.bbox);
   const boundary = ee.Geometry.MultiPolygon(
     boundariesFile.features.filter(
-      f => f.properties.city === path.basename(topoFileName, '.topojson'),
+      f => f.properties.city === path.basename(topoFileName, '.topojson').replace('_', ' '),
     )[0].geometry.coordinates,
   );
 

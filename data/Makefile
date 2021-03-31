@@ -54,16 +54,18 @@ $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif city-boundaries.json
 	python3 $(SCRIPT_DIR)/create-color-config.py $^ > $@
 
 # Download temperature data for 2000
-$(TEMP_DIR)/%-2000.tif: $(OSM_TOPO_DIR)/%.topojson city-boundaries.json
-	node $(SCRIPT_DIR)/download-temperatures.js $^ 2020 | xargs -n1 wget -O $@.zip
-	unzip -p $@.zip > $@
-	rm $@.zip
+$(TEMP_DIR)/%-2000.tif: $(OSM_TOPO_DIR)/%.topojson
+	node $(SCRIPT_DIR)/download-temperatures.js $^ city-boundaries.json 2000 \
+	| xargs -n1 wget -O $@.zip \
+	&& unzip -p $@.zip > $@ \
+	&& rm $@.zip
 
 # Haven't figured out how to do the double wildcard on years yet
-$(TEMP_DIR)/%-2020.tif: $(OSM_TOPO_DIR)/%.topojson city-boundaries.json
-	node $(SCRIPT_DIR)/download-temperatures.js $^ 2000 | xargs -n1 wget -O $@.zip
-	unzip -p $@.zip > $@
-	rm $@.zip
+$(TEMP_DIR)/%-2020.tif: $(OSM_TOPO_DIR)/%.topojson
+	node $(SCRIPT_DIR)/download-temperatures.js $^ city-boundaries.json 2020 \
+	| xargs -n1 wget -O $@.zip \
+	&& unzip -p $@.zip > $@ \
+	&& rm $@.zip
 
 #
 # Basemaps
@@ -138,6 +140,7 @@ city-boundaries.json:
 		$(foreach c, $(call FILTER_LIST,$(comma), $(CITIES)), $(subst CITY,$(c),-each \"city=\'CITY\'.includes\(city\)?\'CITY\':city\")) \
 		-dissolve city \
 		-clean \
+		-drop holes \
 		-o $@)
 
 #
@@ -153,7 +156,7 @@ clean:
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-.PRECIOUS: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(OSM_BURNED_DIR)/%.tif $(OSM_TOPO_DIR)/%.topojson $(COLOR_DIR)/%.txt
+keep: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(OSM_BURNED_DIR)/%.tif $(OSM_TOPO_DIR)/%.topojson $(COLOR_DIR)/%.txt
 
 #
 # Temperature mean formatting and statistics
