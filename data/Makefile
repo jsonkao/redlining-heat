@@ -46,10 +46,13 @@ all: folders tempmaps basemaps holcmaps tukeyResults.json
 # Transform temperature data into color reliefs
 $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 	rm -f $@
-	gdaldem color-relief $< colors.txt $(patsubst %.png,%.tif,$@) -alpha
+	gdaldem color-relief $^ $(patsubst %.png,%.tif,$@) -alpha
 	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
 
 # Design color scheme for tif
+$(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif city-boundaries.json
+	python3 $(SCRIPT_DIR)/create-color-config.py $^ > $@
+
 # Download temperature data for 2000
 $(TEMP_DIR)/%-2000.tif: $(OSM_TOPO_DIR)/%.topojson city-boundaries.json
 	node $(SCRIPT_DIR)/download-temperatures.js $^ 2020 | xargs -n1 wget -O $@.zip
@@ -130,7 +133,7 @@ city-areas.json: $(TASK_DIR)/cityPixelCounts.geojson
 # $(TASK_DIR)/cityPixelCounts.geojson: EXPORTED FROM GEE
 
 # Boundaries file uploaded to GEE
-city-boundaries.json: Makefile
+city-boundaries.json:
 	$(shell mapshaper $(SHAPEFILE) \
 		$(foreach c, $(call FILTER_LIST,$(comma), $(CITIES)), $(subst CITY,$(c),-each \"city=\'CITY\'.includes\(city\)?\'CITY\':city\")) \
 		-dissolve city \
@@ -150,7 +153,7 @@ clean:
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-.PRECIOUS: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(OSM_BURNED_DIR)/%.tif $(OSM_TOPO_DIR)/%.topojson
+.PRECIOUS: $(TEMP_DIR)/%-2000.tif $(TEMP_DIR)/%-2020.tif $(OSM_BURNED_DIR)/%.tif $(OSM_TOPO_DIR)/%.topojson $(COLOR_DIR)/%.txt
 
 #
 # Temperature mean formatting and statistics
