@@ -51,8 +51,8 @@ function retrieveTemperatures(bbox, boundary, year) {
       });
       return image.set({
         proportionCloud: ee
-          .Number(stats.get('cloud_count'))
-          .divide(ee.Number(stats.get('cloud_sum'))),
+          .Number(stats.get('cloud_sum'))
+          .divide(ee.Number(stats.get('cloud_count'))),
       });
     })
     .filter(ee.Filter.lte('proportionCloud', 0.3));
