@@ -26,7 +26,7 @@ function getQABits(image, start, end, newName) {
 
 // Filter images by time and cloud cover
 // Map LST computation across images. Take the mean for overlaps
-function retrieveTemperatures(bbox, boundary, year) {
+function retrieveTemperatures(bbox, boundary, year, city) {
   const [collection, lst_calc] = {
     2020: [ee.ImageCollection('LANDSAT/LC08/C01/T1'), geet.lst_calc_ls8],
     2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), geet.lst_calc_ls7],
@@ -42,11 +42,14 @@ function retrieveTemperatures(bbox, boundary, year) {
       });
       var stats = bqa.reduceRegion({
         reducer: reducers,
+        geometry: boundary,
+        /* THE BELOW APPLIES TO NATION-WIDE TEMPERATURE RETRIEVAL
         geometry: holc_vectors.filterBounds(
           ee.Geometry.Polygon(
             ee.Geometry(image.get('system:footprint')).coordinates(),
           ),
         ),
+        */
         scale: 30,
       });
       return image.set({
@@ -55,8 +58,8 @@ function retrieveTemperatures(bbox, boundary, year) {
           .divide(ee.Number(stats.get('cloud_count'))),
       });
     })
-    .filter(ee.Filter.lte('proportionCloud', 0.3));
-  console.error(filtered.size().getInfo());
+    .filter(ee.Filter.lte('proportionCloud', 0.4));
+  console.error(city, year, filtered.size().getInfo());
   return filtered
     .map(image =>
       lst_calc(image)

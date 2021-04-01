@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const ee = require('@google/earthengine');
-const { makeRun, retrieveTemperatures } = require('./utils.js');
+const { run, retrieveTemperatures } = require('./utils.js');
 
 function main() {
   const topoFileName = './' + process.argv[2];
@@ -15,7 +15,7 @@ function main() {
   );
   const year = process.argv[5];
 
-  const temporalTemperatures = retrieveTemperatures(bbox, boundary, year);
+  const temporalTemperatures = retrieveTemperatures(bbox, boundary, year, city);
 
   // Mask the image
   var mask = ee
@@ -32,4 +32,4 @@ function main() {
   );
 }
 
-makeRun(main)
+run(main)
