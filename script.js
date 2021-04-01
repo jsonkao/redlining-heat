@@ -318,7 +318,7 @@ yearSelector.addEventListener('change', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-  citySelector.value = 'Baltimore';
+  citySelector.value = 'New York';
   yearSelector.value = 2020;
   citySelector.dispatchEvent(new Event('change'));
 
