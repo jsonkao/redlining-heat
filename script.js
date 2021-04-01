@@ -111,8 +111,6 @@ import * as __glob__0_109 from './reliefs/St._Louis-2020.png.proxy.js';
 import * as __SNOWPACK_ENV__ from './underscore_snowpack/env.js';
 import.meta.env = __SNOWPACK_ENV__;
 
-import { intersectTop } from './scripts/utils.js';
-
 const cityNameMods = {
   'Manhattan,Bronx,Queens,Brooklyn': 'New York',
 };
@@ -288,7 +286,7 @@ function setYear(year) {
 function setCityMap(city, year) {
   const [boundarySvg, basemapImg, reliefImg] = map.children;
   const boundaryImg = document.createElement('img');
-  boundaryImg.setAttribute('onload', 'SVGInject(this)');
+  boundaryImg.setAttribute('onload', 'SVGInject(this, {makeIdsUnique: false})');
   boundaryImg.src = boundaries[city];
   // SVGInject(boundaryImg);
   map.replaceChild(boundaryImg, boundarySvg);
@@ -348,3 +346,52 @@ intersectTop({
     topIntersect.style.height = selectorsTop;
   },
 });
+
+function intersectTop({ node, onEnter, onExit }) {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      const {
+        isIntersecting,
+        boundingClientRect: { top },
+      } = entry;
+      if (!isIntersecting && top < 0) {
+        // Enter at the top
+        onEnter();
+      } else if (isIntersecting && top < window.innerHeight / 2) {
+        // Exit from the top
+        onExit();
+      }
+    },
+    { threshold: 1 },
+  );
+  observer.observe(node);
+}
+
+/* Layer selection */
+
+const gradeState = {
+  A: false,
+  B: false,
+  C: false,
+  D: false,
+};
+
+const layeringStyles = document.getElementById('layering');
+
+const gradeOptions = document.getElementById('grade-options');
+for (const choice of gradeOptions.children) {
+  choice.onclick = () => toggleGrade(choice);
+  if ('AD'.includes(choice.innerHTML)) toggleGrade(choice);
+}
+
+function toggleGrade(div) {
+  const grade = div.innerHTML;
+  gradeState[grade] = !gradeState[grade];
+  div.classList.toggle('checked');
+  div.classList.toggle('grade-' + grade.toLowerCase());
+
+  layeringStyles.innerHTML = Object.keys(gradeState)
+    .filter(g => gradeState[g])
+    .map(g => `g#${g}{opacity:1;}`)
+    .join('');
+}

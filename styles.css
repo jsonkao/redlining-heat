@@ -433,13 +433,14 @@ header .inline-credits {
 }
 
 #map-container {
-  margin: 30px 0;
+  position: relative;
 }
 
 #selectors {
   display: flex;
   justify-content: center;
   top: 13px;
+  pointer-events: none;
 }
 
 #selectors.fixed {
@@ -449,6 +450,7 @@ header .inline-credits {
 }
 
 #select-wrap {
+  pointer-events: all;
   display: inline-block;
   position: relative;
   height: 20px;
@@ -520,24 +522,41 @@ select {
   vector-effect: non-scaling-stroke;
 }
 
-path[data-holc_grade=A], .grade-a {
+g#A path {
   stroke: #49a149;
+}
+
+.grade-a {
   background: #49a149;
 }
 
-path[data-holc_grade=B], .grade-b {
+g#B path {
   stroke: #7cb5bd;
+}
+
+.grade-b {
   background: #7cb5bd;
 }
 
-path[data-holc_grade=C], .grade-c {
+g#C path {
   stroke: #ffff00;
+}
+
+.grade-c {
   background: #ffff00;
 }
 
-path[data-holc_grade=D], .grade-d {
+g#D path {
   stroke: #cf1414;
+}
+
+.grade-d {
   background: #cf1414;
+}
+
+g {
+  opacity: 0;
+  transition-duration: 0.2s;
 }
 
 span[class^=grade-] {
@@ -573,4 +592,34 @@ hr {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-family: Graphik, helvetica, arial, sans-serif;
+}
+
+#map-container #grade-selector {
+  position: sticky;
+  display: inline-flex;
+  align-items: center;
+  top: 13px;
+  left: 13px;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+#map-container #grade-selector p {
+  margin: 0;
+  font-family: Graphik, helvetica, arial, sans-serif;
+  font-size: 16px;
+  padding: 0 10px;
+}
+#map-container #grade-selector #grade-options {
+  display: inline-flex;
+}
+#map-container #grade-selector #grade-options div {
+  padding: 8px 10px;
+  margin: 0;
+  font-family: Graphik, helvetica, arial, sans-serif;
+  font-size: 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  border-left: 1px solid #fff;
+  transition-duration: 0.2s;
 }
