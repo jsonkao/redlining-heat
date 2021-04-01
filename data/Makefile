@@ -1,27 +1,36 @@
 MAKEFLAGS += -j4
 
-# Cities to generate maps/data for. Replaces any spaces in city names with underscore.
-CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco Manhattan,Bronx,Queens,Brooklyn
+#
+# PARAMETERS
+#
+
+# Cities to generate maps/data for. Replace any spaces in city names with underscore. To group cities, use commas.
+CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
+	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco \
+	Manhattan,Bronx,Queens,Brooklyn
+
+# Years to generate temperature maps for
 YEARS = 2000 2020
 
-SHAPEFILE = holc-shapefile/holc_ad_data.shp
-OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
+# Width of PNG assets
+WIDTH = 2000
 
+OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 #
-# Directories
+# Directories and filename constants
 #
 
 SCRIPT_DIR = scripts
 TASK_DIR = task-exports
 
-# OSM maps
+# Basemaps and OSM data
 OSM_DIR = osm-raw
 OSM_TOPO_DIR = osm-topojson
 OSM_BURNED_DIR = osm-burned
 BASE_DIR = basemaps
 
-# GEE-derived maps
+# Reliefs and temperature data
 TEMP_DIR = gee-temperatures
 COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
@@ -29,10 +38,9 @@ RELIEF_DIR = reliefs
 # Others
 HOLC_DIR = boundaries
 CHART_DIR = charts
+SHAPEFILE = holc-shapefile/holc_ad_data.shp
+OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
 
-OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
-
-WIDTH = 2000
 
 tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
 tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
@@ -60,7 +68,6 @@ $(TEMP_DIR)/%-2000.tif: $(OSM_TOPO_DIR)/%.topojson
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-
 # Haven't figured out how to do the double wildcard on years yet
 $(TEMP_DIR)/%-2020.tif: $(OSM_TOPO_DIR)/%.topojson
 	node $(SCRIPT_DIR)/download-temperatures.js $^ city-bbox-index.json city-boundaries.json 2020 \
@@ -107,12 +114,15 @@ $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 # Downloading OSM data for each city
 #
 
-# TODO: Only download city if date of the .osm > date of the query (maybe w/ a flag)
 # Download OSM data for each city
 downloads: city-bbox-index.json
-	zsh $(SCRIPT_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) Manhattan,Bronx,Queens,Brooklyn
-	# $(CITIES)
+	zsh $(SCRIPT_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
 
+#
+# Useful reference files
+#
+
+# The bbox of each city is used to download temperature and OSM data
 city-bbox-index.json:
 	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='tmp'
 	rm *.tmp
@@ -123,9 +133,6 @@ city-bbox-index.json:
 	> $@
 	rm bbox-index.json
 
-comma := ,
-FILTER_LIST = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
-
 city-areas.json: $(TASK_DIR)/cityPixelCounts.geojson
 	cat $< \
 	| ndjson-split 'd.features' \
@@ -135,7 +142,13 @@ city-areas.json: $(TASK_DIR)/cityPixelCounts.geojson
 
 # $(TASK_DIR)/cityPixelCounts.geojson: EXPORTED FROM GEE
 
-# Boundaries file uploaded to GEE
+comma := ,
+FILTER_LIST = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
+
+# Boundaries file used to compute cloud covers.
+# I filter all cities for those with commas in them, and assign the city of any
+# polygons within those cities to be the comma-connected conglomerate.
+# I dissolve each city into one boundary and drop any holes to prevent GDAL errors.
 city-boundaries.json:
 	$(shell mapshaper $(SHAPEFILE) \
 		$(foreach c, $(call FILTER_LIST,$(comma), $(CITIES)), $(subst CITY,$(c),-each \"city=\'CITY\'.includes\(city\)?\'CITY\':city\")) \
@@ -165,7 +178,7 @@ keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CI
 
 tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) tukeyResults.json
 
-tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) Makefile ../r/runTukey.r
+tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) ../r/runTukey.r
 	Rscript ../r/runTukey.r $(CITIES) nation | jq '.' > $@
 
 $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
