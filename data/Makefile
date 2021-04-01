@@ -133,15 +133,6 @@ city-bbox-index.json:
 	> $@
 	rm bbox-index.json
 
-city-areas.json: $(TASK_DIR)/cityPixelCounts.geojson
-	cat $< \
-	| ndjson-split 'd.features' \
-	| ndjson-map 'd.properties' \
-	| ndjson-reduce 'p[d.city] = d.count, p' '{}' \
-	> $@
-
-# $(TASK_DIR)/cityPixelCounts.geojson: EXPORTED FROM GEE
-
 comma := ,
 FILTER_LIST = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
 
