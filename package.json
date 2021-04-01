@@ -20,7 +20,7 @@
   "dependencies": {
     "@google/earthengine": "^0.1.257",
     "intersection-observer": "^0.10.0",
-    "snowpack": "file:../snowpack/snowpack"
+    "snowpack": "^3.2.1"
   },
   "browserslist": [
     "defaults"
