@@ -94,7 +94,7 @@ yearSelector.addEventListener('change', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-  citySelector.value = 'Baltimore';
+  citySelector.value = 'Manhattan,Bronx,Queens,Brooklyn';
   yearSelector.value = 2020;
   citySelector.dispatchEvent(new Event('change'));
 

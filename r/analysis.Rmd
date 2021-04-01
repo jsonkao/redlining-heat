@@ -8,6 +8,7 @@ library(foreign)
 library(jsonlite)
 library(dplyr)
 library(ggplot2)
+library(cowplot)
 ```
 
 ## Read in data
@@ -38,10 +39,18 @@ data %>% ggplot(aes(temperature)) +
 TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(year == 2020)))
 ```
 
+```{r}
+southernCities <- strsplit("Birmingham,Mobile,Montgomery,Little Rock,Jacksonville,Miami,St. Petersburg,Tampa,Atlanta,Augusta,Columbus,Macon,Savannah,Evansville,Wichita,Lexington,Louisville,New Orleans,Shreveport,Springfield,Jackson,Asheville,Charlotte,Durham,Greensboro,Winston-Salem,Oklahoma City,Tulsa,Columbia,Chattanooga,Knoxville,Memphis,Nashville,Austin,Beaumont,Dallas,Fort Worth,Galveston,Houston,Port Arthur,San Antonio,Waco,Lynchburg,Newport News,Norfolk,Richmond,Roanoke,Charleston", ",")[[1]]
+
+filteredData <- data %>% filter(city %in% southernCities)
+
+plot(TukeyHSD(aov(temperature ~ holc_grade, data = filteredData)), las = 1, tcl = -.4)
+```
+
 
 ```{r}
-plot(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago'))), las = 1, tcl = -.4)
-tky = as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(city == 'Chicago')))$holc_grade)
+plot(TukeyHSD(aov(temperature ~ holc_grade, data = filteredData)), las = 1, tcl = -.4)
+tky = as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = filteredData))$holc_grade)
 tky$pair = rownames(tky)
 
 # Plot pairwise TukeyHSD comparisons and color by significance level
@@ -54,6 +63,8 @@ tkyPlot <- ggplot(tky, aes(colour=cut(`p adj`, c(0, 0.01, 0.05, 1),
   coord_flip() +
   theme_minimal_vgrid(12) +
   labs(y = 'Difference in temperature', x = 'Pair')
+tkyPlot
+
 ggsave(
   'test.png',
   plot,
