@@ -1,13 +1,14 @@
 @import "./styles/spectate";
 
 #map-container {
-  margin: 30px 0;
+  position: relative;
 }
 
 #selectors {
   display: flex;
   justify-content: center;
   top: 13px;
+  pointer-events: none;
 }
 
 #selectors.fixed {
@@ -17,6 +18,7 @@
 }
 
 #select-wrap {
+  pointer-events: all;
   display: inline-block;
   position: relative;
   height: 20px;
@@ -95,21 +97,37 @@ select {
   }
 }
 
-path[data-holc_grade="A"], .grade-a {
-  stroke: rgb(73, 161, 73);
-  background: rgb(73, 161, 73);
+$a: rgb(73, 161, 73);
+$b: #7cb5bd;
+$c: #ffff00;
+$d: rgb(207, 20, 20);
+g#A path {
+  stroke: $a;
 }
-path[data-holc_grade="B"], .grade-b {
-  stroke: #7cb5bd;
-  background: #7cb5bd;
+.grade-a {
+  background: $a;
 }
-path[data-holc_grade="C"], .grade-c {
-  stroke: #ffff00;
-  background: #ffff00;
+g#B path {
+  stroke: $b;
 }
-path[data-holc_grade="D"], .grade-d {
-  stroke: rgb(207, 20, 20);
-  background: rgb(207, 20, 20);
+.grade-b {
+  background: $b;
+}
+g#C path {
+  stroke: $c;
+}
+.grade-c {
+  background: $c;
+}
+g#D path {
+  stroke: $d;
+}
+.grade-d {
+  background: $d;
+}
+g {
+  opacity: 0;
+  transition-duration: .2s;
 }
 
 span[class^="grade-"] {
@@ -145,4 +163,38 @@ hr {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-family: $graphik;
+}
+
+#map-container #grade-selector {
+  position: sticky;
+  display: inline-flex;
+  align-items: center;
+  top: 13px;
+  left: 13px;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 30%);
+  z-index: 999;
+
+  p {
+    margin: 0;
+    font-family: $graphik;
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  #grade-options {
+    display: inline-flex;
+    div {
+      padding: 8px 10px;
+      margin: 0;
+      font-family: $graphik;
+      font-size: 18px;
+      border-radius: 2px;
+      cursor: pointer;
+      border-left: 1px solid #fff;
+      transition-duration: .2s;
+      &.checked {
+      }
+    }
+  }
 }

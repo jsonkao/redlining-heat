@@ -105,10 +105,11 @@ $(OSM_TOPO_DIR)/%.topojson: $(OSM_DIR)/%.osm
 # HOLC vector layer
 #
 
-$(HOLC_DIR)/%.svg: $(SHAPEFILE)
+$(HOLC_DIR)/%.svg: $(SHAPEFILE) Makefile
 	mapshaper $< \
 	-filter '("$(notdir $(basename $@))".split(",").map(c => c.replace("_", " ")).includes(city)) && holc_grade != "E"' \
-	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1
+	-split holc_grade \
+	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1 target=*
 
 #
 # Downloading OSM data for each city
