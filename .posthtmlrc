@@ -62,7 +62,7 @@
         "headline": "Redlining’s Legacy in Heat Inequality: Exploratory Page",
         "date": "March 25, 2021",
         "byline": "Jason Kao",
-        "footer": "",
+        "footer": "Code to reproduce data and visualizations is on <a href=\"https://github.com/jsonkao/redlining-heat\">GitHub</a>.",
         "USE_NEWS_NAV": true,
         "USE_EYE_NAV": false,
         "USE_COVER_HED": false,
