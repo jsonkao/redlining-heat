@@ -603,6 +603,8 @@ hr {
   background-color: white;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   z-index: 999;
+  opacity: 0;
+  transition-duration: 0.2s;
 }
 #map-container #grade-selector p {
   margin: 0;
@@ -622,4 +624,7 @@ hr {
   cursor: pointer;
   border-left: 1px solid #fff;
   transition-duration: 0.2s;
+}
+#map-container #grade-selector.visible {
+  opacity: 1;
 }
