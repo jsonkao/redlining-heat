@@ -110,16 +110,20 @@ const selectors = document.getElementById('selectors');
 const topIntersect = document.getElementById('top-intersect');
 const selectorsTop = window.getComputedStyle(selectors).top;
 topIntersect.style.height = selectorsTop;
+const gradeSelector = document.getElementById('grade-selector');
+
 intersectTop({
   node: topIntersect,
   onEnter: () => {
     selectors.classList.add('fixed');
     const { height, top } = selectors.getBoundingClientRect();
     topIntersect.style.height = height + top + 'px';
+    gradeSelector.classList.add('visible');
   },
   onExit: () => {
     selectors.classList.remove('fixed');
     topIntersect.style.height = selectorsTop;
+    gradeSelector.classList.remove('visible');
   },
 });
 
