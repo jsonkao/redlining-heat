@@ -5,9 +5,7 @@ Convert OSM style XML into GeoJSON
 import json
 import sys
 
-sys.stdout.write(
-    '{"type":"FeatureCollection","features":['
-)
+sys.stdout.write('{"type":"FeatureCollection","features":[')
 
 with open(sys.argv[1]) as f:
     # Skip irrelevant metadata lines
