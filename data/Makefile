@@ -14,9 +14,11 @@ CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Aus
 YEARS = 2000 2020
 
 # Width of PNG assets
-WIDTH = 2000
+WIDTH = 3000
 
-OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox][maxsize:2000000000]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
+HEADER = [bbox]
+# HEADER += [maxsize:2000000000] # Use this if necessary
+OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=$(HEADER)\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 #
 # Directories and filename constants
