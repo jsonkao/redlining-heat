@@ -13,6 +13,7 @@ module.exports = {
     '/Users/jasonkao/Development/redlining-heat/data/scripts/*',
     '/Users/jasonkao/Development/redlining-heat/data/holc-shapefile/*',
     '/Users/jasonkao/Development/redlining-heat/data/Makefile',
+    '/Users/jasonkao/Development/redlining-heat/LICENSE',
     '/Users/jasonkao/Development/redlining-heat/src/partials/*.html',
   ],
   buildOptions: {
