@@ -167,13 +167,12 @@ keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CI
 # Temperature mean formatting and statistics
 #
 
+charts: folders $(CITIES:%=$(CHART_DIR)/%.png) $(CHART_DIR)/nation.png
+
 tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) tukeyResults.json
 
-tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) ../r/runTukey.r
-	Rscript ../r/runTukey.r $(CITIES) nation | jq '.' > $@
-
-$(CHART_DIR)/%.png: ../r/runTukey.r
-	Rscript ../r/runTukey.r $(notdir $(basename $@))
+$(CHART_DIR)/%.png:
+	Rscript ../r/runTukey.r $(notdir $(basename $@)) > /dev/null
 
 $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	cat $< \

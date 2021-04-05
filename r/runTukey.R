@@ -106,7 +106,7 @@ runTukey <- function(arg) {
     height = 4.5,
     units = 'in'
   )
-  write(paste("Completed", arg), stderr())
+
   output
 }
 
