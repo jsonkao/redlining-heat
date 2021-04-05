@@ -23,6 +23,7 @@ geojson = {
         {
             "type": "Feature",
             "geometry": get_geom(way),
+            "properties": way["tags"],
         }
         for way in elements
     ],

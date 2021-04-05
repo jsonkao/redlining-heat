@@ -7,7 +7,8 @@ MAKEFLAGS += -j4
 # Cities to generate maps/data for. Replace any spaces in city names with underscore. To group cities, use commas.
 CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
 	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco \
-	Manhattan,Bronx,Queens,Brooklyn
+	Manhattan,Bronx,Queens,Brooklyn \
+	Los_Angeles
 
 # Years to generate temperature maps for
 YEARS = 2000 2020
@@ -15,7 +16,7 @@ YEARS = 2000 2020
 # Width of PNG assets
 WIDTH = 2000
 
-OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
+OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=[bbox][maxsize:2000000000]\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 #
 # Directories and filename constants
@@ -63,14 +64,14 @@ $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif city-boundaries.json
 	python3 $(SCRIPT_DIR)/create-color-config.py $^ > $@
 
 # Download temperature data for 2000
-$(TEMP_DIR)/%-2000.tif: $(OSM_TOPO_DIR)/%.topojson
-	node $(SCRIPT_DIR)/download-temperatures.js $^ city-bbox-index.json city-boundaries.json 2000 \
+$(TEMP_DIR)/%-2000.tif:
+	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 2000 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
 # Haven't figured out how to do the double wildcard on years yet
-$(TEMP_DIR)/%-2020.tif: $(OSM_TOPO_DIR)/%.topojson
-	node $(SCRIPT_DIR)/download-temperatures.js $^ city-bbox-index.json city-boundaries.json 2020 \
+$(TEMP_DIR)/%-2020.tif:
+	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 2020 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
@@ -93,9 +94,7 @@ $(OSM_BURNED_DIR)/%.tif: $(OSM_TOPO_DIR)/%.topojson
 # Convert to TopoJSON (NDJSON first to remove unnecessary properties).
 # Removed -clean because it takes a long time and I don't see how it makes life better
 $(OSM_TOPO_DIR)/%.topojson: $(OSM_DIR)/%.osm
-	$(OSMTOGEOJSON) -f osm --ndjson $< \
-	| ndjson-map 'd.properties = {highway: d.properties.tags.highway}, d' \
-	| ndjson-reduce 'p.features.push(d), p' '{type: "FeatureCollection", features: []}' \
+	python3 $(SCRIPT_DIR)/xml2geojson.py $< \
 	| mapshaper-xl - \
 	-rename-layers lines,polygons \
 	-clip bbox=$(shell jq -r ".\"$(subst _, ,$(notdir $(basename $<))\" | join(\",\"))" city-bbox-index.json) \
@@ -105,7 +104,7 @@ $(OSM_TOPO_DIR)/%.topojson: $(OSM_DIR)/%.osm
 # HOLC vector layer
 #
 
-$(HOLC_DIR)/%.svg: $(SHAPEFILE) Makefile
+$(HOLC_DIR)/%.svg: $(SHAPEFILE)
 	mapshaper $< \
 	-filter '("$(notdir $(basename $@))".split(",").map(c => c.replace("_", " ")).includes(city)) && holc_grade != "E"' \
 	-split holc_grade \
