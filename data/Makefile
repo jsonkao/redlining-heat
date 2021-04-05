@@ -172,6 +172,9 @@ tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) tukeyResults.json
 tukeyResults.json: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) ../r/runTukey.r
 	Rscript ../r/runTukey.r $(CITIES) nation | jq '.' > $@
 
+$(CHART_DIR)/%.png: ../r/runTukey.r
+	Rscript ../r/runTukey.r $(notdir $(basename $@))
+
 $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	cat $< \
 	| ndjson-split 'd.features' \
