@@ -26,7 +26,7 @@ function main() {
   // Output download URL
   console.log(
     temporalTemperatures.mask(mask).getDownloadURL({
-      scale: 30,
+      scale: city === 'Los Angeles' ? 45 : 30,
       region: bbox,
     }),
   );
