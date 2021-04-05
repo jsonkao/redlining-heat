@@ -12,6 +12,26 @@ function run(fn) {
   });
 }
 
+function lst_calc_ls7(image) {
+  var toa = geet.toa_radiance(image, 6);
+  var ndvi = geet.ndvi_l7(toa);
+  var bt = geet.brightness_temp_l7c(ndvi, true);
+  var propVeg = geet.prop_veg(bt);
+  var lse = geet.surface_emissivity(propVeg);
+  var lst = geet.surface_temperature_tm(lse);
+  return lst;
+}
+
+function lst_calc_ls8(image) {
+  var toa = geet.toa_radiance(image, 10);
+  var ndvi = geet.ndvi_l8(toa);
+  var bt = geet.brightness_temp_l8c(ndvi, true);
+  var propVeg = geet.prop_veg(bt);
+  var lse = geet.surface_emissivity(propVeg);
+  var lst = geet.surface_temperature_tm(lse);
+  return lst;
+}
+
 // Get bits in BQA band
 function getQABits(image, start, end, newName) {
   // Compute the bits we need to extract.
@@ -28,8 +48,8 @@ function getQABits(image, start, end, newName) {
 // Map LST computation across images. Take the mean for overlaps
 function retrieveTemperatures(bbox, boundary, year, city) {
   const [collection, lst_calc] = {
-    2020: [ee.ImageCollection('LANDSAT/LC08/C01/T1'), geet.lst_calc_ls8],
-    2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), geet.lst_calc_ls7],
+    2020: [ee.ImageCollection('LANDSAT/LC08/C01/T1'), lst_calc_ls8],
+    2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), lst_calc_ls7],
   }[year];
   const filtered = collection
     .filterBounds(bbox)
