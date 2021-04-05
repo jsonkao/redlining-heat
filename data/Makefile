@@ -27,7 +27,7 @@ TASK_DIR = task-exports
 
 # Basemaps and OSM data
 OSM_DIR = osm-raw
-OSM_TOPO_DIR = osm-topojson
+OSM_GEO_DIR = osm-geojson
 OSM_BURNED_DIR = osm-burned
 BASE_DIR = basemaps
 
@@ -82,23 +82,21 @@ $(TEMP_DIR)/%-2020.tif:
 
 $(BASE_DIR)/%.png: $(OSM_BURNED_DIR)/%.tif
 	rm -f $@
-	gdalwarp -ts $(WIDTH 0) -of PNG $< $@
+	gdalwarp -ts $(WIDTH) 0 -of PNG $< $@
 
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
 # then calculate height with that.
-$(OSM_BURNED_DIR)/%.tif: $(OSM_TOPO_DIR)/%.topojson
-	$(eval HEIGHT = $(shell jq '.bbox' $< | jq '$(WIDTH) * (.[3] - .[1]) / (.[2] - .[0])'))
+$(OSM_BURNED_DIR)/%.tif: $(OSM_GEO_DIR)/%.geojson
+	$(eval CITY := $(subst _, ,$(notdir $(basename $<))))
+	$(eval BBOX := $(shell jq -c '.["$(CITY)"]' city-bbox-index.json))
+	$(eval HEIGHT := $(shell jq '$(WIDTH) * (.[3] - .[1]) / (.[2] - .[0])' <<< $(BBOX)))
 	gdal_rasterize -burn 200 -ot Byte -ts $(WIDTH) $(HEIGHT) \
-		-l lines -l polygons -a_nodata 255 $< $@
+	-te $(shell jq -r 'join(" ")' <<< $(BBOX)) \
+	-a_nodata 255 $< $@
 
-# Convert to TopoJSON (NDJSON first to remove unnecessary properties).
-# Removed -clean because it takes a long time and I don't see how it makes life better
-$(OSM_TOPO_DIR)/%.topojson: $(OSM_DIR)/%.osm
-	python3 $(SCRIPT_DIR)/xml2geojson.py $< \
-	| mapshaper-xl - \
-	-rename-layers lines,polygons \
-	-clip bbox=$(shell jq -r ".\"$(subst _, ,$(notdir $(basename $<))\" | join(\",\"))" city-bbox-index.json) \
-	-o $@ format=topojson bbox
+# Convert OSM XML data to GeoJSON
+$(OSM_GEO_DIR)/%.geojson: $(OSM_DIR)/%.osm
+	python3 $(SCRIPT_DIR)/xml2geojson.py $< > $@
 
 #
 # HOLC vector layer
@@ -115,7 +113,7 @@ $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 #
 
 # Download OSM data for each city
-downloads: city-bbox-index.json
+downloads:
 	zsh $(SCRIPT_DIR)/download-osm.sh $(OSM_DIR) $(OVERPASS_QUERY) $(CITIES)
 
 #
@@ -152,7 +150,7 @@ city-boundaries.json:
 # Utilities
 #
 
-ALL_FOLDERS = $(OSM_TOPO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR)
+ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 
@@ -161,7 +159,7 @@ clean:
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_TOPO_DIR)/%.topojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt))
+keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt))
 
 #
 # Temperature mean formatting and statistics

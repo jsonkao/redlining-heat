@@ -1,18 +1,19 @@
 .DS_Store
-build
+.vscode
 
 # R
 .Rproj.user
 .Rhistory
 
-# Node and Parcel
+# Node and Snowpack
 node_modules
 .cache
-dist
+build
 
 # Mapping files
 osm-raw/
 privatekey.json
 
+# Data
 data/osm-*
 data/gee-*
