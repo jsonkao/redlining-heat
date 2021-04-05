@@ -17,9 +17,7 @@ The Makefile handles all data processing. It has the following functions.
 Latest benchmarks with 19 cities, including NYC and LA, without OSM download time:
 ```
 make basemaps  484.17s user 11.69s system 181% cpu 4:32.91 total
-
-# old
-make all  1710.72s user 748.96s system 112% cpu 36:24.79 total
+make tempmaps  218.55s user 35.39s system 137% cpu 3:04.54 total
 ```
 
 ## Next Steps

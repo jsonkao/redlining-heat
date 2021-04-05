@@ -4,7 +4,8 @@ MAKEFLAGS += -j4
 # PARAMETERS
 #
 
-# Cities to generate maps/data for. Replace any spaces in city names with underscore. To group cities, use commas.
+# Cities to generate maps/data for. Replace any spaces in city names with
+# underscores. To group cities, use commas.
 CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
 	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco \
 	Manhattan,Bronx,Queens,Brooklyn \
