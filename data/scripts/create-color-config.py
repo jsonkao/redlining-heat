@@ -1,3 +1,8 @@
+"""
+Creates a color configuration file for GDAL color relief generation.
+Masks nv pixels and calculates min/mean/max.
+"""
+
 from osgeo.gdal import Warp
 from pathlib import Path
 import numpy as np
