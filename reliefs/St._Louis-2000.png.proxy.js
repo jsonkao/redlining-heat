@@ -1,1 +1,0 @@
-export default "/reliefs/St._Louis-2000.png";
