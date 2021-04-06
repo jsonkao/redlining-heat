@@ -9,7 +9,7 @@ MAKEFLAGS += -j4
 CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
 	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis,East_St._Louis Milwaukee_Co. San_Francisco \
 	Manhattan,Bronx,Queens,Brooklyn Los_Angeles \
-	Denver Seattle Dallas Tulsa Miami Memphis
+	Denver Seattle Dallas Tulsa Miami Memphis Flint
 
 # Years to generate temperature maps for
 YEARS = 2000 2020
@@ -17,7 +17,7 @@ YEARS = 2000 2020
 # Width of PNG assets
 WIDTH = 3000
 
-HEADER = [bbox][maxsize:1000000000][timeout:900] # Use this if necessary
+HEADER = [bbox] # [maxsize:2000000000][timeout:900]
 OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=$(strip $(HEADER))\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 #
@@ -49,7 +49,7 @@ tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y
 tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
-all: folders tempmaps basemaps holcmaps tukeyResults.json
+all: folders tempmaps basemaps holcmaps charts
 
 #
 # GEE temperature reliefs
@@ -104,9 +104,9 @@ $(OSM_GEO_DIR)/%.geojson: $(OSM_DIR)/%.osm
 # HOLC vector layer
 #
 
-$(HOLC_DIR)/%.svg: $(SHAPEFILE) Makefile
+$(HOLC_DIR)/%.svg: $(SHAPEFILE)
 	mapshaper $< \
-	-filter '("$(notdir $(basename $@))".split(",").map(c => c.replace(/_/g, " ")).includes(city)) && holc_grade != "E"' \
+	-filter '("$(notdir $(basename $@))".replace(/_/g," ").split(",").includes(city)) && holc_grade != "E"' \
 	-split holc_grade \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1 target=*
 
@@ -183,3 +183,12 @@ $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	| ndjson-map 'd.temperature = +(Math.round(d.temperature + "e+2") + "e-2"), d' \
 	| ndjson-reduce \
 	> $@
+
+#
+# Utility for checking whether city names are unique
+#
+
+check-unique: $(CITIES:%=%.check-unique)
+
+%.check-unique:
+	@echo $(shell mapshaper $(SHAPEFILE) -filter "'$(basename $@)'.replace(/_/g,' ').split(',').includes(city)" -uniq state -calc 'count()' 2>&1 | tail -n1 | cut -c 18-) $(basename $@)
