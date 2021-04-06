@@ -7,7 +7,8 @@ MAKEFLAGS += -j4
 # Cities to generate maps/data for. Replace any spaces in city names with
 # underscores. To group cities, use commas.
 CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
-	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis Milwaukee_Co. San_Francisco \
+	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis,East_St._Louis Milwaukee_Co. San_Francisco \
+	Denver Seattle Dallas Tulsa Miami Memphis \
 	Manhattan,Bronx,Queens,Brooklyn \
 	Los_Angeles
 
@@ -17,9 +18,8 @@ YEARS = 2000 2020
 # Width of PNG assets
 WIDTH = 3000
 
-HEADER = [bbox]
-# HEADER += [maxsize:2000000000] # Use this if necessary
-OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=$(HEADER)\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
+HEADER = [bbox][maxsize:1000000000][timeout:900] # Use this if necessary
+OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=$(strip $(HEADER))\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
 #
 # Directories and filename constants
@@ -63,8 +63,8 @@ $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
 
 # Design color scheme for tif
-$(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif city-boundaries.json
-	python3 $(SCRIPT_DIR)/create-color-config.py $^ > $@
+$(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json > $@
 
 # Download temperature data for 2000
 $(TEMP_DIR)/%-2000.tif:
@@ -124,7 +124,7 @@ downloads:
 #
 
 # The bbox of each city is used to download temperature and OSM data
-city-bbox-index.json:
+city-bbox-index.json: $(SCRIPT_DIR)/custom-merges.js
 	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='tmp'
 	rm *.tmp
 	cat bbox-index.json \
@@ -143,10 +143,11 @@ FILTER_LIST = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
 # I dissolve each city into one boundary and drop any holes to prevent GDAL errors.
 city-boundaries.json:
 	$(shell mapshaper $(SHAPEFILE) \
-		$(foreach c, $(call FILTER_LIST,$(comma), $(CITIES)), $(subst CITY,$(c),-each \"city=\'CITY\'.includes\(city\)?\'CITY\':city\")) \
+		$(foreach c, $(call FILTER_LIST,$(comma), $(CITIES)), $(subst CITY,$(c),-each \"city=\'CITY\'.includes\(city.replace\(/\\s/g,\'_\'\)\)?\'CITY\':city\")) \
 		-dissolve city \
 		-clean \
 		-drop holes \
+		-each 'city = city.replace(/_/g, " ")' \
 		-o $@)
 
 #

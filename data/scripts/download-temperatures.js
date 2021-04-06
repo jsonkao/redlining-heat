@@ -5,7 +5,7 @@ const { run, retrieveTemperatures } = require('./utils.js');
 
 function main() {
   const targetName = './' + process.argv[2];
-  const city = path.basename(targetName).replace('_', ' ').split('-')[0];
+  const city = path.basename(targetName).replace(/_/g, ' ').split('-')[0];
   const boundariesFile = JSON.parse(fs.readFileSync('./' + process.argv[4]));
   const bbox = ee.Geometry.Rectangle(
     JSON.parse(fs.readFileSync('./' + process.argv[3]))[city],

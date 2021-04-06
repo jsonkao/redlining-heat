@@ -12,5 +12,5 @@ do
   outFile=$outputDir/$city.osm
   [[ -e $outFile  ]] && continue
   echo "=== Downloading $city ==="
-  wget -O $outputDir/$city.osm $query\&bbox=$(jq -r ".\"${city/_/ }\" | join(\",\")" city-bbox-index.json)
+  wget -O $outputDir/$city.osm $query\&bbox=$(jq -r ".\"${city//_/ }\" | join(\",\")" city-bbox-index.json)
 done
