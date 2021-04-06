@@ -42,14 +42,13 @@ RELIEF_DIR = reliefs
 HOLC_DIR = boundaries
 CHART_DIR = charts
 SHAPEFILE = holc-shapefile/holc_ad_data.shp
-OSMTOGEOJSON = node --max_old_space_size=8192 `which osmtogeojson`
 
 
 tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
 tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
-holcmaps: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
-all: folders tempmaps basemaps holcmaps charts
+boundaries: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
+all: folders tempmaps basemaps boundaries charts
 
 #
 # GEE temperature reliefs
@@ -59,7 +58,7 @@ all: folders tempmaps basemaps holcmaps charts
 $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 	rm -f $@
 	gdaldem color-relief $^ $(patsubst %.png,%.tif,$@) -alpha
-	gdalwarp -ts $(WIDTH) 0 -of PNG $(patsubst %.png,%.tif,$@) $@
+	python3 $(SCRIPT_DIR)/project.py $(patsubst %.png,%.tif,$@) $@ $(WIDTH)
 
 # Design color scheme for tif
 $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif
@@ -84,7 +83,7 @@ $(TEMP_DIR)/%-2020.tif:
 
 $(BASE_DIR)/%.png: $(OSM_BURNED_DIR)/%.tif
 	rm -f $@
-	gdalwarp -ts $(WIDTH) 0 -of PNG $< $@
+	python3 $(SCRIPT_DIR)/project.py $< $@ $(WIDTH)
 
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
 # then calculate height with that.
@@ -104,9 +103,10 @@ $(OSM_GEO_DIR)/%.geojson: $(OSM_DIR)/%.osm
 # HOLC vector layer
 #
 
-$(HOLC_DIR)/%.svg: $(SHAPEFILE)
+$(HOLC_DIR)/%.svg: $(SHAPEFILE) Makefile
 	mapshaper $< \
 	-filter '("$(notdir $(basename $@))".replace(/_/g," ").split(",").includes(city)) && holc_grade != "E"' \
+	-proj $(shell python3 $(SCRIPT_DIR)/project.py $@ --just-proj) \
 	-split holc_grade \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1 target=*
 
