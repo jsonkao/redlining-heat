@@ -1,5 +1,6 @@
 const cityNameMods = {
   'Manhattan,Bronx,Queens,Brooklyn': 'New York',
+  'St. Louis,East St. Louis': 'St. Louis',
 };
 
 // Glob import all assets, then split them into variables and access module default
@@ -40,7 +41,7 @@ const yearSelector = document.getElementById('year-select');
 
 // Get pretty name from a city value
 function getName(rawValue) {
-  const value = ('' + rawValue).replace('_', ' ');
+  const value = ('' + rawValue).replace(/_/g, ' ');
   return cityNameMods[value] || value;
 }
 
