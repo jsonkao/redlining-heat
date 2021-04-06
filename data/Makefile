@@ -8,9 +8,8 @@ MAKEFLAGS += -j4
 # underscores. To group cities, use commas.
 CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
 	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis,East_St._Louis Milwaukee_Co. San_Francisco \
-	Denver Seattle Dallas Tulsa Miami Memphis \
-	Manhattan,Bronx,Queens,Brooklyn \
-	Los_Angeles
+	Manhattan,Bronx,Queens,Brooklyn Los_Angeles \
+	Denver Seattle Dallas Tulsa Miami Memphis
 
 # Years to generate temperature maps for
 YEARS = 2000 2020
