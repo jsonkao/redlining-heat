@@ -1,6 +1,4 @@
-## Data and map generation (`/data`)
-
-The Makefile handles all data processing. It has the following functions.
+The Makefile (`/data/Makefile`) handles all data processing. It has the following functions.
 
 0. Uses mapshaper to create necessary prerequisite files: `city-bbox-index.json` (maps city to bounding box), `city-boundaries.json` (maps city to dissolved bounary).
 
@@ -20,16 +18,18 @@ make basemaps  484.17s user 11.69s system 181% cpu 4:32.91 total
 make tempmaps  218.55s user 35.39s system 137% cpu 3:04.54 total
 ```
 
+## Instructions
+
+To add new cities, append them to the `CITIES` variable in the Makefile. Run `make check-unique` to make sure there are no duplicate cities. Run `make downloads`, and then `make all`.
+
+Prerequisites:
+* Tools: GDAL, Python GDAL/OGR, jq, mapshaper, ndjson-cli, R, Node
+* Files: [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account)
+
 ## Next Steps
 
 * Policy analysis
 
 * Trees, impervious surfaces, what else?
 
-* Downloading OSM data in multiple tiles of a bbox: Step 1 requests too much from both OSM and GEE for the city of Los Angeles.
-
 ## Prerequisites
-
-Tools: GDAL, Python GDAL/OGR, jq, mapshaper, ndjson-cli, R, Node
-
-Files: [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account)
