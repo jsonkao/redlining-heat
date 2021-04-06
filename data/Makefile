@@ -105,9 +105,9 @@ $(OSM_GEO_DIR)/%.geojson: $(OSM_DIR)/%.osm
 # HOLC vector layer
 #
 
-$(HOLC_DIR)/%.svg: $(SHAPEFILE)
+$(HOLC_DIR)/%.svg: $(SHAPEFILE) Makefile
 	mapshaper $< \
-	-filter '("$(notdir $(basename $@))".split(",").map(c => c.replace("_", " ")).includes(city)) && holc_grade != "E"' \
+	-filter '("$(notdir $(basename $@))".split(",").map(c => c.replace(/_/g, " ")).includes(city)) && holc_grade != "E"' \
 	-split holc_grade \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1 target=*
 
