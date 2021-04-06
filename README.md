@@ -23,13 +23,12 @@ make tempmaps  218.55s user 35.39s system 137% cpu 3:04.54 total
 To add new cities, append them to the `CITIES` variable in the Makefile. Run `make check-unique` to make sure there are no duplicate cities. Run `make downloads`, and then `make all`.
 
 Prerequisites:
-* Tools: GDAL, Python GDAL/OGR, jq, mapshaper, ndjson-cli, R, Node
+* Command line: GDAL, Python GDAL/OGR, jq, mapshaper, ndjson-cli, R, Node
 * Files: [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account)
+* Libraries: `npm install`, `osgeo` for Python
 
 ## Next Steps
 
 * Policy analysis
 
 * Trees, impervious surfaces, what else?
-
-## Prerequisites
