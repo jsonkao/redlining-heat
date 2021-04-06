@@ -18,6 +18,8 @@ make basemaps  484.17s user 11.69s system 181% cpu 4:32.91 total
 make tempmaps  218.55s user 35.39s system 137% cpu 3:04.54 total
 ```
 
+These benchmarks were made before I projected everything. I used bilinear resampling, but it's really slow, and I could just go back to the default resampling.
+
 ## Instructions
 
 To add new cities, append them to the `CITIES` variable in the Makefile. Run `make check-unique` to make sure there are no duplicate cities. Run `make downloads`, and then `make all`.
