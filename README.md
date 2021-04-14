@@ -22,7 +22,7 @@ These benchmarks were made before I projected everything. I used bilinear resamp
 
 ## Instructions
 
-To add new cities, append them to the `CITIES` variable in the Makefile. Run `make check-unique` to make sure there are no duplicate cities. Run `make downloads`, and then `make all`.
+To add new cities, append them to the `CITIES` variable in the Makefile. Run `make check-unique` to make sure there are no duplicate cities. Run `make downloads` (may have to run several times to get over the 429's). Run `make all`.
 
 Prerequisites:
 * Command line: GDAL, Python GDAL/OGR, jq, mapshaper, ndjson-cli, R, Node
