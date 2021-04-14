@@ -10,7 +10,7 @@ import sys
 
 tempTifName = sys.argv[1]
 stem = Path(tempTifName).stem
-[city, year] = stem.replace('_', ' ').split('-')
+[city, year] = stem.replace("_", " ").split("-")
 
 # Cut temperature data according to city boundary
 ds = Warp(
@@ -29,7 +29,7 @@ band = ds.GetRasterBand(1)
 values = np.ma.masked_equal(band.ReadAsArray(), band.GetNoDataValue())
 
 # Write out a color file based on valid values
-print(f'{values.min()} 0 0 255 255')
-print(f'{values.mean()} 255 255 255 255')
-print(f'{values.max()} 255 0 0 255')
-print('nv 236 236 236 255')
+print(f"{values.min()} 0 0 255 255")
+print(f"{values.mean()} 255 255 255 255")
+print(f"{values.max()} 255 0 0 255")
+print("nv 236 236 236 255")

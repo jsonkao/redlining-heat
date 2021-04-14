@@ -11,8 +11,8 @@ input_name = sys.argv[1]
 output_name = sys.argv[2]
 
 # Get geographic extent (bbox)
-city = Path(input_name).stem.replace('_', ' ').split('-')[0]
-with open('city-bbox-index.json') as f:
+city = Path(input_name).stem.replace("_", " ").split("-")[0]
+with open("city-bbox-index.json") as f:
     [xmin, ymin, xmax, ymax] = json.load(f)[city]
 
 # Calculate standard parallels and central meridian
@@ -35,8 +35,9 @@ def progress_callback(complete, message, unknown):
     if pct % 20 == 0:
         print(f"[{output_name}] {pct}%")
 
+
 # Either just print the proj string, or complete the warp
-if output_name == '--just-proj':
+if output_name == "--just-proj":
     sys.stdout.write(proj_string)
 else:
     Warp(
@@ -46,5 +47,5 @@ else:
         height=0,
         dstSRS=proj_string,
         resampleAlg="bilinear",
-        callback=progress_callback
+        callback=progress_callback,
     )
