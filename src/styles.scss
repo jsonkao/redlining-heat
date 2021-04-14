@@ -127,7 +127,7 @@ g#D path {
 }
 g {
   opacity: 0;
-  transition-duration: .2s;
+  transition-duration: 0.2s;
 }
 
 span[class^="grade-"] {
@@ -175,7 +175,7 @@ hr {
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 30%);
   z-index: 999;
   opacity: 0;
-  transition-duration: .2s;
+  transition-duration: 0.2s;
 
   p {
     margin: 0;
@@ -194,7 +194,7 @@ hr {
       border-radius: 2px;
       cursor: pointer;
       border-left: 1px solid #fff;
-      transition-duration: .2s;
+      transition-duration: 0.2s;
       &.checked {
       }
     }
