@@ -45,183 +45,246 @@ import * as __glob__0_43 from './basemaps/Syracuse.png.proxy.js';
 import * as __glob__0_44 from './basemaps/Toledo.png.proxy.js';
 import * as __glob__0_45 from './basemaps/Tulsa.png.proxy.js';
 import * as __glob__0_46 from './basemaps/Union_Co..png.proxy.js';
-import * as __glob__0_47 from './boundaries/Atlanta.svg.proxy.js';
-import * as __glob__0_48 from './boundaries/Austin.svg.proxy.js';
-import * as __glob__0_49 from './boundaries/Baltimore.svg.proxy.js';
-import * as __glob__0_50 from './boundaries/Bergen_Co..svg.proxy.js';
-import * as __glob__0_51 from './boundaries/Birmingham.svg.proxy.js';
-import * as __glob__0_52 from './boundaries/Chicago.svg.proxy.js';
-import * as __glob__0_53 from './boundaries/Cleveland.svg.proxy.js';
-import * as __glob__0_54 from './boundaries/Dallas.svg.proxy.js';
-import * as __glob__0_55 from './boundaries/Denver.svg.proxy.js';
-import * as __glob__0_56 from './boundaries/Detroit.svg.proxy.js';
-import * as __glob__0_57 from './boundaries/Flint.svg.proxy.js';
-import * as __glob__0_58 from './boundaries/Houston.svg.proxy.js';
-import * as __glob__0_59 from './boundaries/Los_Angeles.svg.proxy.js';
-import * as __glob__0_60 from './boundaries/Manhattan,Bronx,Queens,Brooklyn.svg.proxy.js';
-import * as __glob__0_61 from './boundaries/Memphis.svg.proxy.js';
-import * as __glob__0_62 from './boundaries/Miami.svg.proxy.js';
-import * as __glob__0_63 from './boundaries/Milwaukee_Co..svg.proxy.js';
-import * as __glob__0_64 from './boundaries/New_Orleans.svg.proxy.js';
-import * as __glob__0_65 from './boundaries/Oakland.svg.proxy.js';
-import * as __glob__0_66 from './boundaries/Philadelphia.svg.proxy.js';
-import * as __glob__0_67 from './boundaries/Portland.svg.proxy.js';
-import * as __glob__0_68 from './boundaries/Richmond.svg.proxy.js';
-import * as __glob__0_69 from './boundaries/San_Francisco.svg.proxy.js';
-import * as __glob__0_70 from './boundaries/Seattle.svg.proxy.js';
-import * as __glob__0_71 from './boundaries/St._Louis,East_St._Louis.svg.proxy.js';
-import * as __glob__0_72 from './boundaries/St._Louis.svg.proxy.js';
-import * as __glob__0_73 from './boundaries/Tulsa.svg.proxy.js';
-import * as __glob__0_74 from './charts/Atlanta-tky.png.proxy.js';
-import * as __glob__0_75 from './charts/Atlanta.png.proxy.js';
-import * as __glob__0_76 from './charts/Austin-tky.png.proxy.js';
-import * as __glob__0_77 from './charts/Austin.png.proxy.js';
-import * as __glob__0_78 from './charts/Baltimore-tky.png.proxy.js';
-import * as __glob__0_79 from './charts/Baltimore.png.proxy.js';
-import * as __glob__0_80 from './charts/Bergen_Co.-tky.png.proxy.js';
-import * as __glob__0_81 from './charts/Bergen_Co..png.proxy.js';
-import * as __glob__0_82 from './charts/Birmingham-tky.png.proxy.js';
-import * as __glob__0_83 from './charts/Birmingham.png.proxy.js';
-import * as __glob__0_84 from './charts/Chicago-tky.png.proxy.js';
-import * as __glob__0_85 from './charts/Chicago.png.proxy.js';
-import * as __glob__0_86 from './charts/Cleveland-tky.png.proxy.js';
-import * as __glob__0_87 from './charts/Cleveland.png.proxy.js';
-import * as __glob__0_88 from './charts/Dallas-tky.png.proxy.js';
-import * as __glob__0_89 from './charts/Dallas.png.proxy.js';
-import * as __glob__0_90 from './charts/Denver-tky.png.proxy.js';
-import * as __glob__0_91 from './charts/Denver.png.proxy.js';
-import * as __glob__0_92 from './charts/Detroit-tky.png.proxy.js';
-import * as __glob__0_93 from './charts/Detroit.png.proxy.js';
-import * as __glob__0_94 from './charts/Flint-tky.png.proxy.js';
-import * as __glob__0_95 from './charts/Flint.png.proxy.js';
-import * as __glob__0_96 from './charts/Houston-tky.png.proxy.js';
-import * as __glob__0_97 from './charts/Houston.png.proxy.js';
-import * as __glob__0_98 from './charts/Los_Angeles-tky.png.proxy.js';
-import * as __glob__0_99 from './charts/Los_Angeles.png.proxy.js';
-import * as __glob__0_100 from './charts/Manhattan,Bronx,Queens,Brooklyn-tky.png.proxy.js';
-import * as __glob__0_101 from './charts/Manhattan,Bronx,Queens,Brooklyn.png.proxy.js';
-import * as __glob__0_102 from './charts/Memphis-tky.png.proxy.js';
-import * as __glob__0_103 from './charts/Memphis.png.proxy.js';
-import * as __glob__0_104 from './charts/Miami-tky.png.proxy.js';
-import * as __glob__0_105 from './charts/Miami.png.proxy.js';
-import * as __glob__0_106 from './charts/Milwaukee_Co.-tky.png.proxy.js';
-import * as __glob__0_107 from './charts/Milwaukee_Co..png.proxy.js';
-import * as __glob__0_108 from './charts/nation-tky.png.proxy.js';
-import * as __glob__0_109 from './charts/nation.png.proxy.js';
-import * as __glob__0_110 from './charts/New_Orleans-tky.png.proxy.js';
-import * as __glob__0_111 from './charts/New_Orleans.png.proxy.js';
-import * as __glob__0_112 from './charts/Oakland-tky.png.proxy.js';
-import * as __glob__0_113 from './charts/Oakland.png.proxy.js';
-import * as __glob__0_114 from './charts/Philadelphia-tky.png.proxy.js';
-import * as __glob__0_115 from './charts/Philadelphia.png.proxy.js';
-import * as __glob__0_116 from './charts/Portland-tky.png.proxy.js';
-import * as __glob__0_117 from './charts/Portland.png.proxy.js';
-import * as __glob__0_118 from './charts/Richmond-tky.png.proxy.js';
-import * as __glob__0_119 from './charts/Richmond.png.proxy.js';
-import * as __glob__0_120 from './charts/San_Francisco-tky.png.proxy.js';
-import * as __glob__0_121 from './charts/San_Francisco.png.proxy.js';
-import * as __glob__0_122 from './charts/Seattle-tky.png.proxy.js';
-import * as __glob__0_123 from './charts/Seattle.png.proxy.js';
-import * as __glob__0_124 from './charts/St._Louis-tky.png.proxy.js';
-import * as __glob__0_125 from './charts/St._Louis,East_St._Louis-tky.png.proxy.js';
-import * as __glob__0_126 from './charts/St._Louis,East_St._Louis.png.proxy.js';
-import * as __glob__0_127 from './charts/St._Louis.png.proxy.js';
-import * as __glob__0_128 from './charts/Tulsa-tky.png.proxy.js';
-import * as __glob__0_129 from './charts/Tulsa.png.proxy.js';
-import * as __glob__0_130 from './reliefs/Akron-2000.png.proxy.js';
-import * as __glob__0_131 from './reliefs/Akron-2020.png.proxy.js';
-import * as __glob__0_132 from './reliefs/Atlanta-2000.png.proxy.js';
-import * as __glob__0_133 from './reliefs/Atlanta-2020.png.proxy.js';
-import * as __glob__0_134 from './reliefs/Austin-2000.png.proxy.js';
-import * as __glob__0_135 from './reliefs/Austin-2020.png.proxy.js';
-import * as __glob__0_136 from './reliefs/Baltimore-2000.png.proxy.js';
-import * as __glob__0_137 from './reliefs/Baltimore-2020.png.proxy.js';
-import * as __glob__0_138 from './reliefs/Bergen_Co.-2000.png.proxy.js';
-import * as __glob__0_139 from './reliefs/Bergen_Co.-2020.png.proxy.js';
-import * as __glob__0_140 from './reliefs/Birmingham-2000.png.proxy.js';
-import * as __glob__0_141 from './reliefs/Birmingham-2020.png.proxy.js';
-import * as __glob__0_142 from './reliefs/Boston-2000.png.proxy.js';
-import * as __glob__0_143 from './reliefs/Boston-2020.png.proxy.js';
-import * as __glob__0_144 from './reliefs/Cambridge-2000.png.proxy.js';
-import * as __glob__0_145 from './reliefs/Cambridge-2020.png.proxy.js';
-import * as __glob__0_146 from './reliefs/Chicago-2000.png.proxy.js';
-import * as __glob__0_147 from './reliefs/Chicago-2020.png.proxy.js';
-import * as __glob__0_148 from './reliefs/Cleveland-2000.png.proxy.js';
-import * as __glob__0_149 from './reliefs/Cleveland-2020.png.proxy.js';
-import * as __glob__0_150 from './reliefs/Dallas-2000.png.proxy.js';
-import * as __glob__0_151 from './reliefs/Dallas-2020.png.proxy.js';
-import * as __glob__0_152 from './reliefs/Denver-2000.png.proxy.js';
-import * as __glob__0_153 from './reliefs/Denver-2020.png.proxy.js';
-import * as __glob__0_154 from './reliefs/Detroit-2000.png.proxy.js';
-import * as __glob__0_155 from './reliefs/Detroit-2020.png.proxy.js';
-import * as __glob__0_156 from './reliefs/El_Paso-2000.png.proxy.js';
-import * as __glob__0_157 from './reliefs/El_Paso-2020.png.proxy.js';
-import * as __glob__0_158 from './reliefs/Erie-2000.png.proxy.js';
-import * as __glob__0_159 from './reliefs/Erie-2020.png.proxy.js';
-import * as __glob__0_160 from './reliefs/Essex_Co.-2000.png.proxy.js';
-import * as __glob__0_161 from './reliefs/Essex_Co.-2020.png.proxy.js';
-import * as __glob__0_162 from './reliefs/Flint-2000.png.proxy.js';
-import * as __glob__0_163 from './reliefs/Flint-2020.png.proxy.js';
-import * as __glob__0_164 from './reliefs/Fort_Worth-2000.png.proxy.js';
-import * as __glob__0_165 from './reliefs/Fort_Worth-2020.png.proxy.js';
-import * as __glob__0_166 from './reliefs/Greater_Kansas_City-2000.png.proxy.js';
-import * as __glob__0_167 from './reliefs/Greater_Kansas_City-2020.png.proxy.js';
-import * as __glob__0_168 from './reliefs/Greensboro-2000.png.proxy.js';
-import * as __glob__0_169 from './reliefs/Greensboro-2020.png.proxy.js';
-import * as __glob__0_170 from './reliefs/Houston-2000.png.proxy.js';
-import * as __glob__0_171 from './reliefs/Houston-2020.png.proxy.js';
-import * as __glob__0_172 from './reliefs/Kenosha-2000.png.proxy.js';
-import * as __glob__0_173 from './reliefs/Kenosha-2020.png.proxy.js';
-import * as __glob__0_174 from './reliefs/Knoxville-2000.png.proxy.js';
-import * as __glob__0_175 from './reliefs/Knoxville-2020.png.proxy.js';
-import * as __glob__0_176 from './reliefs/Little_Rock-2000.png.proxy.js';
-import * as __glob__0_177 from './reliefs/Little_Rock-2020.png.proxy.js';
-import * as __glob__0_178 from './reliefs/Los_Angeles-2000.png.proxy.js';
-import * as __glob__0_179 from './reliefs/Los_Angeles-2020.png.proxy.js';
-import * as __glob__0_180 from './reliefs/Manhattan,Bronx,Queens,Brooklyn-2000.png.proxy.js';
-import * as __glob__0_181 from './reliefs/Manhattan,Bronx,Queens,Brooklyn-2020.png.proxy.js';
-import * as __glob__0_182 from './reliefs/Memphis-2000.png.proxy.js';
-import * as __glob__0_183 from './reliefs/Memphis-2020.png.proxy.js';
-import * as __glob__0_184 from './reliefs/Miami-2000.png.proxy.js';
-import * as __glob__0_185 from './reliefs/Miami-2020.png.proxy.js';
-import * as __glob__0_186 from './reliefs/Milwaukee_Co.-2000.png.proxy.js';
-import * as __glob__0_187 from './reliefs/Milwaukee_Co.-2020.png.proxy.js';
-import * as __glob__0_188 from './reliefs/Montgomery-2000.png.proxy.js';
-import * as __glob__0_189 from './reliefs/Montgomery-2020.png.proxy.js';
-import * as __glob__0_190 from './reliefs/New_Orleans-2000.png.proxy.js';
-import * as __glob__0_191 from './reliefs/New_Orleans-2020.png.proxy.js';
-import * as __glob__0_192 from './reliefs/Oakland-2000.png.proxy.js';
-import * as __glob__0_193 from './reliefs/Oakland-2020.png.proxy.js';
-import * as __glob__0_194 from './reliefs/Philadelphia-2000.png.proxy.js';
-import * as __glob__0_195 from './reliefs/Philadelphia-2020.png.proxy.js';
-import * as __glob__0_196 from './reliefs/Portland-2000.png.proxy.js';
-import * as __glob__0_197 from './reliefs/Portland-2020.png.proxy.js';
-import * as __glob__0_198 from './reliefs/Richmond-2000.png.proxy.js';
-import * as __glob__0_199 from './reliefs/Richmond-2020.png.proxy.js';
-import * as __glob__0_200 from './reliefs/Sacramento-2000.png.proxy.js';
-import * as __glob__0_201 from './reliefs/Sacramento-2020.png.proxy.js';
-import * as __glob__0_202 from './reliefs/San_Diego-2000.png.proxy.js';
-import * as __glob__0_203 from './reliefs/San_Diego-2020.png.proxy.js';
-import * as __glob__0_204 from './reliefs/San_Francisco-2000.png.proxy.js';
-import * as __glob__0_205 from './reliefs/San_Francisco-2020.png.proxy.js';
-import * as __glob__0_206 from './reliefs/Savannah-2000.png.proxy.js';
-import * as __glob__0_207 from './reliefs/Savannah-2020.png.proxy.js';
-import * as __glob__0_208 from './reliefs/Seattle-2000.png.proxy.js';
-import * as __glob__0_209 from './reliefs/Seattle-2020.png.proxy.js';
-import * as __glob__0_210 from './reliefs/Sioux_City-2000.png.proxy.js';
-import * as __glob__0_211 from './reliefs/Sioux_City-2020.png.proxy.js';
-import * as __glob__0_212 from './reliefs/St._Louis,East_St._Louis-2000.png.proxy.js';
-import * as __glob__0_213 from './reliefs/St._Louis,East_St._Louis-2020.png.proxy.js';
-import * as __glob__0_214 from './reliefs/St._Paul-2000.png.proxy.js';
-import * as __glob__0_215 from './reliefs/St._Paul-2020.png.proxy.js';
-import * as __glob__0_216 from './reliefs/Syracuse-2000.png.proxy.js';
-import * as __glob__0_217 from './reliefs/Syracuse-2020.png.proxy.js';
-import * as __glob__0_218 from './reliefs/Toledo-2000.png.proxy.js';
-import * as __glob__0_219 from './reliefs/Toledo-2020.png.proxy.js';
-import * as __glob__0_220 from './reliefs/Tulsa-2000.png.proxy.js';
-import * as __glob__0_221 from './reliefs/Tulsa-2020.png.proxy.js';
-import * as __glob__0_222 from './reliefs/Union_Co.-2000.png.proxy.js';
-import * as __glob__0_223 from './reliefs/Union_Co.-2020.png.proxy.js';
+import * as __glob__0_47 from './boundaries/Akron.svg.proxy.js';
+import * as __glob__0_48 from './boundaries/Atlanta.svg.proxy.js';
+import * as __glob__0_49 from './boundaries/Austin.svg.proxy.js';
+import * as __glob__0_50 from './boundaries/Baltimore.svg.proxy.js';
+import * as __glob__0_51 from './boundaries/Bergen_Co..svg.proxy.js';
+import * as __glob__0_52 from './boundaries/Birmingham.svg.proxy.js';
+import * as __glob__0_53 from './boundaries/Boston.svg.proxy.js';
+import * as __glob__0_54 from './boundaries/Cambridge.svg.proxy.js';
+import * as __glob__0_55 from './boundaries/Chicago.svg.proxy.js';
+import * as __glob__0_56 from './boundaries/Cleveland.svg.proxy.js';
+import * as __glob__0_57 from './boundaries/Dallas.svg.proxy.js';
+import * as __glob__0_58 from './boundaries/Denver.svg.proxy.js';
+import * as __glob__0_59 from './boundaries/Detroit.svg.proxy.js';
+import * as __glob__0_60 from './boundaries/El_Paso.svg.proxy.js';
+import * as __glob__0_61 from './boundaries/Erie.svg.proxy.js';
+import * as __glob__0_62 from './boundaries/Essex_Co..svg.proxy.js';
+import * as __glob__0_63 from './boundaries/Flint.svg.proxy.js';
+import * as __glob__0_64 from './boundaries/Fort_Worth.svg.proxy.js';
+import * as __glob__0_65 from './boundaries/Greater_Kansas_City.svg.proxy.js';
+import * as __glob__0_66 from './boundaries/Greensboro.svg.proxy.js';
+import * as __glob__0_67 from './boundaries/Houston.svg.proxy.js';
+import * as __glob__0_68 from './boundaries/Kenosha.svg.proxy.js';
+import * as __glob__0_69 from './boundaries/Knoxville.svg.proxy.js';
+import * as __glob__0_70 from './boundaries/Little_Rock.svg.proxy.js';
+import * as __glob__0_71 from './boundaries/Los_Angeles.svg.proxy.js';
+import * as __glob__0_72 from './boundaries/Manhattan,Bronx,Queens,Brooklyn.svg.proxy.js';
+import * as __glob__0_73 from './boundaries/Memphis.svg.proxy.js';
+import * as __glob__0_74 from './boundaries/Miami.svg.proxy.js';
+import * as __glob__0_75 from './boundaries/Milwaukee_Co..svg.proxy.js';
+import * as __glob__0_76 from './boundaries/Montgomery.svg.proxy.js';
+import * as __glob__0_77 from './boundaries/New_Orleans.svg.proxy.js';
+import * as __glob__0_78 from './boundaries/Oakland.svg.proxy.js';
+import * as __glob__0_79 from './boundaries/Philadelphia.svg.proxy.js';
+import * as __glob__0_80 from './boundaries/Portland.svg.proxy.js';
+import * as __glob__0_81 from './boundaries/Richmond.svg.proxy.js';
+import * as __glob__0_82 from './boundaries/Sacramento.svg.proxy.js';
+import * as __glob__0_83 from './boundaries/San_Diego.svg.proxy.js';
+import * as __glob__0_84 from './boundaries/San_Francisco.svg.proxy.js';
+import * as __glob__0_85 from './boundaries/Savannah.svg.proxy.js';
+import * as __glob__0_86 from './boundaries/Seattle.svg.proxy.js';
+import * as __glob__0_87 from './boundaries/Sioux_City.svg.proxy.js';
+import * as __glob__0_88 from './boundaries/St._Louis,East_St._Louis.svg.proxy.js';
+import * as __glob__0_89 from './boundaries/St._Louis.svg.proxy.js';
+import * as __glob__0_90 from './boundaries/St._Paul.svg.proxy.js';
+import * as __glob__0_91 from './boundaries/Syracuse.svg.proxy.js';
+import * as __glob__0_92 from './boundaries/Toledo.svg.proxy.js';
+import * as __glob__0_93 from './boundaries/Tulsa.svg.proxy.js';
+import * as __glob__0_94 from './boundaries/Union_Co..svg.proxy.js';
+import * as __glob__0_95 from './charts/Akron-tky.png.proxy.js';
+import * as __glob__0_96 from './charts/Akron.png.proxy.js';
+import * as __glob__0_97 from './charts/Atlanta-tky.png.proxy.js';
+import * as __glob__0_98 from './charts/Atlanta.png.proxy.js';
+import * as __glob__0_99 from './charts/Austin-tky.png.proxy.js';
+import * as __glob__0_100 from './charts/Austin.png.proxy.js';
+import * as __glob__0_101 from './charts/Baltimore-tky.png.proxy.js';
+import * as __glob__0_102 from './charts/Baltimore.png.proxy.js';
+import * as __glob__0_103 from './charts/Bergen_Co.-tky.png.proxy.js';
+import * as __glob__0_104 from './charts/Bergen_Co..png.proxy.js';
+import * as __glob__0_105 from './charts/Birmingham-tky.png.proxy.js';
+import * as __glob__0_106 from './charts/Birmingham.png.proxy.js';
+import * as __glob__0_107 from './charts/Boston-tky.png.proxy.js';
+import * as __glob__0_108 from './charts/Boston.png.proxy.js';
+import * as __glob__0_109 from './charts/Cambridge-tky.png.proxy.js';
+import * as __glob__0_110 from './charts/Cambridge.png.proxy.js';
+import * as __glob__0_111 from './charts/Chicago-tky.png.proxy.js';
+import * as __glob__0_112 from './charts/Chicago.png.proxy.js';
+import * as __glob__0_113 from './charts/Cleveland-tky.png.proxy.js';
+import * as __glob__0_114 from './charts/Cleveland.png.proxy.js';
+import * as __glob__0_115 from './charts/Dallas-tky.png.proxy.js';
+import * as __glob__0_116 from './charts/Dallas.png.proxy.js';
+import * as __glob__0_117 from './charts/Denver-tky.png.proxy.js';
+import * as __glob__0_118 from './charts/Denver.png.proxy.js';
+import * as __glob__0_119 from './charts/Detroit-tky.png.proxy.js';
+import * as __glob__0_120 from './charts/Detroit.png.proxy.js';
+import * as __glob__0_121 from './charts/El_Paso-tky.png.proxy.js';
+import * as __glob__0_122 from './charts/El_Paso.png.proxy.js';
+import * as __glob__0_123 from './charts/Erie-tky.png.proxy.js';
+import * as __glob__0_124 from './charts/Erie.png.proxy.js';
+import * as __glob__0_125 from './charts/Essex_Co.-tky.png.proxy.js';
+import * as __glob__0_126 from './charts/Essex_Co..png.proxy.js';
+import * as __glob__0_127 from './charts/Flint-tky.png.proxy.js';
+import * as __glob__0_128 from './charts/Flint.png.proxy.js';
+import * as __glob__0_129 from './charts/Fort_Worth-tky.png.proxy.js';
+import * as __glob__0_130 from './charts/Fort_Worth.png.proxy.js';
+import * as __glob__0_131 from './charts/Greater_Kansas_City-tky.png.proxy.js';
+import * as __glob__0_132 from './charts/Greater_Kansas_City.png.proxy.js';
+import * as __glob__0_133 from './charts/Greensboro-tky.png.proxy.js';
+import * as __glob__0_134 from './charts/Greensboro.png.proxy.js';
+import * as __glob__0_135 from './charts/Houston-tky.png.proxy.js';
+import * as __glob__0_136 from './charts/Houston.png.proxy.js';
+import * as __glob__0_137 from './charts/Kenosha-tky.png.proxy.js';
+import * as __glob__0_138 from './charts/Kenosha.png.proxy.js';
+import * as __glob__0_139 from './charts/Knoxville-tky.png.proxy.js';
+import * as __glob__0_140 from './charts/Knoxville.png.proxy.js';
+import * as __glob__0_141 from './charts/Little_Rock-tky.png.proxy.js';
+import * as __glob__0_142 from './charts/Little_Rock.png.proxy.js';
+import * as __glob__0_143 from './charts/Los_Angeles-tky.png.proxy.js';
+import * as __glob__0_144 from './charts/Los_Angeles.png.proxy.js';
+import * as __glob__0_145 from './charts/Manhattan,Bronx,Queens,Brooklyn-tky.png.proxy.js';
+import * as __glob__0_146 from './charts/Manhattan,Bronx,Queens,Brooklyn.png.proxy.js';
+import * as __glob__0_147 from './charts/Memphis-tky.png.proxy.js';
+import * as __glob__0_148 from './charts/Memphis.png.proxy.js';
+import * as __glob__0_149 from './charts/Miami-tky.png.proxy.js';
+import * as __glob__0_150 from './charts/Miami.png.proxy.js';
+import * as __glob__0_151 from './charts/Milwaukee_Co.-tky.png.proxy.js';
+import * as __glob__0_152 from './charts/Milwaukee_Co..png.proxy.js';
+import * as __glob__0_153 from './charts/Montgomery-tky.png.proxy.js';
+import * as __glob__0_154 from './charts/Montgomery.png.proxy.js';
+import * as __glob__0_155 from './charts/nation-tky.png.proxy.js';
+import * as __glob__0_156 from './charts/nation.png.proxy.js';
+import * as __glob__0_157 from './charts/New_Orleans-tky.png.proxy.js';
+import * as __glob__0_158 from './charts/New_Orleans.png.proxy.js';
+import * as __glob__0_159 from './charts/Oakland-tky.png.proxy.js';
+import * as __glob__0_160 from './charts/Oakland.png.proxy.js';
+import * as __glob__0_161 from './charts/Philadelphia-tky.png.proxy.js';
+import * as __glob__0_162 from './charts/Philadelphia.png.proxy.js';
+import * as __glob__0_163 from './charts/Portland-tky.png.proxy.js';
+import * as __glob__0_164 from './charts/Portland.png.proxy.js';
+import * as __glob__0_165 from './charts/Richmond-tky.png.proxy.js';
+import * as __glob__0_166 from './charts/Richmond.png.proxy.js';
+import * as __glob__0_167 from './charts/Sacramento-tky.png.proxy.js';
+import * as __glob__0_168 from './charts/Sacramento.png.proxy.js';
+import * as __glob__0_169 from './charts/San_Diego-tky.png.proxy.js';
+import * as __glob__0_170 from './charts/San_Diego.png.proxy.js';
+import * as __glob__0_171 from './charts/San_Francisco-tky.png.proxy.js';
+import * as __glob__0_172 from './charts/San_Francisco.png.proxy.js';
+import * as __glob__0_173 from './charts/Savannah-tky.png.proxy.js';
+import * as __glob__0_174 from './charts/Savannah.png.proxy.js';
+import * as __glob__0_175 from './charts/Seattle-tky.png.proxy.js';
+import * as __glob__0_176 from './charts/Seattle.png.proxy.js';
+import * as __glob__0_177 from './charts/Sioux_City-tky.png.proxy.js';
+import * as __glob__0_178 from './charts/Sioux_City.png.proxy.js';
+import * as __glob__0_179 from './charts/St._Louis-tky.png.proxy.js';
+import * as __glob__0_180 from './charts/St._Louis,East_St._Louis-tky.png.proxy.js';
+import * as __glob__0_181 from './charts/St._Louis,East_St._Louis.png.proxy.js';
+import * as __glob__0_182 from './charts/St._Louis.png.proxy.js';
+import * as __glob__0_183 from './charts/St._Paul-tky.png.proxy.js';
+import * as __glob__0_184 from './charts/St._Paul.png.proxy.js';
+import * as __glob__0_185 from './charts/Syracuse-tky.png.proxy.js';
+import * as __glob__0_186 from './charts/Syracuse.png.proxy.js';
+import * as __glob__0_187 from './charts/Toledo-tky.png.proxy.js';
+import * as __glob__0_188 from './charts/Toledo.png.proxy.js';
+import * as __glob__0_189 from './charts/Tulsa-tky.png.proxy.js';
+import * as __glob__0_190 from './charts/Tulsa.png.proxy.js';
+import * as __glob__0_191 from './charts/Union_Co.-tky.png.proxy.js';
+import * as __glob__0_192 from './charts/Union_Co..png.proxy.js';
+import * as __glob__0_193 from './reliefs/Akron-2000.png.proxy.js';
+import * as __glob__0_194 from './reliefs/Akron-2020.png.proxy.js';
+import * as __glob__0_195 from './reliefs/Atlanta-2000.png.proxy.js';
+import * as __glob__0_196 from './reliefs/Atlanta-2020.png.proxy.js';
+import * as __glob__0_197 from './reliefs/Austin-2000.png.proxy.js';
+import * as __glob__0_198 from './reliefs/Austin-2020.png.proxy.js';
+import * as __glob__0_199 from './reliefs/Baltimore-2000.png.proxy.js';
+import * as __glob__0_200 from './reliefs/Baltimore-2020.png.proxy.js';
+import * as __glob__0_201 from './reliefs/Bergen_Co.-2000.png.proxy.js';
+import * as __glob__0_202 from './reliefs/Bergen_Co.-2020.png.proxy.js';
+import * as __glob__0_203 from './reliefs/Birmingham-2000.png.proxy.js';
+import * as __glob__0_204 from './reliefs/Birmingham-2020.png.proxy.js';
+import * as __glob__0_205 from './reliefs/Boston-2000.png.proxy.js';
+import * as __glob__0_206 from './reliefs/Boston-2020.png.proxy.js';
+import * as __glob__0_207 from './reliefs/Cambridge-2000.png.proxy.js';
+import * as __glob__0_208 from './reliefs/Cambridge-2020.png.proxy.js';
+import * as __glob__0_209 from './reliefs/Chicago-2000.png.proxy.js';
+import * as __glob__0_210 from './reliefs/Chicago-2020.png.proxy.js';
+import * as __glob__0_211 from './reliefs/Cleveland-2000.png.proxy.js';
+import * as __glob__0_212 from './reliefs/Cleveland-2020.png.proxy.js';
+import * as __glob__0_213 from './reliefs/Dallas-2000.png.proxy.js';
+import * as __glob__0_214 from './reliefs/Dallas-2020.png.proxy.js';
+import * as __glob__0_215 from './reliefs/Denver-2000.png.proxy.js';
+import * as __glob__0_216 from './reliefs/Denver-2020.png.proxy.js';
+import * as __glob__0_217 from './reliefs/Detroit-2000.png.proxy.js';
+import * as __glob__0_218 from './reliefs/Detroit-2020.png.proxy.js';
+import * as __glob__0_219 from './reliefs/El_Paso-2000.png.proxy.js';
+import * as __glob__0_220 from './reliefs/El_Paso-2020.png.proxy.js';
+import * as __glob__0_221 from './reliefs/Erie-2000.png.proxy.js';
+import * as __glob__0_222 from './reliefs/Erie-2020.png.proxy.js';
+import * as __glob__0_223 from './reliefs/Essex_Co.-2000.png.proxy.js';
+import * as __glob__0_224 from './reliefs/Essex_Co.-2020.png.proxy.js';
+import * as __glob__0_225 from './reliefs/Flint-2000.png.proxy.js';
+import * as __glob__0_226 from './reliefs/Flint-2020.png.proxy.js';
+import * as __glob__0_227 from './reliefs/Fort_Worth-2000.png.proxy.js';
+import * as __glob__0_228 from './reliefs/Fort_Worth-2020.png.proxy.js';
+import * as __glob__0_229 from './reliefs/Greater_Kansas_City-2000.png.proxy.js';
+import * as __glob__0_230 from './reliefs/Greater_Kansas_City-2020.png.proxy.js';
+import * as __glob__0_231 from './reliefs/Greensboro-2000.png.proxy.js';
+import * as __glob__0_232 from './reliefs/Greensboro-2020.png.proxy.js';
+import * as __glob__0_233 from './reliefs/Houston-2000.png.proxy.js';
+import * as __glob__0_234 from './reliefs/Houston-2020.png.proxy.js';
+import * as __glob__0_235 from './reliefs/Kenosha-2000.png.proxy.js';
+import * as __glob__0_236 from './reliefs/Kenosha-2020.png.proxy.js';
+import * as __glob__0_237 from './reliefs/Knoxville-2000.png.proxy.js';
+import * as __glob__0_238 from './reliefs/Knoxville-2020.png.proxy.js';
+import * as __glob__0_239 from './reliefs/Little_Rock-2000.png.proxy.js';
+import * as __glob__0_240 from './reliefs/Little_Rock-2020.png.proxy.js';
+import * as __glob__0_241 from './reliefs/Los_Angeles-2000.png.proxy.js';
+import * as __glob__0_242 from './reliefs/Los_Angeles-2020.png.proxy.js';
+import * as __glob__0_243 from './reliefs/Manhattan,Bronx,Queens,Brooklyn-2000.png.proxy.js';
+import * as __glob__0_244 from './reliefs/Manhattan,Bronx,Queens,Brooklyn-2020.png.proxy.js';
+import * as __glob__0_245 from './reliefs/Memphis-2000.png.proxy.js';
+import * as __glob__0_246 from './reliefs/Memphis-2020.png.proxy.js';
+import * as __glob__0_247 from './reliefs/Miami-2000.png.proxy.js';
+import * as __glob__0_248 from './reliefs/Miami-2020.png.proxy.js';
+import * as __glob__0_249 from './reliefs/Milwaukee_Co.-2000.png.proxy.js';
+import * as __glob__0_250 from './reliefs/Milwaukee_Co.-2020.png.proxy.js';
+import * as __glob__0_251 from './reliefs/Montgomery-2000.png.proxy.js';
+import * as __glob__0_252 from './reliefs/Montgomery-2020.png.proxy.js';
+import * as __glob__0_253 from './reliefs/New_Orleans-2000.png.proxy.js';
+import * as __glob__0_254 from './reliefs/New_Orleans-2020.png.proxy.js';
+import * as __glob__0_255 from './reliefs/Oakland-2000.png.proxy.js';
+import * as __glob__0_256 from './reliefs/Oakland-2020.png.proxy.js';
+import * as __glob__0_257 from './reliefs/Philadelphia-2000.png.proxy.js';
+import * as __glob__0_258 from './reliefs/Philadelphia-2020.png.proxy.js';
+import * as __glob__0_259 from './reliefs/Portland-2000.png.proxy.js';
+import * as __glob__0_260 from './reliefs/Portland-2020.png.proxy.js';
+import * as __glob__0_261 from './reliefs/Richmond-2000.png.proxy.js';
+import * as __glob__0_262 from './reliefs/Richmond-2020.png.proxy.js';
+import * as __glob__0_263 from './reliefs/Sacramento-2000.png.proxy.js';
+import * as __glob__0_264 from './reliefs/Sacramento-2020.png.proxy.js';
+import * as __glob__0_265 from './reliefs/San_Diego-2000.png.proxy.js';
+import * as __glob__0_266 from './reliefs/San_Diego-2020.png.proxy.js';
+import * as __glob__0_267 from './reliefs/San_Francisco-2000.png.proxy.js';
+import * as __glob__0_268 from './reliefs/San_Francisco-2020.png.proxy.js';
+import * as __glob__0_269 from './reliefs/Savannah-2000.png.proxy.js';
+import * as __glob__0_270 from './reliefs/Savannah-2020.png.proxy.js';
+import * as __glob__0_271 from './reliefs/Seattle-2000.png.proxy.js';
+import * as __glob__0_272 from './reliefs/Seattle-2020.png.proxy.js';
+import * as __glob__0_273 from './reliefs/Sioux_City-2000.png.proxy.js';
+import * as __glob__0_274 from './reliefs/Sioux_City-2020.png.proxy.js';
+import * as __glob__0_275 from './reliefs/St._Louis,East_St._Louis-2000.png.proxy.js';
+import * as __glob__0_276 from './reliefs/St._Louis,East_St._Louis-2020.png.proxy.js';
+import * as __glob__0_277 from './reliefs/St._Paul-2000.png.proxy.js';
+import * as __glob__0_278 from './reliefs/St._Paul-2020.png.proxy.js';
+import * as __glob__0_279 from './reliefs/Syracuse-2000.png.proxy.js';
+import * as __glob__0_280 from './reliefs/Syracuse-2020.png.proxy.js';
+import * as __glob__0_281 from './reliefs/Toledo-2000.png.proxy.js';
+import * as __glob__0_282 from './reliefs/Toledo-2020.png.proxy.js';
+import * as __glob__0_283 from './reliefs/Tulsa-2000.png.proxy.js';
+import * as __glob__0_284 from './reliefs/Tulsa-2020.png.proxy.js';
+import * as __glob__0_285 from './reliefs/Union_Co.-2000.png.proxy.js';
+import * as __glob__0_286 from './reliefs/Union_Co.-2020.png.proxy.js';
 import * as __SNOWPACK_ENV__ from './underscore_snowpack/env.js';
 import.meta.env = __SNOWPACK_ENV__;
 
@@ -279,183 +342,246 @@ const assets = {
 	"../data/basemaps/Toledo.png": __glob__0_44,
 	"../data/basemaps/Tulsa.png": __glob__0_45,
 	"../data/basemaps/Union_Co..png": __glob__0_46,
-	"../data/boundaries/Atlanta.svg": __glob__0_47,
-	"../data/boundaries/Austin.svg": __glob__0_48,
-	"../data/boundaries/Baltimore.svg": __glob__0_49,
-	"../data/boundaries/Bergen_Co..svg": __glob__0_50,
-	"../data/boundaries/Birmingham.svg": __glob__0_51,
-	"../data/boundaries/Chicago.svg": __glob__0_52,
-	"../data/boundaries/Cleveland.svg": __glob__0_53,
-	"../data/boundaries/Dallas.svg": __glob__0_54,
-	"../data/boundaries/Denver.svg": __glob__0_55,
-	"../data/boundaries/Detroit.svg": __glob__0_56,
-	"../data/boundaries/Flint.svg": __glob__0_57,
-	"../data/boundaries/Houston.svg": __glob__0_58,
-	"../data/boundaries/Los_Angeles.svg": __glob__0_59,
-	"../data/boundaries/Manhattan,Bronx,Queens,Brooklyn.svg": __glob__0_60,
-	"../data/boundaries/Memphis.svg": __glob__0_61,
-	"../data/boundaries/Miami.svg": __glob__0_62,
-	"../data/boundaries/Milwaukee_Co..svg": __glob__0_63,
-	"../data/boundaries/New_Orleans.svg": __glob__0_64,
-	"../data/boundaries/Oakland.svg": __glob__0_65,
-	"../data/boundaries/Philadelphia.svg": __glob__0_66,
-	"../data/boundaries/Portland.svg": __glob__0_67,
-	"../data/boundaries/Richmond.svg": __glob__0_68,
-	"../data/boundaries/San_Francisco.svg": __glob__0_69,
-	"../data/boundaries/Seattle.svg": __glob__0_70,
-	"../data/boundaries/St._Louis,East_St._Louis.svg": __glob__0_71,
-	"../data/boundaries/St._Louis.svg": __glob__0_72,
-	"../data/boundaries/Tulsa.svg": __glob__0_73,
-	"../data/charts/Atlanta-tky.png": __glob__0_74,
-	"../data/charts/Atlanta.png": __glob__0_75,
-	"../data/charts/Austin-tky.png": __glob__0_76,
-	"../data/charts/Austin.png": __glob__0_77,
-	"../data/charts/Baltimore-tky.png": __glob__0_78,
-	"../data/charts/Baltimore.png": __glob__0_79,
-	"../data/charts/Bergen_Co.-tky.png": __glob__0_80,
-	"../data/charts/Bergen_Co..png": __glob__0_81,
-	"../data/charts/Birmingham-tky.png": __glob__0_82,
-	"../data/charts/Birmingham.png": __glob__0_83,
-	"../data/charts/Chicago-tky.png": __glob__0_84,
-	"../data/charts/Chicago.png": __glob__0_85,
-	"../data/charts/Cleveland-tky.png": __glob__0_86,
-	"../data/charts/Cleveland.png": __glob__0_87,
-	"../data/charts/Dallas-tky.png": __glob__0_88,
-	"../data/charts/Dallas.png": __glob__0_89,
-	"../data/charts/Denver-tky.png": __glob__0_90,
-	"../data/charts/Denver.png": __glob__0_91,
-	"../data/charts/Detroit-tky.png": __glob__0_92,
-	"../data/charts/Detroit.png": __glob__0_93,
-	"../data/charts/Flint-tky.png": __glob__0_94,
-	"../data/charts/Flint.png": __glob__0_95,
-	"../data/charts/Houston-tky.png": __glob__0_96,
-	"../data/charts/Houston.png": __glob__0_97,
-	"../data/charts/Los_Angeles-tky.png": __glob__0_98,
-	"../data/charts/Los_Angeles.png": __glob__0_99,
-	"../data/charts/Manhattan,Bronx,Queens,Brooklyn-tky.png": __glob__0_100,
-	"../data/charts/Manhattan,Bronx,Queens,Brooklyn.png": __glob__0_101,
-	"../data/charts/Memphis-tky.png": __glob__0_102,
-	"../data/charts/Memphis.png": __glob__0_103,
-	"../data/charts/Miami-tky.png": __glob__0_104,
-	"../data/charts/Miami.png": __glob__0_105,
-	"../data/charts/Milwaukee_Co.-tky.png": __glob__0_106,
-	"../data/charts/Milwaukee_Co..png": __glob__0_107,
-	"../data/charts/nation-tky.png": __glob__0_108,
-	"../data/charts/nation.png": __glob__0_109,
-	"../data/charts/New_Orleans-tky.png": __glob__0_110,
-	"../data/charts/New_Orleans.png": __glob__0_111,
-	"../data/charts/Oakland-tky.png": __glob__0_112,
-	"../data/charts/Oakland.png": __glob__0_113,
-	"../data/charts/Philadelphia-tky.png": __glob__0_114,
-	"../data/charts/Philadelphia.png": __glob__0_115,
-	"../data/charts/Portland-tky.png": __glob__0_116,
-	"../data/charts/Portland.png": __glob__0_117,
-	"../data/charts/Richmond-tky.png": __glob__0_118,
-	"../data/charts/Richmond.png": __glob__0_119,
-	"../data/charts/San_Francisco-tky.png": __glob__0_120,
-	"../data/charts/San_Francisco.png": __glob__0_121,
-	"../data/charts/Seattle-tky.png": __glob__0_122,
-	"../data/charts/Seattle.png": __glob__0_123,
-	"../data/charts/St._Louis-tky.png": __glob__0_124,
-	"../data/charts/St._Louis,East_St._Louis-tky.png": __glob__0_125,
-	"../data/charts/St._Louis,East_St._Louis.png": __glob__0_126,
-	"../data/charts/St._Louis.png": __glob__0_127,
-	"../data/charts/Tulsa-tky.png": __glob__0_128,
-	"../data/charts/Tulsa.png": __glob__0_129,
-	"../data/reliefs/Akron-2000.png": __glob__0_130,
-	"../data/reliefs/Akron-2020.png": __glob__0_131,
-	"../data/reliefs/Atlanta-2000.png": __glob__0_132,
-	"../data/reliefs/Atlanta-2020.png": __glob__0_133,
-	"../data/reliefs/Austin-2000.png": __glob__0_134,
-	"../data/reliefs/Austin-2020.png": __glob__0_135,
-	"../data/reliefs/Baltimore-2000.png": __glob__0_136,
-	"../data/reliefs/Baltimore-2020.png": __glob__0_137,
-	"../data/reliefs/Bergen_Co.-2000.png": __glob__0_138,
-	"../data/reliefs/Bergen_Co.-2020.png": __glob__0_139,
-	"../data/reliefs/Birmingham-2000.png": __glob__0_140,
-	"../data/reliefs/Birmingham-2020.png": __glob__0_141,
-	"../data/reliefs/Boston-2000.png": __glob__0_142,
-	"../data/reliefs/Boston-2020.png": __glob__0_143,
-	"../data/reliefs/Cambridge-2000.png": __glob__0_144,
-	"../data/reliefs/Cambridge-2020.png": __glob__0_145,
-	"../data/reliefs/Chicago-2000.png": __glob__0_146,
-	"../data/reliefs/Chicago-2020.png": __glob__0_147,
-	"../data/reliefs/Cleveland-2000.png": __glob__0_148,
-	"../data/reliefs/Cleveland-2020.png": __glob__0_149,
-	"../data/reliefs/Dallas-2000.png": __glob__0_150,
-	"../data/reliefs/Dallas-2020.png": __glob__0_151,
-	"../data/reliefs/Denver-2000.png": __glob__0_152,
-	"../data/reliefs/Denver-2020.png": __glob__0_153,
-	"../data/reliefs/Detroit-2000.png": __glob__0_154,
-	"../data/reliefs/Detroit-2020.png": __glob__0_155,
-	"../data/reliefs/El_Paso-2000.png": __glob__0_156,
-	"../data/reliefs/El_Paso-2020.png": __glob__0_157,
-	"../data/reliefs/Erie-2000.png": __glob__0_158,
-	"../data/reliefs/Erie-2020.png": __glob__0_159,
-	"../data/reliefs/Essex_Co.-2000.png": __glob__0_160,
-	"../data/reliefs/Essex_Co.-2020.png": __glob__0_161,
-	"../data/reliefs/Flint-2000.png": __glob__0_162,
-	"../data/reliefs/Flint-2020.png": __glob__0_163,
-	"../data/reliefs/Fort_Worth-2000.png": __glob__0_164,
-	"../data/reliefs/Fort_Worth-2020.png": __glob__0_165,
-	"../data/reliefs/Greater_Kansas_City-2000.png": __glob__0_166,
-	"../data/reliefs/Greater_Kansas_City-2020.png": __glob__0_167,
-	"../data/reliefs/Greensboro-2000.png": __glob__0_168,
-	"../data/reliefs/Greensboro-2020.png": __glob__0_169,
-	"../data/reliefs/Houston-2000.png": __glob__0_170,
-	"../data/reliefs/Houston-2020.png": __glob__0_171,
-	"../data/reliefs/Kenosha-2000.png": __glob__0_172,
-	"../data/reliefs/Kenosha-2020.png": __glob__0_173,
-	"../data/reliefs/Knoxville-2000.png": __glob__0_174,
-	"../data/reliefs/Knoxville-2020.png": __glob__0_175,
-	"../data/reliefs/Little_Rock-2000.png": __glob__0_176,
-	"../data/reliefs/Little_Rock-2020.png": __glob__0_177,
-	"../data/reliefs/Los_Angeles-2000.png": __glob__0_178,
-	"../data/reliefs/Los_Angeles-2020.png": __glob__0_179,
-	"../data/reliefs/Manhattan,Bronx,Queens,Brooklyn-2000.png": __glob__0_180,
-	"../data/reliefs/Manhattan,Bronx,Queens,Brooklyn-2020.png": __glob__0_181,
-	"../data/reliefs/Memphis-2000.png": __glob__0_182,
-	"../data/reliefs/Memphis-2020.png": __glob__0_183,
-	"../data/reliefs/Miami-2000.png": __glob__0_184,
-	"../data/reliefs/Miami-2020.png": __glob__0_185,
-	"../data/reliefs/Milwaukee_Co.-2000.png": __glob__0_186,
-	"../data/reliefs/Milwaukee_Co.-2020.png": __glob__0_187,
-	"../data/reliefs/Montgomery-2000.png": __glob__0_188,
-	"../data/reliefs/Montgomery-2020.png": __glob__0_189,
-	"../data/reliefs/New_Orleans-2000.png": __glob__0_190,
-	"../data/reliefs/New_Orleans-2020.png": __glob__0_191,
-	"../data/reliefs/Oakland-2000.png": __glob__0_192,
-	"../data/reliefs/Oakland-2020.png": __glob__0_193,
-	"../data/reliefs/Philadelphia-2000.png": __glob__0_194,
-	"../data/reliefs/Philadelphia-2020.png": __glob__0_195,
-	"../data/reliefs/Portland-2000.png": __glob__0_196,
-	"../data/reliefs/Portland-2020.png": __glob__0_197,
-	"../data/reliefs/Richmond-2000.png": __glob__0_198,
-	"../data/reliefs/Richmond-2020.png": __glob__0_199,
-	"../data/reliefs/Sacramento-2000.png": __glob__0_200,
-	"../data/reliefs/Sacramento-2020.png": __glob__0_201,
-	"../data/reliefs/San_Diego-2000.png": __glob__0_202,
-	"../data/reliefs/San_Diego-2020.png": __glob__0_203,
-	"../data/reliefs/San_Francisco-2000.png": __glob__0_204,
-	"../data/reliefs/San_Francisco-2020.png": __glob__0_205,
-	"../data/reliefs/Savannah-2000.png": __glob__0_206,
-	"../data/reliefs/Savannah-2020.png": __glob__0_207,
-	"../data/reliefs/Seattle-2000.png": __glob__0_208,
-	"../data/reliefs/Seattle-2020.png": __glob__0_209,
-	"../data/reliefs/Sioux_City-2000.png": __glob__0_210,
-	"../data/reliefs/Sioux_City-2020.png": __glob__0_211,
-	"../data/reliefs/St._Louis,East_St._Louis-2000.png": __glob__0_212,
-	"../data/reliefs/St._Louis,East_St._Louis-2020.png": __glob__0_213,
-	"../data/reliefs/St._Paul-2000.png": __glob__0_214,
-	"../data/reliefs/St._Paul-2020.png": __glob__0_215,
-	"../data/reliefs/Syracuse-2000.png": __glob__0_216,
-	"../data/reliefs/Syracuse-2020.png": __glob__0_217,
-	"../data/reliefs/Toledo-2000.png": __glob__0_218,
-	"../data/reliefs/Toledo-2020.png": __glob__0_219,
-	"../data/reliefs/Tulsa-2000.png": __glob__0_220,
-	"../data/reliefs/Tulsa-2020.png": __glob__0_221,
-	"../data/reliefs/Union_Co.-2000.png": __glob__0_222,
-	"../data/reliefs/Union_Co.-2020.png": __glob__0_223
+	"../data/boundaries/Akron.svg": __glob__0_47,
+	"../data/boundaries/Atlanta.svg": __glob__0_48,
+	"../data/boundaries/Austin.svg": __glob__0_49,
+	"../data/boundaries/Baltimore.svg": __glob__0_50,
+	"../data/boundaries/Bergen_Co..svg": __glob__0_51,
+	"../data/boundaries/Birmingham.svg": __glob__0_52,
+	"../data/boundaries/Boston.svg": __glob__0_53,
+	"../data/boundaries/Cambridge.svg": __glob__0_54,
+	"../data/boundaries/Chicago.svg": __glob__0_55,
+	"../data/boundaries/Cleveland.svg": __glob__0_56,
+	"../data/boundaries/Dallas.svg": __glob__0_57,
+	"../data/boundaries/Denver.svg": __glob__0_58,
+	"../data/boundaries/Detroit.svg": __glob__0_59,
+	"../data/boundaries/El_Paso.svg": __glob__0_60,
+	"../data/boundaries/Erie.svg": __glob__0_61,
+	"../data/boundaries/Essex_Co..svg": __glob__0_62,
+	"../data/boundaries/Flint.svg": __glob__0_63,
+	"../data/boundaries/Fort_Worth.svg": __glob__0_64,
+	"../data/boundaries/Greater_Kansas_City.svg": __glob__0_65,
+	"../data/boundaries/Greensboro.svg": __glob__0_66,
+	"../data/boundaries/Houston.svg": __glob__0_67,
+	"../data/boundaries/Kenosha.svg": __glob__0_68,
+	"../data/boundaries/Knoxville.svg": __glob__0_69,
+	"../data/boundaries/Little_Rock.svg": __glob__0_70,
+	"../data/boundaries/Los_Angeles.svg": __glob__0_71,
+	"../data/boundaries/Manhattan,Bronx,Queens,Brooklyn.svg": __glob__0_72,
+	"../data/boundaries/Memphis.svg": __glob__0_73,
+	"../data/boundaries/Miami.svg": __glob__0_74,
+	"../data/boundaries/Milwaukee_Co..svg": __glob__0_75,
+	"../data/boundaries/Montgomery.svg": __glob__0_76,
+	"../data/boundaries/New_Orleans.svg": __glob__0_77,
+	"../data/boundaries/Oakland.svg": __glob__0_78,
+	"../data/boundaries/Philadelphia.svg": __glob__0_79,
+	"../data/boundaries/Portland.svg": __glob__0_80,
+	"../data/boundaries/Richmond.svg": __glob__0_81,
+	"../data/boundaries/Sacramento.svg": __glob__0_82,
+	"../data/boundaries/San_Diego.svg": __glob__0_83,
+	"../data/boundaries/San_Francisco.svg": __glob__0_84,
+	"../data/boundaries/Savannah.svg": __glob__0_85,
+	"../data/boundaries/Seattle.svg": __glob__0_86,
+	"../data/boundaries/Sioux_City.svg": __glob__0_87,
+	"../data/boundaries/St._Louis,East_St._Louis.svg": __glob__0_88,
+	"../data/boundaries/St._Louis.svg": __glob__0_89,
+	"../data/boundaries/St._Paul.svg": __glob__0_90,
+	"../data/boundaries/Syracuse.svg": __glob__0_91,
+	"../data/boundaries/Toledo.svg": __glob__0_92,
+	"../data/boundaries/Tulsa.svg": __glob__0_93,
+	"../data/boundaries/Union_Co..svg": __glob__0_94,
+	"../data/charts/Akron-tky.png": __glob__0_95,
+	"../data/charts/Akron.png": __glob__0_96,
+	"../data/charts/Atlanta-tky.png": __glob__0_97,
+	"../data/charts/Atlanta.png": __glob__0_98,
+	"../data/charts/Austin-tky.png": __glob__0_99,
+	"../data/charts/Austin.png": __glob__0_100,
+	"../data/charts/Baltimore-tky.png": __glob__0_101,
+	"../data/charts/Baltimore.png": __glob__0_102,
+	"../data/charts/Bergen_Co.-tky.png": __glob__0_103,
+	"../data/charts/Bergen_Co..png": __glob__0_104,
+	"../data/charts/Birmingham-tky.png": __glob__0_105,
+	"../data/charts/Birmingham.png": __glob__0_106,
+	"../data/charts/Boston-tky.png": __glob__0_107,
+	"../data/charts/Boston.png": __glob__0_108,
+	"../data/charts/Cambridge-tky.png": __glob__0_109,
+	"../data/charts/Cambridge.png": __glob__0_110,
+	"../data/charts/Chicago-tky.png": __glob__0_111,
+	"../data/charts/Chicago.png": __glob__0_112,
+	"../data/charts/Cleveland-tky.png": __glob__0_113,
+	"../data/charts/Cleveland.png": __glob__0_114,
+	"../data/charts/Dallas-tky.png": __glob__0_115,
+	"../data/charts/Dallas.png": __glob__0_116,
+	"../data/charts/Denver-tky.png": __glob__0_117,
+	"../data/charts/Denver.png": __glob__0_118,
+	"../data/charts/Detroit-tky.png": __glob__0_119,
+	"../data/charts/Detroit.png": __glob__0_120,
+	"../data/charts/El_Paso-tky.png": __glob__0_121,
+	"../data/charts/El_Paso.png": __glob__0_122,
+	"../data/charts/Erie-tky.png": __glob__0_123,
+	"../data/charts/Erie.png": __glob__0_124,
+	"../data/charts/Essex_Co.-tky.png": __glob__0_125,
+	"../data/charts/Essex_Co..png": __glob__0_126,
+	"../data/charts/Flint-tky.png": __glob__0_127,
+	"../data/charts/Flint.png": __glob__0_128,
+	"../data/charts/Fort_Worth-tky.png": __glob__0_129,
+	"../data/charts/Fort_Worth.png": __glob__0_130,
+	"../data/charts/Greater_Kansas_City-tky.png": __glob__0_131,
+	"../data/charts/Greater_Kansas_City.png": __glob__0_132,
+	"../data/charts/Greensboro-tky.png": __glob__0_133,
+	"../data/charts/Greensboro.png": __glob__0_134,
+	"../data/charts/Houston-tky.png": __glob__0_135,
+	"../data/charts/Houston.png": __glob__0_136,
+	"../data/charts/Kenosha-tky.png": __glob__0_137,
+	"../data/charts/Kenosha.png": __glob__0_138,
+	"../data/charts/Knoxville-tky.png": __glob__0_139,
+	"../data/charts/Knoxville.png": __glob__0_140,
+	"../data/charts/Little_Rock-tky.png": __glob__0_141,
+	"../data/charts/Little_Rock.png": __glob__0_142,
+	"../data/charts/Los_Angeles-tky.png": __glob__0_143,
+	"../data/charts/Los_Angeles.png": __glob__0_144,
+	"../data/charts/Manhattan,Bronx,Queens,Brooklyn-tky.png": __glob__0_145,
+	"../data/charts/Manhattan,Bronx,Queens,Brooklyn.png": __glob__0_146,
+	"../data/charts/Memphis-tky.png": __glob__0_147,
+	"../data/charts/Memphis.png": __glob__0_148,
+	"../data/charts/Miami-tky.png": __glob__0_149,
+	"../data/charts/Miami.png": __glob__0_150,
+	"../data/charts/Milwaukee_Co.-tky.png": __glob__0_151,
+	"../data/charts/Milwaukee_Co..png": __glob__0_152,
+	"../data/charts/Montgomery-tky.png": __glob__0_153,
+	"../data/charts/Montgomery.png": __glob__0_154,
+	"../data/charts/nation-tky.png": __glob__0_155,
+	"../data/charts/nation.png": __glob__0_156,
+	"../data/charts/New_Orleans-tky.png": __glob__0_157,
+	"../data/charts/New_Orleans.png": __glob__0_158,
+	"../data/charts/Oakland-tky.png": __glob__0_159,
+	"../data/charts/Oakland.png": __glob__0_160,
+	"../data/charts/Philadelphia-tky.png": __glob__0_161,
+	"../data/charts/Philadelphia.png": __glob__0_162,
+	"../data/charts/Portland-tky.png": __glob__0_163,
+	"../data/charts/Portland.png": __glob__0_164,
+	"../data/charts/Richmond-tky.png": __glob__0_165,
+	"../data/charts/Richmond.png": __glob__0_166,
+	"../data/charts/Sacramento-tky.png": __glob__0_167,
+	"../data/charts/Sacramento.png": __glob__0_168,
+	"../data/charts/San_Diego-tky.png": __glob__0_169,
+	"../data/charts/San_Diego.png": __glob__0_170,
+	"../data/charts/San_Francisco-tky.png": __glob__0_171,
+	"../data/charts/San_Francisco.png": __glob__0_172,
+	"../data/charts/Savannah-tky.png": __glob__0_173,
+	"../data/charts/Savannah.png": __glob__0_174,
+	"../data/charts/Seattle-tky.png": __glob__0_175,
+	"../data/charts/Seattle.png": __glob__0_176,
+	"../data/charts/Sioux_City-tky.png": __glob__0_177,
+	"../data/charts/Sioux_City.png": __glob__0_178,
+	"../data/charts/St._Louis-tky.png": __glob__0_179,
+	"../data/charts/St._Louis,East_St._Louis-tky.png": __glob__0_180,
+	"../data/charts/St._Louis,East_St._Louis.png": __glob__0_181,
+	"../data/charts/St._Louis.png": __glob__0_182,
+	"../data/charts/St._Paul-tky.png": __glob__0_183,
+	"../data/charts/St._Paul.png": __glob__0_184,
+	"../data/charts/Syracuse-tky.png": __glob__0_185,
+	"../data/charts/Syracuse.png": __glob__0_186,
+	"../data/charts/Toledo-tky.png": __glob__0_187,
+	"../data/charts/Toledo.png": __glob__0_188,
+	"../data/charts/Tulsa-tky.png": __glob__0_189,
+	"../data/charts/Tulsa.png": __glob__0_190,
+	"../data/charts/Union_Co.-tky.png": __glob__0_191,
+	"../data/charts/Union_Co..png": __glob__0_192,
+	"../data/reliefs/Akron-2000.png": __glob__0_193,
+	"../data/reliefs/Akron-2020.png": __glob__0_194,
+	"../data/reliefs/Atlanta-2000.png": __glob__0_195,
+	"../data/reliefs/Atlanta-2020.png": __glob__0_196,
+	"../data/reliefs/Austin-2000.png": __glob__0_197,
+	"../data/reliefs/Austin-2020.png": __glob__0_198,
+	"../data/reliefs/Baltimore-2000.png": __glob__0_199,
+	"../data/reliefs/Baltimore-2020.png": __glob__0_200,
+	"../data/reliefs/Bergen_Co.-2000.png": __glob__0_201,
+	"../data/reliefs/Bergen_Co.-2020.png": __glob__0_202,
+	"../data/reliefs/Birmingham-2000.png": __glob__0_203,
+	"../data/reliefs/Birmingham-2020.png": __glob__0_204,
+	"../data/reliefs/Boston-2000.png": __glob__0_205,
+	"../data/reliefs/Boston-2020.png": __glob__0_206,
+	"../data/reliefs/Cambridge-2000.png": __glob__0_207,
+	"../data/reliefs/Cambridge-2020.png": __glob__0_208,
+	"../data/reliefs/Chicago-2000.png": __glob__0_209,
+	"../data/reliefs/Chicago-2020.png": __glob__0_210,
+	"../data/reliefs/Cleveland-2000.png": __glob__0_211,
+	"../data/reliefs/Cleveland-2020.png": __glob__0_212,
+	"../data/reliefs/Dallas-2000.png": __glob__0_213,
+	"../data/reliefs/Dallas-2020.png": __glob__0_214,
+	"../data/reliefs/Denver-2000.png": __glob__0_215,
+	"../data/reliefs/Denver-2020.png": __glob__0_216,
+	"../data/reliefs/Detroit-2000.png": __glob__0_217,
+	"../data/reliefs/Detroit-2020.png": __glob__0_218,
+	"../data/reliefs/El_Paso-2000.png": __glob__0_219,
+	"../data/reliefs/El_Paso-2020.png": __glob__0_220,
+	"../data/reliefs/Erie-2000.png": __glob__0_221,
+	"../data/reliefs/Erie-2020.png": __glob__0_222,
+	"../data/reliefs/Essex_Co.-2000.png": __glob__0_223,
+	"../data/reliefs/Essex_Co.-2020.png": __glob__0_224,
+	"../data/reliefs/Flint-2000.png": __glob__0_225,
+	"../data/reliefs/Flint-2020.png": __glob__0_226,
+	"../data/reliefs/Fort_Worth-2000.png": __glob__0_227,
+	"../data/reliefs/Fort_Worth-2020.png": __glob__0_228,
+	"../data/reliefs/Greater_Kansas_City-2000.png": __glob__0_229,
+	"../data/reliefs/Greater_Kansas_City-2020.png": __glob__0_230,
+	"../data/reliefs/Greensboro-2000.png": __glob__0_231,
+	"../data/reliefs/Greensboro-2020.png": __glob__0_232,
+	"../data/reliefs/Houston-2000.png": __glob__0_233,
+	"../data/reliefs/Houston-2020.png": __glob__0_234,
+	"../data/reliefs/Kenosha-2000.png": __glob__0_235,
+	"../data/reliefs/Kenosha-2020.png": __glob__0_236,
+	"../data/reliefs/Knoxville-2000.png": __glob__0_237,
+	"../data/reliefs/Knoxville-2020.png": __glob__0_238,
+	"../data/reliefs/Little_Rock-2000.png": __glob__0_239,
+	"../data/reliefs/Little_Rock-2020.png": __glob__0_240,
+	"../data/reliefs/Los_Angeles-2000.png": __glob__0_241,
+	"../data/reliefs/Los_Angeles-2020.png": __glob__0_242,
+	"../data/reliefs/Manhattan,Bronx,Queens,Brooklyn-2000.png": __glob__0_243,
+	"../data/reliefs/Manhattan,Bronx,Queens,Brooklyn-2020.png": __glob__0_244,
+	"../data/reliefs/Memphis-2000.png": __glob__0_245,
+	"../data/reliefs/Memphis-2020.png": __glob__0_246,
+	"../data/reliefs/Miami-2000.png": __glob__0_247,
+	"../data/reliefs/Miami-2020.png": __glob__0_248,
+	"../data/reliefs/Milwaukee_Co.-2000.png": __glob__0_249,
+	"../data/reliefs/Milwaukee_Co.-2020.png": __glob__0_250,
+	"../data/reliefs/Montgomery-2000.png": __glob__0_251,
+	"../data/reliefs/Montgomery-2020.png": __glob__0_252,
+	"../data/reliefs/New_Orleans-2000.png": __glob__0_253,
+	"../data/reliefs/New_Orleans-2020.png": __glob__0_254,
+	"../data/reliefs/Oakland-2000.png": __glob__0_255,
+	"../data/reliefs/Oakland-2020.png": __glob__0_256,
+	"../data/reliefs/Philadelphia-2000.png": __glob__0_257,
+	"../data/reliefs/Philadelphia-2020.png": __glob__0_258,
+	"../data/reliefs/Portland-2000.png": __glob__0_259,
+	"../data/reliefs/Portland-2020.png": __glob__0_260,
+	"../data/reliefs/Richmond-2000.png": __glob__0_261,
+	"../data/reliefs/Richmond-2020.png": __glob__0_262,
+	"../data/reliefs/Sacramento-2000.png": __glob__0_263,
+	"../data/reliefs/Sacramento-2020.png": __glob__0_264,
+	"../data/reliefs/San_Diego-2000.png": __glob__0_265,
+	"../data/reliefs/San_Diego-2020.png": __glob__0_266,
+	"../data/reliefs/San_Francisco-2000.png": __glob__0_267,
+	"../data/reliefs/San_Francisco-2020.png": __glob__0_268,
+	"../data/reliefs/Savannah-2000.png": __glob__0_269,
+	"../data/reliefs/Savannah-2020.png": __glob__0_270,
+	"../data/reliefs/Seattle-2000.png": __glob__0_271,
+	"../data/reliefs/Seattle-2020.png": __glob__0_272,
+	"../data/reliefs/Sioux_City-2000.png": __glob__0_273,
+	"../data/reliefs/Sioux_City-2020.png": __glob__0_274,
+	"../data/reliefs/St._Louis,East_St._Louis-2000.png": __glob__0_275,
+	"../data/reliefs/St._Louis,East_St._Louis-2020.png": __glob__0_276,
+	"../data/reliefs/St._Paul-2000.png": __glob__0_277,
+	"../data/reliefs/St._Paul-2020.png": __glob__0_278,
+	"../data/reliefs/Syracuse-2000.png": __glob__0_279,
+	"../data/reliefs/Syracuse-2020.png": __glob__0_280,
+	"../data/reliefs/Toledo-2000.png": __glob__0_281,
+	"../data/reliefs/Toledo-2020.png": __glob__0_282,
+	"../data/reliefs/Tulsa-2000.png": __glob__0_283,
+	"../data/reliefs/Tulsa-2020.png": __glob__0_284,
+	"../data/reliefs/Union_Co.-2000.png": __glob__0_285,
+	"../data/reliefs/Union_Co.-2020.png": __glob__0_286
 };
 const [reliefs, basemaps, boundaries, charts] = [
   'reliefs',
