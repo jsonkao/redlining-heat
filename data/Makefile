@@ -9,7 +9,10 @@ MAKEFLAGS += -j4
 CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
 	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis,East_St._Louis Milwaukee_Co. San_Francisco \
 	Manhattan,Bronx,Queens,Brooklyn Los_Angeles \
-	Denver Seattle Dallas Tulsa Miami Memphis Flint
+	Denver Seattle Dallas Tulsa Miami Memphis Flint \
+	Kenosha Boston San_Diego Essex_Co. Greater_Kansas_City \
+	Akron Union_Co. Sioux_City Fort_Worth Toledo St._Paul Syracuse Knoxville Erie Montgomery \
+	Little_Rock Sacramento Greensboro El_Paso Savannah Kenosha Cambridge
 
 # Years to generate temperature maps for
 YEARS = 2000 2020
