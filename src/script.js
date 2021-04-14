@@ -1,5 +1,6 @@
 const cityNameMods = {
-  'Manhattan,Bronx,Queens,Brooklyn': 'New York',
+  'Manhattan,Bronx,Queens,Brooklyn': 'New York City',
+  'Greater Kansas City': 'Kansas City',
   'St. Louis,East St. Louis': 'St. Louis',
 };
 
