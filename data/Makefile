@@ -161,7 +161,7 @@ folders:
 	mkdir -p $(ALL_FOLDERS)
 
 clean:
-	rm -rf $(ALL_FOLDERS) tukeyResults.json
+	rm -rf $(ALL_FOLDERS)
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
@@ -173,7 +173,7 @@ keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CI
 
 charts: folders $(CITIES:%=$(CHART_DIR)/%.png) $(CHART_DIR)/nation.png
 
-tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json) tukeyResults.json
+tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json)
 
 $(CHART_DIR)/%.png:
 	Rscript ../r/runTukey.r $(notdir $(basename $@)) > /dev/null
