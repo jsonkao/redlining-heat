@@ -50,6 +50,7 @@ function retrieveTemperatures(bbox, boundary, year, city) {
   const [collection, lst_calc] = {
     2020: [ee.ImageCollection('LANDSAT/LC08/C01/T1'), lst_calc_ls8],
     2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), lst_calc_ls7],
+    1990: [ee.ImageCollection('LANDSAT/LT05/C01/T1'), geet.lst_calc_ls5],
   }[year];
   const filtered = collection
     .filterBounds(bbox)

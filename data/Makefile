@@ -15,7 +15,7 @@ CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Aus
 	Little_Rock Sacramento Greensboro El_Paso Savannah Kenosha Cambridge
 
 # Years to generate temperature maps for
-YEARS = 2000 2020
+YEARS = 2000 2020 1990
 
 # Width of PNG assets
 WIDTH = 3000
@@ -76,6 +76,12 @@ $(TEMP_DIR)/%-2000.tif:
 # Haven't figured out how to do the double wildcard on years yet
 $(TEMP_DIR)/%-2020.tif:
 	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 2020 \
+	| xargs -n1 wget -O $@.zip \
+	&& unzip -p $@.zip > $@ \
+	&& rm $@.zip
+# Haven't figured out how to do the double wildcard on years yet
+$(TEMP_DIR)/%-1990.tif:
+	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 1990 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
