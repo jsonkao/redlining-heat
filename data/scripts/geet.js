@@ -1547,7 +1547,7 @@ var collection2image = function (image, previous) {
   AL           = Band-specific additive rescaling factor from the metadata (RADIANCE_ADD_BAND_x, where x is the band number)
   Qcal         = Quantized and calibrated standard product pixel values (DN)
 */
-var toa_radiance = function (image, band) {
+var toa_radiance = function (image, band, isLS5) {
     // Error Handling
     if (image === undefined) error('toa_radiance', 'You need to specify an input image.');
     if (band === undefined) error('toa_radiance', 'You need to specify the number of the band that you want to process.');
@@ -1557,7 +1557,7 @@ var toa_radiance = function (image, band) {
     var radiance_add_band = ee.Number(image.get('RADIANCE_ADD_BAND_' + band.toString())); // Al
 
     // Landsat 7 special case
-    if (band === 6) {
+    if (band === 6 && !isLS5) {
       //var id = ee.String(image.get('LANDSAT_PRODUCT_ID'))
       //var id_split = id.split("_")
       //if (ee.String(id_split.get(0)).getInfo() === "LE07") {
@@ -3435,7 +3435,7 @@ var surface_temperature_oli = function (image) {
   http://www.jestr.org/downloads/Volume8Issue3/fulltext83122015.pdf
 */
 var lst_calc_ls5 = function (image) {
-    var toa = toa_radiance(image, 6);
+    var toa = toa_radiance(image, 6, true);
     var ndvi = ndvi_l5(toa);
     var bt = brightness_temp_l5c(ndvi, true);
     var propVeg = prop_veg(bt);
