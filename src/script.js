@@ -1,9 +1,3 @@
-const cityNameMods = {
-  'Manhattan,Bronx,Queens,Brooklyn': 'New York City',
-  'Greater Kansas City': 'Kansas City',
-  'St. Louis,East St. Louis': 'St. Louis',
-};
-
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.globEager('../data/**/*.{png,svg}');
 const [reliefs, basemaps, boundaries, charts] = [
@@ -20,17 +14,31 @@ const [reliefs, basemaps, boundaries, charts] = [
     }, {}),
 );
 
-const cities = [...new Set(Object.keys(reliefs).map(f => f.split('-')[0]))];
+const fNames = Object.keys(reliefs).map(f => f.split('-'));
+const cities = [...new Set(fNames.map(n => n[0]))];
+const years = [...new Set(fNames.map(n => +n[1].substring(0, 4)))];
+
 const map = document.getElementById('map');
 const variableCitySpans = document.getElementsByClassName('variable-city');
 
 /* Dropdown setup */
 
+// Get pretty name from a city value
+const cityNameMods = {
+  'Manhattan,Bronx,Queens,Brooklyn': 'New York City',
+  'Greater Kansas City': 'Kansas City',
+  'St. Louis,East St. Louis': 'St. Louis',
+};
+function getName(rawValue) {
+  const value = ('' + rawValue).replace(/_/g, ' ');
+  return cityNameMods[value] || value;
+}
+
 const citySelector = document.getElementById('city-select');
 const yearSelector = document.getElementById('year-select');
 [
   [citySelector, cities],
-  [yearSelector, [2000, 2020]],
+  [yearSelector, years],
 ].forEach(([selector, options]) => {
   options.forEach(value => {
     const option = document.createElement('option');
@@ -39,12 +47,6 @@ const yearSelector = document.getElementById('year-select');
     selector.append(option);
   });
 });
-
-// Get pretty name from a city value
-function getName(rawValue) {
-  const value = ('' + rawValue).replace(/_/g, ' ');
-  return cityNameMods[value] || value;
-}
 
 /* Primary change function */
 
