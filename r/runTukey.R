@@ -12,7 +12,8 @@ data <- inner_join(
   read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
   rbind(
     fromJSON('../data/task-exports/temperatures-2020.json'),
-    fromJSON('../data/task-exports/temperatures-2000.json')
+    fromJSON('../data/task-exports/temperatures-2000.json'),
+    fromJSON('../data/task-exports/temperatures-1990.json')
   ),
   by = c('neighborho' = 'id')
 ) %>%
@@ -27,18 +28,19 @@ WILDCARD <- 'nation'
 runTukey <- function(arg) {
   output <- list()
   tkyPlots <- list()
-  for (theYear in c(2000, 2020)) {
+  for (theYear in c(1990, 2000, 2020)) {
     filteredData <- data %>%
       filter(year == theYear) %>%
-      filter(if (arg == WILDCARD) T else city %in% strsplit(arg, ',')[[1]]) %>%
+      filter(if (arg == WILDCARD)
+        T
+        else
+          city %in% strsplit(arg, ',')[[1]]) %>%
       filter(!is.na(temperature)) %>%
       mutate(city = arg)
-
+    
     if (nrow(filteredData) == 0)
       next
-    tky <- as.data.frame(TukeyHSD(aov(
-      temperature ~ holc_grade, data = filteredData
-    ))$holc_grade)
+    tky <- as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = filteredData))$holc_grade)
     tky$pair <- rownames(tky)
     tkyPlots[[length(tkyPlots) + 1]] <-
       ggplot(tky, aes(colour = cut(
@@ -62,11 +64,20 @@ runTukey <- function(arg) {
     tkyPlot <- tkyPlots[[1]]
   } else {
     tkyPlot <-
-      plot_grid(tkyPlots[[1]], tkyPlots[[2]], labels = c('2000', '2020'))
+      plot_grid(
+        tkyPlots[[1]],
+        tkyPlots[[2]],
+        tkyPlots[[3]],
+        labels = c('1990', '2000', '2020'),
+        nrow = 1
+      )
   }
   
   plot <- data %>%
-    filter(if (arg == WILDCARD) T else city %in% strsplit(arg, ',')[[1]]) %>%
+    filter(if (arg == WILDCARD)
+      T
+      else
+        city %in% strsplit(arg, ',')[[1]]) %>%
     filter(!is.na(temperature)) %>%
     ggplot(aes(temperature, fill = holc_grade)) +
     geom_density(alpha = 0.6) +
@@ -86,7 +97,7 @@ runTukey <- function(arg) {
   if (arg == WILDCARD) {
     plot <- plot + coord_cartesian(xlim = c(40, 120))
   }
-
+  
   ggsave(
     paste0(gsub(' ', '_', arg), '.png'),
     plot,
@@ -102,11 +113,11 @@ runTukey <- function(arg) {
     tkyPlot,
     device = 'png',
     path = 'charts/',
-    width = 9,
+    width = 11.5,
     height = 4.5,
     units = 'in'
   )
-
+  
   output
 }
 

@@ -32,6 +32,11 @@ function lst_calc_ls8(image) {
   return lst;
 }
 
+// Return a filter for the summer of a particular year
+function inSummer(year) {
+  return ee.Filter.date(year + '-06-01', year + '-08-31');
+}
+
 // Get bits in BQA band
 function getQABits(image, start, end, newName) {
   // Compute the bits we need to extract.
@@ -52,9 +57,9 @@ function retrieveTemperatures(bbox, boundary, year, city) {
     2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), lst_calc_ls7],
     1990: [ee.ImageCollection('LANDSAT/LT05/C01/T1'), geet.lst_calc_ls5],
   }[year];
-  const filtered = collection
+  const images = collection
     .filterBounds(bbox)
-    .filterDate(year + '-06-01', year + '-08-31')
+    .filter(ee.Filter.or(inSummer(year), inSummer(year - 1), inSummer(year + 1)))
     .map(function (image) {
       var bqa = getQABits(image.select('BQA'), 4, 4, 'cloud');
       var reducers = ee.Reducer.sum().combine({
@@ -78,9 +83,13 @@ function retrieveTemperatures(bbox, boundary, year, city) {
           .Number(stats.get('cloud_sum'))
           .divide(ee.Number(stats.get('cloud_count'))),
       });
-    })
-    .filter(ee.Filter.lte('proportionCloud', 0.4));
-  console.error(city, year, filtered.size().getInfo());
+    });
+  let cloudThreshold = 0.1;
+  let filtered = images.filter(ee.Filter.lte('proportionCloud', cloudThreshold));
+  while (filtered.size().getInfo() === 0) {
+    filtered = images.filter(ee.Filter.lte('proportionCloud', cloudThreshold += 0.1));
+  }
+  console.error(`\n${city}-${year}: ${filtered.size().getInfo()} at threshold ${cloudThreshold}\n`);
   return filtered
     .map(image =>
       lst_calc(image)
@@ -89,7 +98,7 @@ function retrieveTemperatures(bbox, boundary, year, city) {
         .add(32)
         .rename(year),
     )
-    .mean();
+    .median();
 }
 
 module.exports = {
