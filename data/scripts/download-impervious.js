@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const ee = require('@google/earthengine');
-const { run, retrieveTemperatures } = require('./utils.js');
+const { run } = require('./utils.js');
 
 function main() {
   const targetName = './' + process.argv[2];
