@@ -41,6 +41,9 @@ TEMP_DIR = gee-temperatures
 COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
+# Impervious surfaces data
+IMPERVIOUS_DIR = impervious
+
 # Others
 HOLC_DIR = boundaries
 CHART_DIR = charts
@@ -82,6 +85,13 @@ $(TEMP_DIR)/%-2020.tif:
 # Haven't figured out how to do the double wildcard on years yet
 $(TEMP_DIR)/%-1990.tif:
 	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 1990 \
+	| xargs -n1 wget -O $@.zip \
+	&& unzip -p $@.zip > $@ \
+	&& rm $@.zip
+
+# Impervious surfaces
+$(IMPERVIOUS_DIR)/%.tif:
+	node $(SCRIPT_DIR)/download-impervious.js $@ city-bbox-index.json \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
