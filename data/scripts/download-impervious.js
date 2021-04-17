@@ -6,12 +6,11 @@ const { run } = require('./utils.js');
 function main() {
   const targetName = './' + process.argv[2];
   const city = path.basename(targetName, '.tif').replace(/_/g, ' ');
-  console.error('city :>> ', targetName, city);
   const bbox = ee.Geometry.Rectangle(
     JSON.parse(fs.readFileSync('./' + process.argv[3]))[city],
   );
 
-  const dataset = ee.Image('Tsinghua/FROM-GLC/GAIA/v10');
+  const dataset = ee.Image('Tsinghua/FROM-GLC/GAIA/v10').neq(0);
 
   // Mask the image
   var mask = ee
