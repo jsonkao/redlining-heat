@@ -59,7 +59,7 @@ function retrieveTemperatures(bbox, boundary, year, city) {
   }[year];
   const images = collection
     .filterBounds(bbox)
-    .filter(ee.Filter.or(inSummer(year), inSummer(year - 1), inSummer(year + 1)))
+    .filter(ee.Filter.or(...[year-1, year, year+1].map(inSummer)))
     .map(function (image) {
       var bqa = getQABits(image.select('BQA'), 4, 4, 'cloud');
       var reducers = ee.Reducer.sum().combine({
