@@ -6,23 +6,8 @@ MAKEFLAGS += -j4
 
 # Cities to generate maps/data for. Replace any spaces in city names with
 # underscores. To group cities, use commas.
-CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Austin Houston \
-	Portland Oakland Cleveland Birmingham Bergen_Co. St._Louis,East_St._Louis Milwaukee_Co. San_Francisco \
-	Manhattan,Bronx,Queens,Brooklyn Los_Angeles \
-	Denver Seattle Dallas Tulsa Miami Memphis Flint \
-	Kenosha Boston San_Diego Essex_Co. Greater_Kansas_City \
-	Akron Union_Co. Sioux_City Fort_Worth Toledo St._Paul Syracuse Knoxville Erie Montgomery \
-	Little_Rock Sacramento Greensboro El_Paso Savannah Kenosha Cambridge \
-	Jacksonville Chattanooga Indianapolis Joliet Youngstown Fort_Wayne \
-	Terre_Haute Decatur Wichita Warren Battle_Creek Bay_City \
-	South_Bend Dayton Grand_Rapids Portsmouth Racine Muskegon Kalamazoo Hamilton \
-	Rochester@NY Trenton Camden Utica Stamford \
-	New_Britain Holyoke_Chicopee Haverhill Manchester Altoona Buffalo Brockton San_Jose Niagara_Falls \
-	Johnson_City Fresno Spokane Stockton Tacoma Roanoke Louisville Charlotte  Poughkeepsie \
-	Lexington@KY Macon Durham Augusta Norfolk Winston-Salem Charleston Columbus@OH New_Haven
 CITIES := $(shell cat all_cities.txt)
-tk: 
-	@echo $(CITIES)
+
 # Years to generate temperature maps for
 YEARS = 2000 2020 1990
 
