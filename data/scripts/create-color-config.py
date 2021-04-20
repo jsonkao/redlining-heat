@@ -10,7 +10,7 @@ import sys
 
 tempTifName = sys.argv[1]
 stem = Path(tempTifName).stem
-[city, year] = stem.replace("_", " ").split("-")
+[city, year] = stem.replace("_", " ").rsplit("-", 1)
 
 # Cut temperature data according to city boundary
 ds = Warp(
