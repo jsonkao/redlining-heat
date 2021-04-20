@@ -20,8 +20,9 @@ CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Aus
 	New_Britain Holyoke_Chicopee Haverhill Manchester Altoona Buffalo Brockton San_Jose Niagara_Falls \
 	Johnson_City Fresno Spokane Stockton Tacoma Roanoke Louisville Charlotte  Poughkeepsie \
 	Lexington@KY Macon Durham Augusta Norfolk Winston-Salem Charleston Columbus@OH New_Haven
-
-
+CITIES := $(shell cat all_cities.txt)
+tk: 
+	@echo $(CITIES)
 # Years to generate temperature maps for
 YEARS = 2000 2020 1990
 
@@ -223,15 +224,12 @@ check-unique:
 	-o - format=geojson \
 	| python3 $(SCRIPT_DIR)/check-unique.py $(CITIES)
 
-ls-cities:
+all_cities.txt: Makefile
 	mapshaper $(SHAPEFILE) \
 	-dissolve city,state \
 	-o - format=geojson \
-	| python3 $(SCRIPT_DIR)/list-cities.py $(CITIES)
-
-%.check-unique:
-	@echo $(basename $@)
-	@echo $(shell mapshaper $(SHAPEFILE) -filter "'$(basename $@)'.replace(/_/g,' ').split(',').includes(city)" -uniq state -calc 'count()' 2>&1 | tail -n1 | cut -c 18-) $(basename $@)
+	| python3 $(SCRIPT_DIR)/list-cities.py \
+	> $@
 
 #
 # Directly modify shapefile to simplify and de-duplicy some city names
@@ -248,5 +246,6 @@ $(SHAPEFILE): holc-shapefile/holc_ad_data.shp rm-shapefile
 	-each 'city = city.includes("Stamford") ? "Stamford" : city' \
 	-each 'city = city.includes("Binghamton-Johnson") ? "Johnson City" : city' \
 	-each 'city = ["Lexington", "Rochester", "Columbus", "Springfield", "Jackson"].includes(city) ? city + "@" + state : city' \
+	-each 'city = city.replace("&", "and")' \
 	-drop fields=area_descr \
 	-o $@

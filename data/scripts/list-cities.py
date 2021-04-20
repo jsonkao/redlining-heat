@@ -6,7 +6,9 @@ geojson = json.loads("".join(sys.stdin.readlines()))
 locations = [f["properties"] for f in geojson["features"]]
 
 groups = ["Manhattan,Bronx,Queens,Brooklyn", "St. Louis,East St. Louis"]
-cities = groups + [loc["city"] for loc in locations if loc["city"] not in ''.join(groups)]
+cities = groups + [
+    loc["city"] for loc in locations if loc["city"] not in "".join(groups)
+]
 
 for i, city in enumerate(cities):
     # Ignore intentional groupings
@@ -25,5 +27,4 @@ for i, city in enumerate(cities):
                     if word in loc["city"]:
                         print("  -", loc["city"], loc["state"], file=sys.stderr)
 
-print(" ".join(c.replace(" ", "_") for c in cities))
-print(len(cities))
+print(" ".join(c.replace(" ", "_") for c in cities), end="")
