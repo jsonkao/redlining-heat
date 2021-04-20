@@ -11,7 +11,14 @@ input_name = sys.argv[1]
 output_name = sys.argv[2]
 
 # Get geographic extent (bbox)
-city = Path(input_name).stem.replace("_", " ").split("-")[0]
+fname_components = Path(input_name).stem.replace("_", " ").split("-")
+try:
+    int(fname_components[-1])
+    city = "-".join(fname_components[:-1])
+except:
+    # Not a year
+    city = "-".join(fname_components)
+
 with open("city-bbox-index.json") as f:
     [xmin, ymin, xmax, ymax] = json.load(f)[city]
 
@@ -37,7 +44,7 @@ def progress_callback(complete, message, unknown):
 
 
 # Either just print the proj string, or complete the warp
-if output_name == "--just-proj":
+if output_name == "--proj4":
     sys.stdout.write(proj_string)
 else:
     Warp(
@@ -46,6 +53,6 @@ else:
         width=sys.argv[3],
         height=0,
         dstSRS=proj_string,
-        resampleAlg="bilinear",
+        # resampleAlg="bilinear",
         callback=progress_callback,
     )

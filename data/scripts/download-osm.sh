@@ -21,5 +21,5 @@ do
   echo "=== Downloading $city ==="
   wget -O $outFile $query\&bbox=$(jq -r ".\"${city//_/ }\" | join(\",\")" city-bbox-index.json)
   [[ $? -ne 0 ]] && rm $outFile
-  sleep 5
+  sleep 7
 done

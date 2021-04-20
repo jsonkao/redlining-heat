@@ -17,9 +17,9 @@ CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Aus
 	Terre_Haute Decatur Wichita Warren Battle_Creek Bay_City \
 	South_Bend Dayton Grand_Rapids Portsmouth Racine Muskegon Kalamazoo Hamilton \
 	Rochester@NY Trenton Camden Utica Stamford \
-	New_Britain New_Haven Holyoke_Chicopee Haverhill Manchester Altoona Poughkeepsie Buffalo Brockton \
-	Niagara_Falls Johnson_City Fresno San_Jose Spokane Stockton Tacoma Roanoke Louisville Charlotte \
-	Lexington@KY Macon Durham Augusta Norfolk Winston-Salem Charleston Columbus@OH \
+	New_Britain Holyoke_Chicopee Haverhill Manchester Altoona Buffalo Brockton San_Jose Niagara_Falls \
+	Johnson_City Fresno Spokane Stockton Tacoma Roanoke Louisville Charlotte  Poughkeepsie \
+	Lexington@KY Macon Durham Augusta Norfolk Winston-Salem Charleston Columbus@OH New_Haven
 
 
 # Years to generate temperature maps for
@@ -133,7 +133,7 @@ $(OSM_GEO_DIR)/%.geojson: $(OSM_DIR)/%.osm
 $(HOLC_DIR)/%.svg: $(SHAPEFILE)
 	mapshaper $< \
 	-filter '("$(notdir $(basename $@))".replace(/_/g," ").split(",").includes(city)) && holc_grade != "E"' \
-	-proj $(shell python3 $(SCRIPT_DIR)/project.py $@ --just-proj) \
+	-proj $(shell python3 $(SCRIPT_DIR)/project.py $@ --proj4) \
 	-split holc_grade \
 	-o $@ width=$(WIDTH) svg-data=holc_grade precision=0.1 target=*
 
@@ -220,8 +220,14 @@ $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 check-unique:
 	mapshaper $(SHAPEFILE) \
 	-dissolve city,state \
-	-o - format=geojson encoding=utf8 2> /dev/null \
+	-o - format=geojson \
 	| python3 $(SCRIPT_DIR)/check-unique.py $(CITIES)
+
+ls-cities:
+	mapshaper $(SHAPEFILE) \
+	-dissolve city,state \
+	-o - format=geojson \
+	| python3 $(SCRIPT_DIR)/list-cities.py $(CITIES)
 
 %.check-unique:
 	@echo $(basename $@)
@@ -236,10 +242,11 @@ shapefile: rm-shapefile $(SHAPEFILE)
 rm-shapefile:
 	rm $(SHAPEFILE)
 
+# Modifies original shapefile to remove commas from Stamford, rename Johnson, and disambiguate some cities
 $(SHAPEFILE): holc-shapefile/holc_ad_data.shp rm-shapefile
 	mapshaper $< \
 	-each 'city = city.includes("Stamford") ? "Stamford" : city' \
 	-each 'city = city.includes("Binghamton-Johnson") ? "Johnson City" : city' \
-	-each 'city = ["Lexington", "Rochester", "Columbus"].includes(city) ? city + "@" + state : city' \
+	-each 'city = ["Lexington", "Rochester", "Columbus", "Springfield", "Jackson"].includes(city) ? city + "@" + state : city' \
 	-drop fields=area_descr \
 	-o $@
