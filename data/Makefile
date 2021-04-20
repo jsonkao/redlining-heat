@@ -12,7 +12,15 @@ CITIES = Philadelphia Richmond Detroit Baltimore Chicago New_Orleans Atlanta Aus
 	Denver Seattle Dallas Tulsa Miami Memphis Flint \
 	Kenosha Boston San_Diego Essex_Co. Greater_Kansas_City \
 	Akron Union_Co. Sioux_City Fort_Worth Toledo St._Paul Syracuse Knoxville Erie Montgomery \
-	Little_Rock Sacramento Greensboro El_Paso Savannah Kenosha Cambridge
+	Little_Rock Sacramento Greensboro El_Paso Savannah Kenosha Cambridge \
+	Jacksonville Chattanooga Indianapolis Joliet Youngstown Fort_Wayne \
+	Terre_Haute Decatur Wichita Warren Battle_Creek Bay_City \
+	South_Bend Dayton Grand_Rapids Portsmouth Racine Muskegon Kalamazoo Hamilton \
+	Rochester@NY Trenton Camden Utica Stamford \
+	New_Britain New_Haven Holyoke_Chicopee Haverhill Manchester Altoona Poughkeepsie Buffalo Brockton \
+	Niagara_Falls Johnson_City Fresno San_Jose Spokane Stockton Tacoma Roanoke Louisville Charlotte \
+	Lexington@KY Macon Durham Augusta Norfolk Winston-Salem Charleston Columbus@OH \
+
 
 # Years to generate temperature maps for
 YEARS = 2000 2020 1990
@@ -47,7 +55,7 @@ IMPERVIOUS_DIR = impervious
 # Others
 HOLC_DIR = boundaries
 CHART_DIR = charts
-SHAPEFILE = holc-shapefile/holc_ad_data.shp
+SHAPEFILE = holc-shapefile/holc_ad_data_adjusted.shp
 
 
 tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
@@ -122,7 +130,7 @@ $(OSM_GEO_DIR)/%.geojson: $(OSM_DIR)/%.osm
 # HOLC vector layer
 #
 
-$(HOLC_DIR)/%.svg: $(SHAPEFILE) Makefile
+$(HOLC_DIR)/%.svg: $(SHAPEFILE)
 	mapshaper $< \
 	-filter '("$(notdir $(basename $@))".replace(/_/g," ").split(",").includes(city)) && holc_grade != "E"' \
 	-proj $(shell python3 $(SCRIPT_DIR)/project.py $@ --just-proj) \
@@ -141,9 +149,11 @@ downloads:
 # Useful reference files
 #
 
+city-reference: city-bbox-index.json city-boundaries.json
+
 # The bbox of each city is used to download temperature and OSM data
-city-bbox-index.json: $(SCRIPT_DIR)/custom-merges.js
-	mapshaper $(SHAPEFILE) -split city -o format=geojson bbox-index extension='tmp'
+city-bbox-index.json: $(SHAPEFILE) $(SCRIPT_DIR)/custom-merges.js
+	mapshaper $< -split city -o format=geojson bbox-index extension='tmp'
 	rm *.tmp
 	cat bbox-index.json \
 	| ndjson-split \
@@ -159,8 +169,8 @@ FILTER_LIST = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
 # I filter all cities for those with commas in them, and assign the city of any
 # polygons within those cities to be the comma-connected conglomerate.
 # I dissolve each city into one boundary and drop any holes to prevent GDAL errors.
-city-boundaries.json:
-	$(shell mapshaper $(SHAPEFILE) \
+city-boundaries.json: $(SHAPEFILE)
+	$(shell mapshaper $< \
 		$(foreach c, $(call FILTER_LIST,$(comma), $(CITIES)), $(subst CITY,$(c),-each \"city=\'CITY\'.includes\(city.replace\(/\\s/g,\'_\'\)\)?\'CITY\':city\")) \
 		-dissolve city \
 		-clean \
@@ -207,7 +217,28 @@ $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 # Utility for checking whether city names are unique
 #
 
-check-unique: $(CITIES:%=%.check-unique)
+check-unique:
+	mapshaper $(SHAPEFILE) \
+	-dissolve city,state \
+	-o - format=geojson encoding=utf8 2> /dev/null \
+	| python3 $(SCRIPT_DIR)/check-unique.py $(CITIES)
 
 %.check-unique:
+	@echo $(basename $@)
 	@echo $(shell mapshaper $(SHAPEFILE) -filter "'$(basename $@)'.replace(/_/g,' ').split(',').includes(city)" -uniq state -calc 'count()' 2>&1 | tail -n1 | cut -c 18-) $(basename $@)
+
+#
+# Directly modify shapefile to simplify and de-duplicy some city names
+#
+
+shapefile: rm-shapefile $(SHAPEFILE)
+
+rm-shapefile:
+	rm $(SHAPEFILE)
+
+$(SHAPEFILE): holc-shapefile/holc_ad_data.shp rm-shapefile
+	mapshaper $< \
+	-each 'city = city.includes("Stamford") ? "Stamford" : city' \
+	-each 'city = city.includes("Binghamton-Johnson") ? "Johnson City" : city' \
+	-each 'city = ["Lexington", "Rochester", "Columbus"].includes(city) ? city + "@" + state : city' \
+	-o $@
