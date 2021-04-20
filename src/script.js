@@ -35,6 +35,8 @@ const cityNameMods = {
   'Manhattan,Bronx,Queens,Brooklyn': 'New York City',
   'Greater Kansas City': 'Kansas City',
   'St. Louis,East St. Louis': 'St. Louis',
+  'Pawtucket and Central Falls': 'Pawtucket',
+
 };
 function getName(rawValue) {
   const value = ('' + rawValue).replace(/_/g, ' ').replace('@', ', ');
