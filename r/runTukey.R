@@ -9,7 +9,7 @@ suppressPackageStartupMessages(library(dplyr))
 cities <- commandArgs(trailingOnly = TRUE)
 
 data <- inner_join(
-  read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
+  read.dbf('../data/holc-shapefile/holc_ad_data_adjusted.dbf'),
   rbind(
     fromJSON('../data/task-exports/temperatures-2020.json'),
     fromJSON('../data/task-exports/temperatures-2000.json'),
@@ -28,6 +28,7 @@ WILDCARD <- 'nation'
 runTukey <- function(arg) {
   output <- list()
   tkyPlots <- list()
+  datafulYears <- list()
   for (theYear in c(1990, 2000, 2020)) {
     filteredData <- data %>%
       filter(year == theYear) %>%
@@ -37,9 +38,12 @@ runTukey <- function(arg) {
           city %in% strsplit(arg, ',')[[1]]) %>%
       filter(!is.na(temperature)) %>%
       mutate(city = arg)
-    
-    if (nrow(filteredData) == 0)
+
+    if (nrow(filteredData) == 0) {
       next
+    } else {
+      datafulYears <- as.character(theYear)
+    }
     tky <- as.data.frame(TukeyHSD(aov(temperature ~ holc_grade, data = filteredData))$holc_grade)
     tky$pair <- rownames(tky)
     tkyPlots[[length(tkyPlots) + 1]] <-
@@ -59,20 +63,28 @@ runTukey <- function(arg) {
       labs(y = 'Difference in temperature', x = 'Pair')
     output[[as.character(theYear)]] <- tky
   }
-  
-  if (length(tkyPlots) < 2) {
+
+  if (length(tkyPlots) == 1) {
     tkyPlot <- tkyPlots[[1]]
+  } else if (length(tkyPlots) == 2) {
+    tkyPlot <-
+      plot_grid(
+        tkyPlots[[1]],
+        tkyPlots[[2]],
+        labels = unlist(datafulYears),
+        nrow = 1
+      )
   } else {
     tkyPlot <-
       plot_grid(
         tkyPlots[[1]],
         tkyPlots[[2]],
         tkyPlots[[3]],
-        labels = c('1990', '2000', '2020'),
+        labels = unlist(datafulYears),
         nrow = 1
       )
   }
-  
+
   plot <- data %>%
     filter(if (arg == WILDCARD)
       T
@@ -97,7 +109,7 @@ runTukey <- function(arg) {
   if (arg == WILDCARD) {
     plot <- plot + coord_cartesian(xlim = c(40, 120))
   }
-  
+
   ggsave(
     paste0(gsub(' ', '_', arg), '.png'),
     plot,
@@ -117,7 +129,7 @@ runTukey <- function(arg) {
     height = 4.5,
     units = 'in'
   )
-  
+
   output
 }
 
