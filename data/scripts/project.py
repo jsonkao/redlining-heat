@@ -39,7 +39,7 @@ proj_string = (
 # Callback function for keeping track of progress
 def progress_callback(complete, message, unknown):
     pct = round(complete * 100)
-    if pct % 20 == 0:
+    if pct % 50 == 0:
         print(f"[{output_name}] {pct}%")
 
 

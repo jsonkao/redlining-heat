@@ -51,7 +51,10 @@ function getQABits(image, start, end, newName) {
 
 // Filter images by time and cloud cover
 // Map LST computation across images. Take the mean for overlaps
-function retrieveTemperatures(bbox, boundary, year, city) {
+function retrieveTemperatures(bbox, boundary, year, city, yearDiff=1) {
+  const years = [];
+  for (let i = -yearDiff; i <= yearDiff; i++)
+    years.push((+year + i).toString());
   const [collection, lst_calc] = {
     2020: [ee.ImageCollection('LANDSAT/LC08/C01/T1'), lst_calc_ls8],
     2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), lst_calc_ls7],
@@ -59,7 +62,7 @@ function retrieveTemperatures(bbox, boundary, year, city) {
   }[year];
   const images = collection
     .filterBounds(bbox)
-    .filter(ee.Filter.or(...[year-1, year, year+1].map(inSummer)))
+    .filter(ee.Filter.or(...years.map(inSummer)))
     .map(function (image) {
       var bqa = getQABits(image.select('BQA'), 4, 4, 'cloud');
       var reducers = ee.Reducer.sum().combine({
@@ -86,8 +89,14 @@ function retrieveTemperatures(bbox, boundary, year, city) {
     });
   let cloudThreshold = 0.1;
   let filtered = images.filter(ee.Filter.lte('proportionCloud', cloudThreshold));
-  while (filtered.size().getInfo() === 0) {
+  let filteredSize = filtered.size().getInfo();
+  while (filteredSize === 0) {
+    if (cloudThreshold >= 0.4) {
+      console.error(`\n${city}-${year}: Retrying with yearDiff=${yearDiff + 1}`);
+      return retrieveTemperatures(bbox, boundary, year, city, yearDiff + 1)
+    }
     filtered = images.filter(ee.Filter.lte('proportionCloud', cloudThreshold += 0.1));
+    filteredSize = filtered.size().getInfo();
   }
   console.error(`\n${city}-${year}: ${filtered.size().getInfo()} at threshold ${cloudThreshold}\n`);
   return filtered
