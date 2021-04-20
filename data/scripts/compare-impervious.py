@@ -31,7 +31,7 @@ ds_imp = Warp(
     cutlineDSName=sys.argv[3],
     cutlineWhere=f"city = '{city}'",
     cropToCutline=True,
-    dstNodata=0
+    dstNodata=0,
 )
 
 # Get bands. For temperature data, mask band according to NoData values
@@ -49,4 +49,4 @@ temp_imp = temp_values.copy()
 temp_imp.mask = imp_mask
 temp_values.mask = no_imp_mask
 result = stats.ttest_ind(temp_imp, temp_values, axis=None)
-print('t-test result:', result)
+print("t-test result:", result)

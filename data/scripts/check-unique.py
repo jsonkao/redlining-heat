@@ -20,8 +20,8 @@ for city in sys.argv[1:]:
     if len(states) != 1:
         print(city, states)
     if len(states) == 0:
-        print('  Possible matches:')
+        print("  Possible matches:")
         for word in city.split(" "):
             for loc in locations:
                 if word in loc["city"]:
-                    print('  -', loc["city"], loc["state"])
+                    print("  -", loc["city"], loc["state"])
