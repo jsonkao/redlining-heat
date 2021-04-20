@@ -188,7 +188,7 @@ charts: folders $(CITIES:%=$(CHART_DIR)/%.png) $(CHART_DIR)/nation.png
 tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json)
 
 $(CHART_DIR)/%.png:
-	Rscript ../r/runTukey.r $(notdir $(basename $@)) > /dev/null
+	- Rscript ../r/runTukey.r $(notdir $(basename $@)) > /dev/null
 
 $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	cat $< \
