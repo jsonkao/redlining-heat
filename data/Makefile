@@ -241,4 +241,5 @@ $(SHAPEFILE): holc-shapefile/holc_ad_data.shp rm-shapefile
 	-each 'city = city.includes("Stamford") ? "Stamford" : city' \
 	-each 'city = city.includes("Binghamton-Johnson") ? "Johnson City" : city' \
 	-each 'city = ["Lexington", "Rochester", "Columbus"].includes(city) ? city + "@" + state : city' \
+	-drop fields=area_descr \
 	-o $@
