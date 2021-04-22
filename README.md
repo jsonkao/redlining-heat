@@ -8,7 +8,7 @@ The Makefile (`/data/Makefile`) handles all data processing. It has the followin
 
 3. It generates city-level HOLC boundary SVGs into `HOLC_DIR` using the Mapping Inequality shapefile (I downloaded the compressed data from [Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/#loc=11/40.809/-74.187&˜city=manhattan-ny&area=D3&text=intro), unzipped it, and kept only the `shapefile` directory, which I renamed to `holc-shapefile`. I then adjusted the shapefile to simplify/de-duplify some city names.). It uses [`-split holc_grade`](https://github.com/mbloch/mapshaper/wiki/Command-Reference#-split) to group polygons into `<g>`'s. It uses mapshaper to project the SVG according to the string produced by `scripts/project.py --proj4`.
 
-4. It extracts the essentials from GEE task exports with ndjson-cli into `temperatures-YYYY.json`.
+4. It extracts the essentials from temperature GEE task exports with ndjson-cli into `temperatures-YYYY.json`. It does the same for impervious surfaces exports into `impervious-YYYY.json`.
 
 5. It takes the GEE task export and uses the R script `./r/runTukey.r` to run the Tukey HSD test on all cities. The script also generates Tukey and density plot visualizations for all cities.
 
@@ -18,7 +18,7 @@ make basemaps  484.17s user 11.69s system 181% cpu 4:32.91 total
 make tempmaps  218.55s user 35.39s system 137% cpu 3:04.54 total
 ```
 
-These benchmarks were made before I projected everything. I use right now bilinear resampling, but it's really slow, and I could just go back to the default resampling.
+These benchmarks were made before I projected everything, though nearest-neighbor interpolation seems to be negligibly fast.
 
 ## Instructions
 
