@@ -186,6 +186,7 @@ keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CI
 charts: folders $(CITIES:%=$(CHART_DIR)/%.png) $(CHART_DIR)/nation.png
 
 tempstats: $(YEARS:%=$(TASK_DIR)/temperatures-%.json)
+impervious: $(TASK_DIR)/impervious-2016.json
 
 $(CHART_DIR)/%.png:
 	- Rscript ../r/runTukey.r $(notdir $(basename $@)) > /dev/null
@@ -196,6 +197,14 @@ $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	| ndjson-map 'd.properties' \
 	| ndjson-map '{id: d.neighborho, temperature: d.mean, holc_grade: d.holc_grade, year: $(patsubst $(TASK_DIR)/temperatures-%.json,%,$@)}' \
 	| ndjson-map 'd.temperature = +(Math.round(d.temperature + "e+2") + "e-2"), d' \
+	| ndjson-reduce \
+	> $@
+
+$(TASK_DIR)/impervious-%.json: $(TASK_DIR)/imperviousTask-%.geojson
+	cat $< \
+	| ndjson-split 'd.features' \
+	| ndjson-map 'd.properties' \
+	| ndjson-map '{id: d.neighborho, frequency: d.histogram, holc_grade: d.holc_grade}' \
 	| ndjson-reduce \
 	> $@
 
