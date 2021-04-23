@@ -200,11 +200,11 @@ $(TASK_DIR)/temperatures-%.json: $(TASK_DIR)/tempTask-%.geojson
 	| ndjson-reduce \
 	> $@
 
-$(TASK_DIR)/impervious-%.json: $(TASK_DIR)/imperviousTask-%.geojson
+$(TASK_DIR)/impervious-%.json: $(TASK_DIR)/imperviousTask-%.geojson Makefile
 	cat $< \
 	| ndjson-split 'd.features' \
 	| ndjson-map 'd.properties' \
-	| ndjson-map '{id: d.neighborho, frequency: d.histogram, holc_grade: d.holc_grade}' \
+	| ndjson-map 'Object.assign({id: d.neighborho, holc_grade: d.holc_grade}, Object.keys(d.histogram).reduce((a, k) => {a["freq"+k] = d.histogram[k]; return a;}, {}))' \
 	| ndjson-reduce \
 	> $@
 

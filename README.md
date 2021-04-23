@@ -34,3 +34,7 @@ Prerequisites:
 * Policy analysis
 
 * Trees, impervious surfaces, what else?
+
+## Reference material
+
+* [USGS National Land Cover Database (NLCD) band value reference](https://developers.google.com/earth-engine/datasets/catalog/USGS_NLCD_RELEASES_2016_REL#bands)

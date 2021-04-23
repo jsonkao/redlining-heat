@@ -8,36 +8,58 @@ library(foreign)
 library(jsonlite)
 library(dplyr)
 library(ggplot2)
-library(cowplot)
+library(data.table)
 ```
 
-## Read in data
+# Impervious surfaces + temperature analysis
 
+Reference: https://developers.google.com/earth-engine/datasets/catalog/USGS_NLCD_RELEASES_2016_REL#bands
+```{r}
+impv_data <- fromJSON("../data/task-exports/impervious-2016.json") %>% 
+  mutate_all(~replace(., is.na(.), 0)) %>% 
+  mutate(n_road = freq1+freq2+freq3+freq4+freq5+freq6, n_nonroad = freq9+freq10, n_energy = freq11) %>% 
+  mutate(n_total = select(., starts_with("freq")) %>% rowSums()) %>% 
+  select(-starts_with("freq"))
+setDT(impv_data)
+```
+
+# Read and join rest of data
 ```{r}
 data <- inner_join(
-  read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
+  inner_join(
+    read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
+    impv_data %>% 
+      mutate(prop_road = n_road/n_total, prop_nonroad = n_nonroad/n_total, prop_imp = prop_road+prop_nonroad) %>% 
+      select(id, starts_with("prop")),
+      by = c('neighborho' = 'id')
+  ),
   rbind(fromJSON('../data/task-exports/temperatures-2020.json'), fromJSON('../data/task-exports/temperatures-2000.json')),
   by = c('neighborho' = 'id')
 ) %>% 
   rename(holc_grade = holc_grade.x) %>% 
   filter(holc_grade != 'E') %>% 
-  select(state, city, holc_grade, temperature, year)
-data
+  select(state, city, holc_grade, temperature, year, starts_with("prop"))
+setDT(data)
 ```
 
-## Visualize data
+# Viz and analysis
+
+Scatter plot and linear trendline
+```{r}
+TukeyHSD(aov(prop_road ~ holc_grade, data = data %>% filter(year == 2020)))
+```
 
 ```{r}
-data %>% ggplot(aes(temperature)) +
-  geom_density() +
-  facet_wrap(~ holc_grade)
+data %>% 
+  filter(year == 2020) %>% 
+  ggplot(aes(prop_road, temperature)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm")
 ```
 
-## Tukey-Kramer test
 
-```{r}
-TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(year == 2020)))
-```
+
+
 
 
 
