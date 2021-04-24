@@ -15,6 +15,5 @@ build
 osm-raw/
 privatekey.json
 
-# Data
+# OSM data is too big
 data/osm-*
-data/gee-*

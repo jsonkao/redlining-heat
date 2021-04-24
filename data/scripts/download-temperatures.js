@@ -31,7 +31,7 @@ function main() {
 
   // Output download URL
   console.log(
-    temporalTemperatures.mask(mask).getDownloadURL({
+    temporalTemperatures.mask(mask).reproject(ee.Projection('EPSG:4326')).getDownloadURL({
       scale: city === 'Los Angeles' ? 45 : 30,
       region: bbox,
     }),

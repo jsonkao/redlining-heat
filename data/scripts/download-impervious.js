@@ -10,7 +10,13 @@ function main() {
     JSON.parse(fs.readFileSync('./' + process.argv[3]))[city],
   );
 
-  const dataset = ee.Image('Tsinghua/FROM-GLC/GAIA/v10').neq(0);
+  // Filter NLCD dataset to impervious descriptor of 2016 product.
+  const year = '2016';
+  const impervious = ee
+    .ImageCollection('USGS/NLCD_RELEASES/2016_REL')
+    .filter(ee.Filter.eq('system:index', year))
+    .first()
+    .select('impervious_descriptor');
 
   // Mask the image
   var mask = ee
@@ -20,7 +26,8 @@ function main() {
 
   // Output download URL
   console.log(
-    dataset.mask(mask).getDownloadURL({
+    impervious.mask(mask).getDownloadURL({
+      // LA is so big the request would get rejected
       scale: city === 'Los Angeles' ? 45 : 30,
       region: bbox,
     }),

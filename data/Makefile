@@ -36,7 +36,7 @@ COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
 # Impervious surfaces data
-IMPERVIOUS_DIR = impervious
+IMPERVIOUS_DIR = gee-impervious
 
 # Others
 HOLC_DIR = boundaries
@@ -84,11 +84,16 @@ $(TEMP_DIR)/%-1990.tif:
 	&& rm $@.zip
 
 # Impervious surfaces
-$(IMPERVIOUS_DIR)/%.tif:
+$(IMPERVIOUS_DIR)/%.tif: Makefile
 	node $(SCRIPT_DIR)/download-impervious.js $@ city-bbox-index.json \
 	| xargs -n1 wget -O $@.zip \
-	&& unzip -p $@.zip > $@ \
+	&& unzip -p $@.zip > $@.albers \
 	&& rm $@.zip
+	$(eval CITY := $(subst _, ,$(notdir $(basename $@))))
+	$(eval BBOX := $(shell jq '.["$(CITY)"] | join(" ")' -r city-bbox-index.json))
+	$(eval SIZE := $(shell gdalinfo gee-temperatures/$(CITY)-2020.tif | sed -n 3p | cut -c9- | sed 's/,//g'))
+	gdalwarp -t_srs EPSG:4236 -srcnodata 127 -te $(BBOX) -ts $(SIZE) $@.albers $@
+	rm $@.albers
 
 #
 # Basemaps
@@ -168,7 +173,7 @@ city-boundaries.json: $(SHAPEFILE)
 # Utilities
 #
 
-ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR)
+ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR) $(IMPERVIOUS_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 
