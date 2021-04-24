@@ -9,6 +9,7 @@ function main() {
   const bbox = ee.Geometry.Rectangle(
     JSON.parse(fs.readFileSync('./' + process.argv[3]))[city],
   );
+  const layer = process.argv[4];
 
   // Filter NLCD dataset to impervious descriptor of 2016 product.
   const year = '2016';
@@ -16,7 +17,7 @@ function main() {
     .ImageCollection('USGS/NLCD_RELEASES/2016_REL')
     .filter(ee.Filter.eq('system:index', year))
     .first()
-    .select('impervious_descriptor');
+    .select(layer);
 
   // Mask the image
   var mask = ee
