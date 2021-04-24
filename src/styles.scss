@@ -80,7 +80,7 @@ select {
     mix-blend-mode: multiply;
   }
 
-  :last-child {
+  :last-child, :last-child *:last-child {
     position: relative;
   }
 

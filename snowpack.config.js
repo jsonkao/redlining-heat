@@ -19,4 +19,7 @@ module.exports = {
   buildOptions: {
     metaUrlPath: 'underscore_snowpack'
   },
+  devOptions: {
+    port: 5000
+  },
 };

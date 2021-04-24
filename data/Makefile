@@ -71,8 +71,8 @@ $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 	python3 $(SCRIPT_DIR)/project.py $(patsubst %.png,%.tif,$@) $@ $(WIDTH)
 
 # Design color scheme for tif
-$(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json > $@
+$(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@
 
 # Download temperature data for 2000
 $(TEMP_DIR)/%-2000.tif:
@@ -222,7 +222,7 @@ clean:
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt))
+keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.tif))
 
 #
 # Temperature mean formatting and statistics

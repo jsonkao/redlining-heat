@@ -1,9 +1,10 @@
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.globEager('../data/**/*.{png,svg}');
-const [reliefs, basemaps, boundaries, charts] = [
+const [reliefs, basemaps, boundaries, impReliefs, charts] = [
   'reliefs',
   'basemaps',
   'boundaries',
+  'impervious-reliefs',
   'charts',
 ].map(dir =>
   Object.keys(assets)
@@ -36,6 +37,7 @@ const cityNameMods = {
   'Greater Kansas City': 'Kansas City',
   'St. Louis,East St. Louis': 'St. Louis',
   'Pawtucket and Central Falls': 'Pawtucket',
+  'Lower Westchester Co.': 'Westchester',
 
 };
 function getName(rawValue) {
@@ -73,14 +75,17 @@ function setYear(year) {
 /* Map logic */
 
 function setCityMap(city, year) {
-  const [boundarySvg, basemapImg, reliefImg] = map.children;
+  const [boundarySvg, basemapImg, reliefImg, impDiv] = map.children;
   const boundaryImg = document.createElement('img');
   boundaryImg.setAttribute('onload', 'SVGInject(this, {makeIdsUnique: false})');
   boundaryImg.src = boundaries[city];
-  // SVGInject(boundaryImg);
   map.replaceChild(boundaryImg, boundarySvg);
   reliefImg.src = reliefs[city + '-' + year];
   basemapImg.src = basemaps[city];
+
+  const [impImg1, impImg2] = impDiv.children;
+  impImg1.src = reliefs[city + '-1,6'];
+  impImg2.src = reliefs[city + '-9,10'];
 }
 
 /* Chart */
