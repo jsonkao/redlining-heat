@@ -35,7 +35,8 @@ TEMP_DIR = gee-temperatures
 COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
-# Impervious surfaces data
+# Impervious reliefs and surfaces data
+IMP_RELIEF_DIR = impervious-reliefs
 IMPERVIOUS_DIR = gee-impervious
 
 # Others
@@ -49,6 +50,7 @@ tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 boundaries: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 impervious: folders $(CITIES:%=$(IMPERVIOUS_DIR)/%.tif)
+impreliefs: folders $(CITIES:%=$(IMP_RELIEF_DIR)/%)
 all: folders tempmaps basemaps boundaries charts
 
 #
@@ -85,16 +87,29 @@ $(TEMP_DIR)/%-1990.tif:
 	&& rm $@.zip
 
 # Impervious surfaces
-$(IMPERVIOUS_DIR)/%.tif: Makefile
+$(IMPERVIOUS_DIR)/%.tif:
 	node $(SCRIPT_DIR)/download-impervious.js $@ city-bbox-index.json \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@.albers \
 	&& rm $@.zip
-	$(eval CITY := $(subst _, ,$(notdir $(basename $@))))
-	$(eval BBOX := $(shell jq '.["$(CITY)"] | join(" ")' -r city-bbox-index.json))
+	$(eval CITY := $(notdir $(basename $@)))
+	$(eval BBOX := $(shell jq '.["$(subst _, ,$(CITY))"] | join(" ")' -r city-bbox-index.json))
 	$(eval SIZE := $(shell gdalinfo gee-temperatures/$(CITY)-2020.tif | sed -n 3p | cut -c9- | sed 's/,//g'))
 	gdalwarp -t_srs EPSG:4236 -srcnodata 127 -te $(BBOX) -ts $(SIZE) $@.albers $@
 	rm $@.albers
+
+# Wildcard should just be city name. I'm lazy and tired.
+$(IMP_RELIEF_DIR)/%: $(IMPERVIOUS_DIR)/%.tif
+	gdal_calc.py -A $< --outfile=$@-road.tif --calc="logical_and(1<=A, A<=6)"
+	gdal_calc.py -A $< --outfile=$@-nonroad.tif --calc="logical_and(9<=A, A<=10)"
+	gdal_calc.py -A $< --outfile=$@-energy.tif --calc="logical_and(11<=A, A<=12)"
+	gdaldem color-relief $@-road.tif colors_imp.txt $@-road-relief.tif -alpha
+	gdaldem color-relief $@-nonroad.tif colors_imp.txt $@-nonroad-relief.tif -alpha
+	gdaldem color-relief $@-energy.tif colors_imp.txt $@-energy-relief.tif -alpha
+	python3 $(SCRIPT_DIR)/project.py $@-road-relief.tif $@-road.png $(WIDTH) $@
+	python3 $(SCRIPT_DIR)/project.py $@-nonroad-relief.tif $@-nonroad.png $(WIDTH) $@
+	python3 $(SCRIPT_DIR)/project.py $@-energy-relief.tif $@-energy.png $(WIDTH) $@
+	rm $@*.tif $@*.xml
 
 #
 # Basemaps
@@ -174,7 +189,7 @@ city-boundaries.json: $(SHAPEFILE)
 # Utilities
 #
 
-ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR) $(IMPERVIOUS_DIR)
+ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR) $(IMPERVIOUS_DIR) $(IMP_RELIEF_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 

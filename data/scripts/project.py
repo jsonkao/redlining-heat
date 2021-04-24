@@ -18,6 +18,8 @@ try:
 except:
     # Not a year
     city = "-".join(fname_components)
+if len(sys.argv) > 4:
+    city = sys.argv[4].split('/')[-1].replace("_", " ")
 
 with open("city-bbox-index.json") as f:
     [xmin, ymin, xmax, ymax] = json.load(f)[city]

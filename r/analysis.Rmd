@@ -54,7 +54,8 @@ data %>%
   filter(year == 2020) %>% 
   ggplot(aes(prop_road, temperature)) +
   geom_point(alpha = 0.3) +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  facet_wrap(~ holc_grade)
 ```
 
 
