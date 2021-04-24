@@ -48,6 +48,7 @@ tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y
 tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 boundaries: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
+impervious: folders $(CITIES:%=$(IMPERVIOUS_DIR)/%.tif)
 all: folders tempmaps basemaps boundaries charts
 
 #
