@@ -37,6 +37,10 @@ TEMP_DIR = gee-temperatures
 COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
+# Color and relief dirs for testing different ordinal scales.
+COLOR_ORD_DIR = color-configs-ord
+RELIEF_ORD_DIR = reliefs-ord
+
 # Impervious reliefs and surfaces data
 IMP_RELIEF_DIR = impervious-reliefs
 IMP_DESC_DIR = gee-impervious-desc

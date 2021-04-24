@@ -1,5 +1,7 @@
 @import "./styles/spectate";
 
+$blend: soft-light;
+
 #map-container {
   position: relative;
 }
@@ -80,8 +82,14 @@ select {
     mix-blend-mode: multiply;
   }
 
-  :last-child, :last-child *:last-child {
+  :last-child,
+  :last-child *:last-child {
     position: relative;
+  }
+
+  div img {
+    mix-blend-mode: $blend;
+    filter: hue-rotate(180deg);
   }
 
   svg {
@@ -203,4 +211,25 @@ hr {
   &.visible {
     opacity: 1;
   }
+}
+
+#legend {
+  width: 150px;
+  height: 300px;
+  position: relative;
+
+  div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: $blend;
+  }
+}
+
+#legend-temp {
+  background: linear-gradient(0deg, rgba(0, 0, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 0, 0, 1) 100%);
+}
+
+#legend-imp {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 255, 0, 1) 100%);
 }
