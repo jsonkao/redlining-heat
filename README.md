@@ -6,11 +6,13 @@ The Makefile (`/data/Makefile`) handles all data processing. It has the followin
 
 2. It generates a temperature layers for each city. I use the GEE JavaScript API to download a temperature layer for each city's bounding box into `TEMP_DIR`. I convert it (`gdaldem color-relief`) into a colored relief (`RELIEF_DIR`). `scripts/create-color-config.py` makes a custom color configuration (`COLOR_DIR`) for each temperature raster that only considers values inside a city's boundary. `scripts/project.py` applies an Albers projection and converts the raster into a PNG.
 
-3. It generates city-level HOLC boundary SVGs into `HOLC_DIR` using the Mapping Inequality shapefile (I downloaded the compressed data from [Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/#loc=11/40.809/-74.187&˜city=manhattan-ny&area=D3&text=intro), unzipped it, and kept only the `shapefile` directory, which I renamed to `holc-shapefile`. I then adjusted the shapefile to simplify/de-duplify some city names.). It uses [`-split holc_grade`](https://github.com/mbloch/mapshaper/wiki/Command-Reference#-split) to group polygons into `<g>`'s. It uses mapshaper to project the SVG according to the string produced by `scripts/project.py --proj4`.
+3. It generates impervious descriptor layers for each city. Must generate `$(IMP_DESC_DIR)/$(CITY).tif` and `$(IMP_PCT_DIR)/$(CITY).tif` before generating `$(IMP_RELIEF_DIR)/$(CITY)-$(BOUND).tif`
 
-4. It extracts the essentials from temperature GEE task exports with ndjson-cli into `temperatures-YYYY.json`. It does the same for impervious surfaces exports into `impervious-YYYY.json`.
+4. It generates city-level HOLC boundary SVGs into `HOLC_DIR` using the Mapping Inequality shapefile (I downloaded the compressed data from [Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/#loc=11/40.809/-74.187&˜city=manhattan-ny&area=D3&text=intro), unzipped it, and kept only the `shapefile` directory, which I renamed to `holc-shapefile`. I then adjusted the shapefile to simplify/de-duplify some city names.). It uses [`-split holc_grade`](https://github.com/mbloch/mapshaper/wiki/Command-Reference#-split) to group polygons into `<g>`'s. It uses mapshaper to project the SVG according to the string produced by `scripts/project.py --proj4`.
 
-5. It takes the GEE task export and uses the R script `./r/runTukey.r` to run the Tukey HSD test on all cities. The script also generates Tukey and density plot visualizations for all cities.
+5. It extracts the essentials from temperature GEE task exports with ndjson-cli into `temperatures-YYYY.json`. It does the same for impervious surfaces exports into `impervious-YYYY.json`.
+
+6. It takes the GEE task export and uses the R script `./r/runTukey.r` to run the Tukey HSD test on all cities. The script also generates Tukey and density plot visualizations for all cities.
 
 Latest benchmarks with 19 cities, including NYC and LA, without OSM download time:
 ```

@@ -13,13 +13,14 @@ output_name = sys.argv[2]
 # Get geographic extent (bbox)
 fname_components = Path(input_name).stem.replace("_", " ").split("-")
 try:
-    int(fname_components[-1])
+    if ',' in fname_components[-1]: # CITY-1,6
+        int(fname_components[-1].split(',')[0])
+    else: # CITY-2020
+        int(fname_components[-1])
     city = "-".join(fname_components[:-1])
 except:
-    # Not a year
+    # CITY
     city = "-".join(fname_components)
-if len(sys.argv) > 4:
-    city = sys.argv[4].split('/')[-1].replace("_", " ")
 
 with open("city-bbox-index.json") as f:
     [xmin, ymin, xmax, ymax] = json.load(f)[city]

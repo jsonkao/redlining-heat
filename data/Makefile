@@ -10,6 +10,8 @@ CITIES := $(shell cat all_cities.txt)
 
 # Years to generate temperature maps for
 YEARS = 2000 2020 1990
+# Group bounds of imperivous surfaces descriptor layer
+IMP_GRP_BOUNDS = 1,6 9,10 11,12
 
 # Width of PNG assets
 WIDTH = 3000
@@ -48,11 +50,14 @@ SHAPEFILE = holc-shapefile/holc_ad_data_adjusted.shp
 
 tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
 tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
+
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
 boundaries: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
+
 impervious_descriptor: folders $(CITIES:%=$(IMP_DESC_DIR)/%.tif)
 impervious_pct: folders $(CITIES:%=$(IMP_PCT_DIR)/%.tif)
-impreliefs: folders $(CITIES:%=$(IMP_RELIEF_DIR)/%)
+impervious_reliefs: folders $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.png))
+
 all: folders tempmaps basemaps boundaries charts
 
 #
@@ -112,18 +117,24 @@ $(IMP_PCT_DIR)/%.tif:
 	gdalwarp -t_srs EPSG:4326 -te $(BBOX) -ts $(SIZE) $@.albers $@
 	rm $@.albers
 
-# Wildcard should just be city name. I'm lazy and tired.
-$(IMP_RELIEF_DIR)/%: $(IMP_DESC_DIR)/%.tif
-	gdal_calc.py -A $< --outfile=$@-road.tif --calc="logical_and(1<=A, A<=6)"
-	gdal_calc.py -A $< --outfile=$@-nonroad.tif --calc="logical_and(9<=A, A<=10)"
-	gdal_calc.py -A $< --outfile=$@-energy.tif --calc="logical_and(11<=A, A<=12)"
-	gdaldem color-relief $@-road.tif colors_imp.txt $@-road-relief.tif -alpha
-	gdaldem color-relief $@-nonroad.tif colors_imp.txt $@-nonroad-relief.tif -alpha
-	gdaldem color-relief $@-energy.tif colors_imp.txt $@-energy-relief.tif -alpha
-	python3 $(SCRIPT_DIR)/project.py $@-road-relief.tif $@-road.png $(WIDTH) $@
-	python3 $(SCRIPT_DIR)/project.py $@-nonroad-relief.tif $@-nonroad.png $(WIDTH) $@
-	python3 $(SCRIPT_DIR)/project.py $@-energy-relief.tif $@-energy.png $(WIDTH) $@
-	rm $@*.tif $@*.xml
+comma := ,
+
+# Basename is of the form CITY-LOW,HI.png
+$(IMP_RELIEF_DIR)/%.png: $(IMP_RELIEF_DIR)/%.tif.relief
+	python3 $(SCRIPT_DIR)/project.py $< $@ $(WIDTH) && rm $@.aux.xml
+
+# Basename is of the form CITY-LOW,HI.tif.relief
+$(IMP_RELIEF_DIR)/%.tif.relief: $(IMP_RELIEF_DIR)/%.tif
+	gdaldem color-relief $< colors_imp.txt $@ -alpha -of GTiff
+
+# Basename is of the form CITY-LOW,HI.tif where we calc LOW <= A and A <= HI
+# Prerequisites are hardcoded bc Im lazy
+$(IMP_RELIEF_DIR)/%.tif:
+	$(eval BASE := $(notdir $(basename $@)))
+	$(eval CITY := $(shell echo $(BASE) | rev | cut -d "-" -f2- | rev))
+	$(eval RANGE := $(shell echo $(BASE) | rev | cut -d "-" -f1 | rev))
+	gdal_calc.py -A $(IMP_DESC_DIR)/$(CITY).tif -B $(IMP_PCT_DIR)/$(CITY).tif \
+	--calc='B * logical_and($(subst $(comma),<=A$(comma)A<=,$(RANGE)))' --outfile=$@ --NoDataValue=0
 
 #
 # Basemaps
@@ -183,7 +194,6 @@ city-bbox-index.json: $(SHAPEFILE) $(SCRIPT_DIR)/custom-merges.js
 	> $@
 	rm bbox-index.json
 
-comma := ,
 FILTER_LIST = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
 
 # Boundaries file used to compute cloud covers.
