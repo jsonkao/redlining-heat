@@ -15,9 +15,7 @@ tif_name = sys.argv[1]
 out_file = sys.argv[3]
 
 bin_arg = [a for a in sys.argv if "--bins" in a]
-if (
-    '--nocalc' in sys.argv
-):
+if "--nocalc" in sys.argv:
     # We're here because we modified this script, not any temperature values,
     # so I'm probably just trying to change the color scheme.
     # Just rewrite the file with these new values:
@@ -84,29 +82,49 @@ def hsv_to_rgb(h, s, v):
 
 def seq_colors(n, hue=0):
     """Generate n sequential colors (whitish to a saturated hue)"""
-    assert n % 2 == 1
-    return [(hue, 0.65 - i * 0.65 / (n - 1), 0.72 + i * 0.2 / (n - 1)) for i in range(n)]
+    # Initial (white) and final (saturated hue) values
+    # TODO: variabilize this stuff
+    sat_i = .65
+    sat_f = 0
+    val_i = .72
+    val_f = .92
+    return [
+        (hue, 0.65 - i * 0.65 / (n - 1), 0.92 + i * 0.07 / (n - 1)) for i in range(n)
+    ]
 
 
 if len(bin_arg) > 0:
     bins = int(bin_arg[0].split("=")[-1])
     assert bins % 2 == 1
-    if "--diverging" in sys.argv:
-        n_seq = int((bins + 1) / 2)
-        colors = seq_colors(n_seq, hue=0.5)[:-1] + seq_colors(n_seq, hue=0)[::-1]
-    else:
-        colors = seq_colors(bins)
+else:
+    bins = 7
 
-    values = values.compressed()
+if "--diverging" in sys.argv:
+    n_seq = int((bins + 1) / 2)
+    colors = seq_colors(n_seq, hue=1/3)[:-1] + seq_colors(n_seq, hue=0)[::-1]
+else:
+    colors = seq_colors(bins)[::-1]
+
+values = values.compressed()
+bounds = []
+if "--quantile" in sys.argv:
+    percentiles = np.percentile(values, [b / bins * 100 for b in range(bins+1)])
+    for i in range(bins):
+        bounds.append((percentiles[i], percentiles[i+1]-0.1))
+else:
     clusters, _ = kmeans1d.cluster(values, bins)
     clusters = np.array(clusters)
+    for i in range(bins):
+        cluster = values[clusters == i]
+        bounds.append((np.min(cluster), np.max(cluster)))
 
-    with open(out_file, "w") as f:
-        for i in range(bins):
-            cluster = values[clusters == i]
-            lwr = np.min(cluster)
-            upr = np.max(cluster)
-            color = " ".join(str(v) for v in hsv_to_rgb(*colors[i])) + " 255"
+with open(out_file, "w") as f:
+    for i in range(bins):
+        lwr, upr = bounds[i]
+        color = " ".join(str(v) for v in hsv_to_rgb(*colors[i])) + " 255"
+        if len(bin_arg) > 0:
             f.write(f"{lwr} {color}\n")
             f.write(f"{upr} {color}\n")
-        f.write("nv 236 236 236 255\n")
+        else:
+            f.write(f"{[ upr, lwr ][i > 0]} {color}\n")
+    f.write("nv 236 236 236 255\n")

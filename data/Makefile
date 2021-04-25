@@ -38,13 +38,15 @@ COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
 # Color and relief dirs for testing different ordinal scales.
-COLOR_ORD_DIR = color-configs-ord
-RELIEF_ORD_DIR = reliefs-ord
+NUM_BINS = 5
+COLOR_ORD_DIR = color-configs-ord$(NUM_BINS)
+RELIEF_ORD_DIR = reliefs-ord$(NUM_BINS)
 
 # Impervious reliefs and surfaces data
 IMP_RELIEF_DIR = impervious-reliefs
 IMP_DESC_DIR = gee-impervious-desc
 IMP_PCT_DIR = gee-impervious-pct
+COLOR_IMP_DIR = color-configs-imp
 
 # Others
 HOLC_DIR = boundaries
@@ -79,7 +81,7 @@ $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 
 # Design color scheme for tif
 $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --nocalc
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --diverging
 
 # Transform temperature data into color reliefs (ord)
 $(RELIEF_ORD_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_ORD_DIR)/%.txt
@@ -89,8 +91,8 @@ $(RELIEF_ORD_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_ORD_DIR)/%.txt
 	rm $(patsubst %.png,%.tif,$@)
 
 # Design color scheme for tif
-$(COLOR_ORD_DIR)/%.txt: $(TEMP_DIR)/%.tif
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=5 --diverging
+$(COLOR_ORD_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=$(NUM_BINS) --diverging
 
 # Download temperature data for 2000
 $(TEMP_DIR)/%-2000.tif:
@@ -142,8 +144,11 @@ $(IMP_RELIEF_DIR)/%.png: $(IMP_RELIEF_DIR)/%.tif.relief
 	python3 $(SCRIPT_DIR)/project.py $< $@ $(WIDTH) && rm $@.aux.xml
 
 # Basename is of the form CITY-LOW,HI.tif.relief
-$(IMP_RELIEF_DIR)/%.tif.relief: $(IMP_RELIEF_DIR)/%.tif
-	gdaldem color-relief $< colors_imp.txt $@ -alpha -of GTiff
+$(IMP_RELIEF_DIR)/%.tif.relief: $(IMP_RELIEF_DIR)/%.tif $(COLOR_IMP_DIR)/%.txt
+	gdaldem color-relief $^ $@ -alpha -of GTiff
+
+$(COLOR_IMP_DIR)/%.txt: $(IMP_RELIEF_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=5
 
 # Basename is of the form CITY-LOW,HI.tif where we calc LOW <= A and A <= HI
 # Prerequisites are hardcoded bc Im lazy
@@ -240,7 +245,7 @@ clean:
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_ORD_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.tif))
+keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_ORD_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.tif)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(COLOR_IMP_DIR)/$C-$B.txt))
 
 #
 # Temperature mean formatting and statistics

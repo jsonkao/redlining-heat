@@ -50,12 +50,18 @@ def progress_callback(complete, message, unknown):
 if output_name == "--proj4":
     sys.stdout.write(proj_string)
 else:
+    # https://gdal.org/python/osgeo.gdal-module.html#WarpOptions
+    resample_method = [a.split('=')[1] for a in sys.argv if "--resampling" in a]
+    if len(resample_method) > 0:
+        resample_method = resample_method[0]
+    else:
+        resample_method = "near"
     Warp(
         output_name,
         input_name,
         width=sys.argv[3],
         height=0,
         dstSRS=proj_string,
-        # resampleAlg="bilinear",
+        resampleAlg=resample_method,
         callback=progress_callback,
     )

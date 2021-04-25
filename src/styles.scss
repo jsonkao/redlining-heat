@@ -81,6 +81,9 @@ select {
   img {
     width: 100%;
     mix-blend-mode: $blend;
+    &.multiply {
+      mix-blend-mode: multiply;
+    }
   }
 
   & > img {
@@ -92,8 +95,19 @@ select {
     position: relative;
   }
 
-  div img {
-    filter: hue-rotate($hue-offset + 240deg);
+  #impervious-maps {
+    opacity: 0;
+    transition-duration: 0.3s;
+
+    img {
+      opacity: 0;
+      filter: hue-rotate($hue-offset + 240deg);
+      transition-duration: 0.3s;
+    }
+
+    &.visible, img.visible {
+      opacity: 1;
+    }
   }
 
   svg {

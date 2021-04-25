@@ -15,11 +15,11 @@ const [reliefs, basemaps, boundaries, impReliefs, charts] = [
       return acc;
     }, {}),
 );
-console.log(reliefs)
+console.log(reliefs);
 let cities = 'Manhattan,Bronx,Queens,Brooklyn St._Louis,East_St._Louis Birmingham Mobile Montgomery Little_Rock Phoenix Fresno Los_Angeles Oakland Sacramento San_Diego San_Francisco San_Jose Stockton Denver Pueblo Hartford New_Britain New_Haven Stamford Waterbury Jacksonville Miami St._Petersburg Tampa Atlanta Augusta Columbus@GA Macon Savannah Council_Bluffs Davenport Des_Moines Dubuque Sioux_City Waterloo Aurora Chicago Decatur Joliet Peoria Rockford Springfield@IL Evansville Fort_Wayne Indianapolis Lake_Co._Gary Muncie South_Bend Terre_Haute Topeka Wichita Covington Lexington@KY Louisville New_Orleans Shreveport Arlington Belmont Boston Braintree Brockton Brookline Cambridge Chelsea Dedham Everett Haverhill Holyoke_Chicopee Lexington@MA Malden Medford Melrose Milton Needham Newton Quincy Revere Saugus Somerville Waltham Watertown Winchester Winthrop Baltimore Battle_Creek Bay_City Detroit Flint Grand_Rapids Jackson@MI Kalamazoo Lansing Muskegon Pontiac Saginaw Duluth Minneapolis Rochester@MN St._Paul Greater_Kansas_City Springfield@MO St._Joseph Jackson@MS Asheville Charlotte Durham Greensboro Winston-Salem Lincoln Omaha Manchester Atlantic_City Bergen_Co. Camden Essex_Co. Hudson_Co. Trenton Union_Co. Albany Johnson_City Buffalo Elmira Lower_Westchester_Co. Niagara_Falls Poughkeepsie Rochester@NY Schenectady Staten_Island Syracuse Troy Utica Akron Canton Cleveland Columbus@OH Dayton Hamilton Lima Lorain Portsmouth Springfield@OH Toledo Warren Youngstown Oklahoma_City Tulsa Portland Altoona Bethlehem Chester Erie Harrisburg Johnstown Lancaster New_Castle Philadelphia Pittsburgh Wilkes-Barre York Pawtucket_and_Central_Falls Providence Woonsocket Columbia Chattanooga Knoxville Memphis Nashville Amarillo Austin Beaumont Dallas El_Paso Fort_Worth Galveston Houston Port_Arthur San_Antonio Waco Ogden Salt_Lake_City Lynchburg Newport_News Norfolk Richmond Roanoke Seattle Spokane Tacoma Kenosha Madison Milwaukee_Co. Oshkosh Racine Charleston Huntington Wheeling'
   .split(' ')
   .sort();
-cities = ['Richmond']
+cities = ['Richmond'];
 let years = [
   ...new Set(
     Object.keys(reliefs)
@@ -76,18 +76,34 @@ function setYear(year) {
 
 /* Map logic */
 
+const impDiv = document.getElementById('impervious-maps');
+const reliefImg = document.getElementById('temperature-map');
 async function setCityMap(city, year) {
-  const [boundarySvg, basemapImg, reliefImg, impDiv] = map.children;
+  const [boundarySvg, basemapImg, _, __] = map.children;
   const boundaryImg = document.createElement('img');
   boundaryImg.setAttribute('onload', 'SVGInject(this, {makeIdsUnique: false})');
   boundaryImg.src = (await boundaries[city]()).default;
   map.replaceChild(boundaryImg, boundarySvg);
   reliefImg.src = (await reliefs[city + '-' + year]()).default;
   basemapImg.src = (await basemaps[city]()).default;
+  updateImpMap(city);
+}
 
-  const [impImg1, impImg2] = impDiv.children;
-  impImg1.src = (await impReliefs[city + '-1,6']()).default;
-  impImg2.src = (await impReliefs[city + '-9,10']()).default;
+const impState = {
+  impervious: false,
+  road: false,
+  nonroad: false,
+};
+async function updateImpMap(city) {
+  const anyVisible = Object.values(impState).some(b => b);
+  impDiv.classList = anyVisible && 'visible';
+  reliefImg.classList = !anyVisible && 'multiply';
+
+  const [roadImg, nonroadImg] = impDiv.children;
+  roadImg.classList = impState['road'] && 'visible';
+  nonroadImg.classList = impState['nonroad'] && 'visible';
+  roadImg.src = (await impReliefs[city + '-1,6']()).default;
+  nonroadImg.src = (await impReliefs[city + '-9,10']()).default;
 }
 
 /* Chart */
@@ -197,16 +213,23 @@ function toggleGrade(div) {
     .join('');
 }
 
-const impState = {
-  all: false,
-}
 const impOptions = document.getElementById('imp-options');
 for (const choice of impOptions.children) {
   choice.onclick = () => toggleImp(choice);
 }
 
 function toggleImp(div) {
-  const choice = div.innerHTML;
+  const choiceOf = el => el.innerHTML.toLowerCase().replace('-', '');
+  const choice = choiceOf(div);
   impState[choice] = !impState[choice];
-  div.classList.toggle('chosen');
+  if (choice === 'impervious') {
+    console.log(impState);
+    impState['road'] = impState['nonroad'] = impState['impervious'];
+  } else {
+    impState['impervious'] = impState['road'] && impState['nonroad'];
+  }
+  for (let el of div.parentNode.children) {
+    el.classList = impState[choiceOf(el)] && 'chosen';
+  }
+  updateImpMap(citySelector.value);
 }
