@@ -5,6 +5,7 @@ Masks nv pixels and calculates min/mean/max.
 
 from osgeo.gdal import Warp
 from pathlib import Path
+from ckmeans import ckmeans
 import numpy as np
 import sys
 import os
@@ -13,8 +14,9 @@ script_name = sys.argv[0]  # Self
 tif_name = sys.argv[1]
 out_file = sys.argv[3]
 
+bin_arg = [a for a in sys.argv if "--bins" in a]
 if (
-    "--recalc" not in sys.argv
+    len(bin_arg) == 0
     and os.path.exists(out_file)
     and os.path.getmtime(out_file) > os.path.getmtime(tif_name)
 ):
@@ -53,9 +55,67 @@ band = ds.GetRasterBand(1)
 # Mask band according to NoData values
 values = np.ma.masked_equal(band.ReadAsArray(), band.GetNoDataValue())
 
+# Bins and percentiles
+
+
+def hsv_to_rgb(h, s, v):
+    """Source: stackoverflow.com/a/26856771"""
+    if s == 0.0:
+        v *= 255
+        return (v, v, v)
+    i = int(h * 6.0)  # XXX assume int() truncates!
+    f = (h * 6.0) - i
+    p, q, t = (
+        int(255 * (v * (1.0 - s))),
+        int(255 * (v * (1.0 - s * f))),
+        int(255 * (v * (1.0 - s * (1.0 - f)))),
+    )
+    v *= 255
+    i %= 6
+    if i == 0:
+        return (v, t, p)
+    if i == 1:
+        return (q, v, p)
+    if i == 2:
+        return (p, v, t)
+    if i == 3:
+        return (p, q, v)
+    if i == 4:
+        return (t, p, v)
+    if i == 5:
+        return (v, p, q)
+
+
+def seq_colors(n, hue=0):
+    """Generate n sequential colors (whitish to a saturated hue)"""
+    assert n % 2 == 1
+    return [(hue, 0.65 - i * 0.65 / (n - 1), 0.72 + i * 0.2 / (n - 1)) for i in range(n)]
+
+
+if len(bin_arg) > 0:
+    bins = int(bin_arg[0].split("=")[-1])
+    assert bins % 2 == 1
+    if "--diverging" in sys.argv:
+        n_seq = int((bins + 1) / 2)
+        colors = seq_colors(n_seq, hue=0.5)[:-1] + seq_colors(n_seq, hue=0)[::-1]
+    else:
+        colors = seq_colors(bins)
+    clusters = ckmeans(values.compressed(), bins)
+    with open(out_file, "w") as f:
+        for i, c in enumerate(clusters):
+            lwr, upr = c
+            color = " ".join(str(v) for v in hsv_to_rgb(*colors[i])) + " 255"
+            f.write(f"{lwr} {color}\n")
+            f.write(f"{upr} {color}\n")
+        f.write("nv 236 236 236 255\n")
+
+
+sys.exit(0)
+"""
 # Write out a color file based on valid values
 with open(out_file, "w") as f:
     f.write(f"{values.min()} 255 255 255 255\n")
     f.write(f"{values.mean()} 255 {255/2} {255/2} 255\n")
     f.write(f"{values.max()} 255 0 0 255\n")
     f.write("nv 236 236 236 255\n")
+"""

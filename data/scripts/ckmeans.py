@@ -103,9 +103,9 @@ def ckmeans(data, n_clusters):
 
     # if there's only one value, return it; there's no sensible way to split
     # it. This means that len(ckmeans([data], 2)) may not == 2. Is that OK?
-    unique = len(set(data))
-    if unique == 1:
-        return [data]
+    # unique = len(set(data))
+    # if unique == 1:
+    #     return [data]
 
     data.sort()
     n = len(data)
@@ -121,7 +121,7 @@ def ckmeans(data, n_clusters):
 
     for cluster in range(n_clusters-1, -1, -1):
         cluster_left = int(J[cluster][cluster_right])
-        clusters.append(data[cluster_left:cluster_right+1])
+        clusters.append((data[cluster_left], data[cluster_right]))
 
         if cluster > 0:
             cluster_right = cluster_left - 1

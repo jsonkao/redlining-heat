@@ -53,6 +53,7 @@ SHAPEFILE = holc-shapefile/holc_ad_data_adjusted.shp
 
 
 tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
+tempmaps_ord: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_ORD_DIR)/$C-$Y.png))
 tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
 
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
@@ -73,10 +74,22 @@ $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 	rm -f $@
 	gdaldem color-relief $^ $(patsubst %.png,%.tif,$@) -alpha
 	python3 $(SCRIPT_DIR)/project.py $(patsubst %.png,%.tif,$@) $@ $(WIDTH)
+	rm $(patsubst %.png,%.tif,$@)
 
 # Design color scheme for tif
 $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
 	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@
+
+# Transform temperature data into color reliefs (ord)
+$(RELIEF_ORD_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_ORD_DIR)/%.txt
+	rm -f $@
+	gdaldem color-relief $^ $(patsubst %.png,%.tif,$@) -alpha
+	python3 $(SCRIPT_DIR)/project.py $(patsubst %.png,%.tif,$@) $@ $(WIDTH)
+	rm $(patsubst %.png,%.tif,$@)
+
+# Design color scheme for tif
+$(COLOR_ORD_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=5 --diverging
 
 # Download temperature data for 2000
 $(TEMP_DIR)/%-2000.tif:
