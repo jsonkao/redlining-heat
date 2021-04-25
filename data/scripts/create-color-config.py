@@ -54,8 +54,6 @@ band = ds.GetRasterBand(1)
 values = np.ma.masked_equal(band.ReadAsArray(), band.GetNoDataValue())
 
 # Bins and percentiles
-
-
 def hsv_to_rgb(h, s, v):
     """Source: stackoverflow.com/a/26856771"""
     if s == 0.0:
@@ -98,9 +96,11 @@ if len(bin_arg) > 0:
         colors = seq_colors(n_seq, hue=0.5)[:-1] + seq_colors(n_seq, hue=0)[::-1]
     else:
         colors = seq_colors(bins)
+
     values = values.compressed()
     clusters, _ = kmeans1d.cluster(values, bins)
     clusters = np.array(clusters)
+
     with open(out_file, "w") as f:
         for i in range(bins):
             cluster = values[clusters == i]

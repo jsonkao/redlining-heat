@@ -1,7 +1,7 @@
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*.{png,svg}');
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
-  'reliefs',
+  'reliefs-ord',
   'basemaps',
   'boundaries',
   'impervious-reliefs',
@@ -109,7 +109,8 @@ yearSelector.addEventListener('change', async function () {
 });
 
 document.addEventListener('DOMContentLoaded', async function () {
-  citySelector.value = 'Manhattan,Bronx,Queens,Brooklyn';
+  // citySelector.value = 'Manhattan,Bronx,Queens,Brooklyn';
+  citySelector.value = 'Richmond';
   yearSelector.value = 2020;
   citySelector.dispatchEvent(new Event('change'));
 
