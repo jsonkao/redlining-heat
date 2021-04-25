@@ -6,6 +6,7 @@ Masks nv pixels and calculates min/mean/max.
 from osgeo.gdal import Warp
 from pathlib import Path
 from ckmeans import ckmeans
+import kmeans1d
 import numpy as np
 import sys
 import os
@@ -16,9 +17,7 @@ out_file = sys.argv[3]
 
 bin_arg = [a for a in sys.argv if "--bins" in a]
 if (
-    len(bin_arg) == 0
-    and os.path.exists(out_file)
-    and os.path.getmtime(out_file) > os.path.getmtime(tif_name)
+    '--nocalc' in sys.argv
 ):
     # We're here because we modified this script, not any temperature values,
     # so I'm probably just trying to change the color scheme.
@@ -26,9 +25,9 @@ if (
     with open(out_file) as f:
         lines = f.readlines()
     colors = [
-        "255 0   0   255",  # min is hue angle 0° (#FF0000)
-        "255 255 255 255",  # median is saturation 0 (white)
         "0   255 255 255",  # max is 180° (#00FFFF)
+        "255 255 255 255",  # median is saturation 0 (white)
+        "255 0   0   255",  # min is hue angle 0° (#FF0000)
     ]
     for i, c in enumerate(colors):
         lines[i] = lines[i].split(" ")[0] + f" {c}\n"
@@ -100,22 +99,15 @@ if len(bin_arg) > 0:
         colors = seq_colors(n_seq, hue=0.5)[:-1] + seq_colors(n_seq, hue=0)[::-1]
     else:
         colors = seq_colors(bins)
-    clusters = ckmeans(values.compressed(), bins)
+    values = values.compressed()
+    clusters, _ = kmeans1d.cluster(values, bins)
+    clusters = np.array(clusters)
     with open(out_file, "w") as f:
-        for i, c in enumerate(clusters):
-            lwr, upr = c
+        for i in range(bins):
+            cluster = values[clusters == i]
+            lwr = np.min(cluster)
+            upr = np.max(cluster)
             color = " ".join(str(v) for v in hsv_to_rgb(*colors[i])) + " 255"
             f.write(f"{lwr} {color}\n")
             f.write(f"{upr} {color}\n")
         f.write("nv 236 236 236 255\n")
-
-
-sys.exit(0)
-"""
-# Write out a color file based on valid values
-with open(out_file, "w") as f:
-    f.write(f"{values.min()} 255 255 255 255\n")
-    f.write(f"{values.mean()} 255 {255/2} {255/2} 255\n")
-    f.write(f"{values.max()} 255 0 0 255\n")
-    f.write("nv 236 236 236 255\n")
-"""
