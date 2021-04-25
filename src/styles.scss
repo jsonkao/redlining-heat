@@ -1,6 +1,7 @@
 @import "./styles/spectate";
 
-$blend: soft-light;
+$blend: darken;
+$hue-offset: -48deg;
 
 #map-container {
   position: relative;
@@ -79,7 +80,11 @@ select {
 
   img {
     width: 100%;
-    mix-blend-mode: multiply;
+    mix-blend-mode: $blend;
+  }
+
+  & > img {
+    filter: hue-rotate($hue-offset);
   }
 
   :last-child,
@@ -88,8 +93,7 @@ select {
   }
 
   div img {
-    mix-blend-mode: $blend;
-    filter: hue-rotate(180deg);
+    filter: hue-rotate($hue-offset + 240deg);
   }
 
   svg {
@@ -173,43 +177,51 @@ hr {
   font-family: $graphik;
 }
 
-#map-container #grade-selector {
-  position: sticky;
-  display: inline-flex;
-  align-items: center;
-  top: 13px;
-  left: 13px;
-  background-color: white;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 30%);
-  z-index: 999;
-  opacity: 0;
-  transition-duration: 0.2s;
+#map-container {
+  #menu {
+    position: sticky;
+    top: 13px;
+    left: 13px;
+    z-index: 999;
+    opacity: 0;
+    transition-duration: 0.2s;
 
-  p {
-    margin: 0;
-    font-family: $graphik;
-    font-size: 16px;
-    padding: 0 10px;
-  }
-
-  #grade-options {
-    display: inline-flex;
-    div {
-      padding: 8px 10px;
+    p {
       margin: 0;
       font-family: $graphik;
-      font-size: 18px;
-      border-radius: 2px;
-      cursor: pointer;
-      border-left: 1px solid #fff;
-      transition-duration: 0.2s;
-      &.checked {
+      font-size: 16px;
+      padding: 0 10px;
+    }
+
+    .selector-container {
+      background-color: white;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 30%);
+
+      .options {
+        display: inline-flex;
+        div {
+          user-select: none;
+          padding: 8px 10px;
+          margin: 0;
+          font-family: $graphik;
+          font-size: 18px;
+          border-radius: 2px;
+          cursor: pointer;
+          border-left: 1px solid #fff;
+          transition-duration: 0.2s;
+          &.chosen {
+            background: #333;
+            color: white;
+          }
+        }
       }
     }
-  }
 
-  &.visible {
-    opacity: 1;
+    &.visible {
+      opacity: 1;
+    }
   }
 }
 
@@ -227,9 +239,14 @@ hr {
 }
 
 #legend-temp {
-  background: linear-gradient(0deg, rgba(0, 0, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 0, 0, 1) 100%);
+  background: linear-gradient(
+    0deg,
+    hsl($hue-offset + 120, 100%, 50%) 0%,
+    hsl(0, 0%, 100%) 50%,
+    hsl($hue-offset, 100%, 50%) 100%
+  );
 }
 
 #legend-imp {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 255, 0, 1) 100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, hsl($hue-offset + 240, 100%, 50%) 100%);
 }

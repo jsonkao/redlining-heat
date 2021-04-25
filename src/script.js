@@ -1,7 +1,8 @@
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*.{png,svg}');
+
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
-  'reliefs-ord',
+  'reliefs-ord5',
   'basemaps',
   'boundaries',
   'impervious-reliefs',
@@ -14,17 +15,19 @@ const [reliefs, basemaps, boundaries, impReliefs, charts] = [
       return acc;
     }, {}),
 );
-
-const cities = 'Manhattan,Bronx,Queens,Brooklyn St._Louis,East_St._Louis Birmingham Mobile Montgomery Little_Rock Phoenix Fresno Los_Angeles Oakland Sacramento San_Diego San_Francisco San_Jose Stockton Denver Pueblo Hartford New_Britain New_Haven Stamford Waterbury Jacksonville Miami St._Petersburg Tampa Atlanta Augusta Columbus@GA Macon Savannah Council_Bluffs Davenport Des_Moines Dubuque Sioux_City Waterloo Aurora Chicago Decatur Joliet Peoria Rockford Springfield@IL Evansville Fort_Wayne Indianapolis Lake_Co._Gary Muncie South_Bend Terre_Haute Topeka Wichita Covington Lexington@KY Louisville New_Orleans Shreveport Arlington Belmont Boston Braintree Brockton Brookline Cambridge Chelsea Dedham Everett Haverhill Holyoke_Chicopee Lexington@MA Malden Medford Melrose Milton Needham Newton Quincy Revere Saugus Somerville Waltham Watertown Winchester Winthrop Baltimore Battle_Creek Bay_City Detroit Flint Grand_Rapids Jackson@MI Kalamazoo Lansing Muskegon Pontiac Saginaw Duluth Minneapolis Rochester@MN St._Paul Greater_Kansas_City Springfield@MO St._Joseph Jackson@MS Asheville Charlotte Durham Greensboro Winston-Salem Lincoln Omaha Manchester Atlantic_City Bergen_Co. Camden Essex_Co. Hudson_Co. Trenton Union_Co. Albany Johnson_City Buffalo Elmira Lower_Westchester_Co. Niagara_Falls Poughkeepsie Rochester@NY Schenectady Staten_Island Syracuse Troy Utica Akron Canton Cleveland Columbus@OH Dayton Hamilton Lima Lorain Portsmouth Springfield@OH Toledo Warren Youngstown Oklahoma_City Tulsa Portland Altoona Bethlehem Chester Erie Harrisburg Johnstown Lancaster New_Castle Philadelphia Pittsburgh Wilkes-Barre York Pawtucket_and_Central_Falls Providence Woonsocket Columbia Chattanooga Knoxville Memphis Nashville Amarillo Austin Beaumont Dallas El_Paso Fort_Worth Galveston Houston Port_Arthur San_Antonio Waco Ogden Salt_Lake_City Lynchburg Newport_News Norfolk Richmond Roanoke Seattle Spokane Tacoma Kenosha Madison Milwaukee_Co. Oshkosh Racine Charleston Huntington Wheeling'
+console.log(reliefs)
+let cities = 'Manhattan,Bronx,Queens,Brooklyn St._Louis,East_St._Louis Birmingham Mobile Montgomery Little_Rock Phoenix Fresno Los_Angeles Oakland Sacramento San_Diego San_Francisco San_Jose Stockton Denver Pueblo Hartford New_Britain New_Haven Stamford Waterbury Jacksonville Miami St._Petersburg Tampa Atlanta Augusta Columbus@GA Macon Savannah Council_Bluffs Davenport Des_Moines Dubuque Sioux_City Waterloo Aurora Chicago Decatur Joliet Peoria Rockford Springfield@IL Evansville Fort_Wayne Indianapolis Lake_Co._Gary Muncie South_Bend Terre_Haute Topeka Wichita Covington Lexington@KY Louisville New_Orleans Shreveport Arlington Belmont Boston Braintree Brockton Brookline Cambridge Chelsea Dedham Everett Haverhill Holyoke_Chicopee Lexington@MA Malden Medford Melrose Milton Needham Newton Quincy Revere Saugus Somerville Waltham Watertown Winchester Winthrop Baltimore Battle_Creek Bay_City Detroit Flint Grand_Rapids Jackson@MI Kalamazoo Lansing Muskegon Pontiac Saginaw Duluth Minneapolis Rochester@MN St._Paul Greater_Kansas_City Springfield@MO St._Joseph Jackson@MS Asheville Charlotte Durham Greensboro Winston-Salem Lincoln Omaha Manchester Atlantic_City Bergen_Co. Camden Essex_Co. Hudson_Co. Trenton Union_Co. Albany Johnson_City Buffalo Elmira Lower_Westchester_Co. Niagara_Falls Poughkeepsie Rochester@NY Schenectady Staten_Island Syracuse Troy Utica Akron Canton Cleveland Columbus@OH Dayton Hamilton Lima Lorain Portsmouth Springfield@OH Toledo Warren Youngstown Oklahoma_City Tulsa Portland Altoona Bethlehem Chester Erie Harrisburg Johnstown Lancaster New_Castle Philadelphia Pittsburgh Wilkes-Barre York Pawtucket_and_Central_Falls Providence Woonsocket Columbia Chattanooga Knoxville Memphis Nashville Amarillo Austin Beaumont Dallas El_Paso Fort_Worth Galveston Houston Port_Arthur San_Antonio Waco Ogden Salt_Lake_City Lynchburg Newport_News Norfolk Richmond Roanoke Seattle Spokane Tacoma Kenosha Madison Milwaukee_Co. Oshkosh Racine Charleston Huntington Wheeling'
   .split(' ')
   .sort();
-const years = [
+cities = ['Richmond']
+let years = [
   ...new Set(
     Object.keys(reliefs)
       .map(f => f.split('-'))
       .map(n => +n[n.length - 1].substring(0, 4)),
   ),
 ];
+years = ['2000'];
 
 const map = document.getElementById('map');
 const variableCitySpans = document.getElementsByClassName('variable-city');
@@ -83,8 +86,8 @@ async function setCityMap(city, year) {
   basemapImg.src = (await basemaps[city]()).default;
 
   const [impImg1, impImg2] = impDiv.children;
-  impImg1.src = (await reliefs[city + '-1,6']()).default;
-  impImg2.src = (await reliefs[city + '-9,10']()).default;
+  impImg1.src = (await impReliefs[city + '-1,6']()).default;
+  impImg2.src = (await impReliefs[city + '-9,10']()).default;
 }
 
 /* Chart */
@@ -111,7 +114,7 @@ yearSelector.addEventListener('change', async function () {
 document.addEventListener('DOMContentLoaded', async function () {
   // citySelector.value = 'Manhattan,Bronx,Queens,Brooklyn';
   citySelector.value = 'Richmond';
-  yearSelector.value = 2020;
+  yearSelector.value = 2000;
   citySelector.dispatchEvent(new Event('change'));
 
   // Nation chart stuff
@@ -128,7 +131,7 @@ const selectors = document.getElementById('selectors');
 const topIntersect = document.getElementById('top-intersect');
 const selectorsTop = window.getComputedStyle(selectors).top;
 topIntersect.style.height = selectorsTop;
-const gradeSelector = document.getElementById('grade-selector');
+const menu = document.getElementById('menu');
 
 intersectTop({
   node: topIntersect,
@@ -136,12 +139,12 @@ intersectTop({
     selectors.classList.add('fixed');
     const { height, top } = selectors.getBoundingClientRect();
     topIntersect.style.height = height + top + 'px';
-    gradeSelector.classList.add('visible');
+    menu.classList.add('visible');
   },
   onExit: () => {
     selectors.classList.remove('fixed');
     topIntersect.style.height = selectorsTop;
-    gradeSelector.classList.remove('visible');
+    menu.classList.remove('visible');
   },
 });
 
@@ -179,17 +182,31 @@ const layeringStyles = document.getElementById('layering');
 const gradeOptions = document.getElementById('grade-options');
 for (const choice of gradeOptions.children) {
   choice.onclick = () => toggleGrade(choice);
-  if ('AD'.includes(choice.innerHTML)) toggleGrade(choice);
+  const initialGrades = '';
+  if (initialGrades.includes(choice.innerHTML)) toggleGrade(choice);
 }
 
 function toggleGrade(div) {
   const grade = div.innerHTML;
   gradeState[grade] = !gradeState[grade];
-  div.classList.toggle('checked');
   div.classList.toggle('grade-' + grade.toLowerCase());
 
   layeringStyles.innerHTML = Object.keys(gradeState)
     .filter(g => gradeState[g])
     .map(g => `g#${g}{opacity:1;}`)
     .join('');
+}
+
+const impState = {
+  all: false,
+}
+const impOptions = document.getElementById('imp-options');
+for (const choice of impOptions.children) {
+  choice.onclick = () => toggleImp(choice);
+}
+
+function toggleImp(div) {
+  const choice = div.innerHTML;
+  impState[choice] = !impState[choice];
+  div.classList.toggle('chosen');
 }
