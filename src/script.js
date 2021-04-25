@@ -1,8 +1,10 @@
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*.{png,svg}');
 
+const numBins = 7;
+
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
-  'reliefs-ord5',
+  'reliefs-ord' + numBins,
   'basemaps',
   'boundaries',
   'impervious-reliefs',
@@ -15,7 +17,7 @@ const [reliefs, basemaps, boundaries, impReliefs, charts] = [
       return acc;
     }, {}),
 );
-console.log(reliefs);
+
 let cities = 'Manhattan,Bronx,Queens,Brooklyn St._Louis,East_St._Louis Birmingham Mobile Montgomery Little_Rock Phoenix Fresno Los_Angeles Oakland Sacramento San_Diego San_Francisco San_Jose Stockton Denver Pueblo Hartford New_Britain New_Haven Stamford Waterbury Jacksonville Miami St._Petersburg Tampa Atlanta Augusta Columbus@GA Macon Savannah Council_Bluffs Davenport Des_Moines Dubuque Sioux_City Waterloo Aurora Chicago Decatur Joliet Peoria Rockford Springfield@IL Evansville Fort_Wayne Indianapolis Lake_Co._Gary Muncie South_Bend Terre_Haute Topeka Wichita Covington Lexington@KY Louisville New_Orleans Shreveport Arlington Belmont Boston Braintree Brockton Brookline Cambridge Chelsea Dedham Everett Haverhill Holyoke_Chicopee Lexington@MA Malden Medford Melrose Milton Needham Newton Quincy Revere Saugus Somerville Waltham Watertown Winchester Winthrop Baltimore Battle_Creek Bay_City Detroit Flint Grand_Rapids Jackson@MI Kalamazoo Lansing Muskegon Pontiac Saginaw Duluth Minneapolis Rochester@MN St._Paul Greater_Kansas_City Springfield@MO St._Joseph Jackson@MS Asheville Charlotte Durham Greensboro Winston-Salem Lincoln Omaha Manchester Atlantic_City Bergen_Co. Camden Essex_Co. Hudson_Co. Trenton Union_Co. Albany Johnson_City Buffalo Elmira Lower_Westchester_Co. Niagara_Falls Poughkeepsie Rochester@NY Schenectady Staten_Island Syracuse Troy Utica Akron Canton Cleveland Columbus@OH Dayton Hamilton Lima Lorain Portsmouth Springfield@OH Toledo Warren Youngstown Oklahoma_City Tulsa Portland Altoona Bethlehem Chester Erie Harrisburg Johnstown Lancaster New_Castle Philadelphia Pittsburgh Wilkes-Barre York Pawtucket_and_Central_Falls Providence Woonsocket Columbia Chattanooga Knoxville Memphis Nashville Amarillo Austin Beaumont Dallas El_Paso Fort_Worth Galveston Houston Port_Arthur San_Antonio Waco Ogden Salt_Lake_City Lynchburg Newport_News Norfolk Richmond Roanoke Seattle Spokane Tacoma Kenosha Madison Milwaukee_Co. Oshkosh Racine Charleston Huntington Wheeling'
   .split(' ')
   .sort();
@@ -94,10 +96,13 @@ const impState = {
   road: false,
   nonroad: false,
 };
+const impLegend = document.getElementById('legend-imp');
+const tempLegend = document.getElementById('legend-temp');
 async function updateImpMap(city) {
   const anyVisible = Object.values(impState).some(b => b);
   impDiv.classList = anyVisible && 'visible';
   reliefImg.classList = !anyVisible && 'multiply';
+  impLegend.classList = anyVisible && 'visible';
 
   const [roadImg, nonroadImg] = impDiv.children;
   roadImg.classList = impState['road'] && 'visible';
@@ -223,13 +228,81 @@ function toggleImp(div) {
   const choice = choiceOf(div);
   impState[choice] = !impState[choice];
   if (choice === 'impervious') {
-    console.log(impState);
     impState['road'] = impState['nonroad'] = impState['impervious'];
   } else {
     impState['impervious'] = impState['road'] && impState['nonroad'];
   }
-  for (let el of div.parentNode.children) {
+  for (const el of div.parentNode.children) {
     el.classList = impState[choiceOf(el)] && 'chosen';
   }
   updateImpMap(citySelector.value);
 }
+
+/* Hue offset stuff */
+
+const sat_i = 0.65;
+const sat_f = 0;
+const val_i = 0.84;
+const val_f = 0.98;
+// Based on https://stackoverflow.com/a/54116681
+let sv2sl = (s, v, l = v - (v * s) / 2, m = Math.min(l, 1 - l)) => [
+  m ? (v - l) / m : 0,
+  l,
+];
+
+// Scheme skeletons (only S and L, no H).
+const tempSchemeSL = getScheme(numBins, true);
+const impSchemeSL = getScheme(numBins);
+
+function seqColors(n, hue = 0) {
+  // Generate n sequential colors (whitish to a saturated hue)
+  // Initial (white) and final (saturated hue) values
+
+  const output = [];
+  const interpolate = (init, final, i) => init + (i * (final - init)) / (n - 1);
+  for (let i = 0; i < n; i++) {
+    const sl = sv2sl(
+      interpolate(sat_i, sat_f, i),
+      interpolate(val_i, val_f, i),
+    );
+    [0, 1].forEach(i => (sl[i] = Math.round(sl[i] * 100) + '%'));
+    output.push(sl);
+  }
+  return output;
+}
+function getScheme(isDiverging = false) {
+  if (isDiverging) {
+    const n_seq = (numBins + 1) / 2;
+    return seqColors(n_seq).slice(0, -1).concat(seqColors(n_seq).reverse());
+  }
+  return seqColors(numBins).reverse();
+}
+function makeGradient(scheme, hue) {
+  const pct = i => Math.round((i / scheme.length) * 100) + '%';
+  return (
+    'linear-gradient(0deg' +
+    scheme
+      .map(
+        (c, i, _, h = i < scheme.length / 2 ? hue + 120 : hue) =>
+          `, hsl(${h},${c.join(',')}) ${pct(i)} ${pct(i + 1)}`,
+      )
+      .join('') +
+    ')'
+  );
+}
+
+const input = document.getElementById('hue-offset');
+const hueLabel = document.getElementById('hue-offset-value');
+function updateHueOffset(h) {
+  tempLegend.style.background = makeGradient(tempSchemeSL, h);
+  impLegend.style.background = `linear-gradient(90deg, #fff 0%, hsl(${
+    h + 240
+  }, 100%, 50%) 100%)`;
+  reliefImg.style.filter = `hue-rotate(${h}deg)`;
+  for (const img of impDiv.children)
+    img.style.filter = `hue-rotate(${h + 240}deg)`;
+  hueLabel.innerHTML = h;
+}
+input.addEventListener('input', e => {
+  updateHueOffset(+e.target.value);
+});

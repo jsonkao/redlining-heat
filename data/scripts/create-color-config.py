@@ -84,12 +84,17 @@ def seq_colors(n, hue=0):
     """Generate n sequential colors (whitish to a saturated hue)"""
     # Initial (white) and final (saturated hue) values
     # TODO: variabilize this stuff
-    sat_i = .65
+    sat_i = 0.65
     sat_f = 0
-    val_i = .72
-    val_f = .92
+    val_i = 0.84
+    val_f = 0.98
     return [
-        (hue, 0.65 - i * 0.65 / (n - 1), 0.92 + i * 0.07 / (n - 1)) for i in range(n)
+        (
+            hue,
+            sat_i + i * (sat_f - sat_i) / (n - 1),
+            val_i + i * (val_f - val_i) / (n - 1),
+        )
+        for i in range(n)
     ]
 
 
@@ -101,16 +106,16 @@ else:
 
 if "--diverging" in sys.argv:
     n_seq = int((bins + 1) / 2)
-    colors = seq_colors(n_seq, hue=1/3)[:-1] + seq_colors(n_seq, hue=0)[::-1]
+    colors = seq_colors(n_seq, hue=1 / 3)[:-1] + seq_colors(n_seq, hue=0)[::-1]
 else:
     colors = seq_colors(bins)[::-1]
-
+print(colors)
 values = values.compressed()
 bounds = []
 if "--quantile" in sys.argv:
-    percentiles = np.percentile(values, [b / bins * 100 for b in range(bins+1)])
+    percentiles = np.percentile(values, [b / bins * 100 for b in range(bins + 1)])
     for i in range(bins):
-        bounds.append((percentiles[i], percentiles[i+1]-0.1))
+        bounds.append((percentiles[i], percentiles[i + 1] - 0.1))
 else:
     clusters, _ = kmeans1d.cluster(values, bins)
     clusters = np.array(clusters)

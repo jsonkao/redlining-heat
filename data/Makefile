@@ -38,7 +38,7 @@ COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
 # Color and relief dirs for testing different ordinal scales.
-NUM_BINS = 5
+NUM_BINS = 7
 COLOR_ORD_DIR = color-configs-ord$(NUM_BINS)
 RELIEF_ORD_DIR = reliefs-ord$(NUM_BINS)
 

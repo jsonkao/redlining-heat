@@ -1,7 +1,7 @@
 @import "./styles/spectate";
 
 $blend: darken;
-$hue-offset: -48deg;
+$hue-offset: 0deg;
 
 #map-container {
   position: relative;
@@ -86,7 +86,7 @@ select {
     }
   }
 
-  & > img {
+  #temperature-map {
     filter: hue-rotate($hue-offset);
   }
 
@@ -105,7 +105,8 @@ select {
       transition-duration: 0.3s;
     }
 
-    &.visible, img.visible {
+    &.visible,
+    img.visible {
       opacity: 1;
     }
   }
@@ -263,4 +264,9 @@ hr {
 
 #legend-imp {
   background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, hsl($hue-offset + 240, 100%, 50%) 100%);
+  opacity: 0;
+  transition-duration: 0.3s;
+  &.visible {
+    opacity: 1;
+  }
 }
