@@ -1,3 +1,5 @@
+import { makeGradient, getScheme } from './color-utils.js';
+
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*.{png,svg}');
 
@@ -240,64 +242,15 @@ function toggleImp(div) {
 
 /* Hue offset stuff */
 
-const sat_i = 0.65;
-const sat_f = 0;
-const val_i = 0.84;
-const val_f = 0.98;
-// Based on https://stackoverflow.com/a/54116681
-let sv2sl = (s, v, l = v - (v * s) / 2, m = Math.min(l, 1 - l)) => [
-  m ? (v - l) / m : 0,
-  l,
-];
-
 // Scheme skeletons (only S and L, no H).
 const tempSchemeSL = getScheme(numBins, true);
-const impSchemeSL = getScheme(numBins);
-
-function seqColors(n, hue = 0) {
-  // Generate n sequential colors (whitish to a saturated hue)
-  // Initial (white) and final (saturated hue) values
-
-  const output = [];
-  const interpolate = (init, final, i) => init + (i * (final - init)) / (n - 1);
-  for (let i = 0; i < n; i++) {
-    const sl = sv2sl(
-      interpolate(sat_i, sat_f, i),
-      interpolate(val_i, val_f, i),
-    );
-    [0, 1].forEach(i => (sl[i] = Math.round(sl[i] * 100) + '%'));
-    output.push(sl);
-  }
-  return output;
-}
-function getScheme(isDiverging = false) {
-  if (isDiverging) {
-    const n_seq = (numBins + 1) / 2;
-    return seqColors(n_seq).slice(0, -1).concat(seqColors(n_seq).reverse());
-  }
-  return seqColors(numBins).reverse();
-}
-function makeGradient(scheme, hue) {
-  const pct = i => Math.round((i / scheme.length) * 100) + '%';
-  return (
-    'linear-gradient(0deg' +
-    scheme
-      .map(
-        (c, i, _, h = i < scheme.length / 2 ? hue + 120 : hue) =>
-          `, hsl(${h},${c.join(',')}) ${pct(i)} ${pct(i + 1)}`,
-      )
-      .join('') +
-    ')'
-  );
-}
+const impSchemeSL = getScheme(5);
 
 const input = document.getElementById('hue-offset');
 const hueLabel = document.getElementById('hue-offset-value');
 function updateHueOffset(h) {
   tempLegend.style.background = makeGradient(tempSchemeSL, h);
-  impLegend.style.background = `linear-gradient(90deg, #fff 0%, hsl(${
-    h + 240
-  }, 100%, 50%) 100%)`;
+  impLegend.style.background = makeGradient(impSchemeSL, h + 240, false, 90);
   reliefImg.style.filter = `hue-rotate(${h}deg)`;
   for (const img of impDiv.children)
     img.style.filter = `hue-rotate(${h + 240}deg)`;
@@ -306,3 +259,5 @@ function updateHueOffset(h) {
 input.addEventListener('input', e => {
   updateHueOffset(+e.target.value);
 });
+
+updateHueOffset(0);
