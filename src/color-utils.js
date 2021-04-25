@@ -27,8 +27,12 @@ function seqColors(n) {
 
 export function getScheme(numBins, isDiverging = false) {
   if (isDiverging) {
-    const n_seq = (numBins + 1) / 2;
-    return seqColors(n_seq).slice(0, -1).concat(seqColors(n_seq).reverse());
+    if (numBins % 2 === 1){
+      const n_seq = (numBins + 1) / 2;
+      return seqColors(n_seq).slice(0, -1).concat(seqColors(n_seq).reverse());
+    }
+    const n_seq = (numBins / 2) + 1;
+    return seqColors(n_seq).slice(0, -1).concat(seqColors(n_seq).slice(0, -1).reverse());
   }
   return seqColors(numBins).reverse();
 }

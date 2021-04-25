@@ -3,7 +3,7 @@ import { makeGradient, getScheme } from './color-utils.js';
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*.{png,svg}');
 
-const numBins = 7;
+const numBins = 8;
 
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
   'reliefs-ord' + numBins,
@@ -109,8 +109,14 @@ async function updateImpMap(city) {
   const [roadImg, nonroadImg] = impDiv.children;
   roadImg.classList = impState['road'] && 'visible';
   nonroadImg.classList = impState['nonroad'] && 'visible';
-  roadImg.src = (await impReliefs[city + '-1,6']()).default;
-  nonroadImg.src = (await impReliefs[city + '-9,10']()).default;
+  // Never show both images on top of each other. Always use composite to prevent weird overlap coloring issues
+  if (Object.values(impState).every(b => b)) {
+    nonroadImg.classList = '';
+    roadImg.src = (await impReliefs[city + '-1,10']()).default;
+  } else {
+    roadImg.src = (await impReliefs[city + '-1,6']()).default;
+    nonroadImg.src = (await impReliefs[city + '-9,10']()).default;
+  }
 }
 
 /* Chart */

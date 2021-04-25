@@ -11,7 +11,7 @@ CITIES := $(shell cat all_cities.txt)
 # Years to generate temperature maps for
 YEARS = 2000 2020 1990
 # Group bounds of imperivous surfaces descriptor layer
-IMP_GRP_BOUNDS = 1,6 9,10 11,12
+IMP_GRP_BOUNDS = 1,6 9,10 1,10
 
 # Width of PNG assets
 WIDTH = 3000
@@ -38,7 +38,7 @@ COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
 # Color and relief dirs for testing different ordinal scales.
-NUM_BINS = 7
+NUM_BINS = 8
 COLOR_ORD_DIR = color-configs-ord$(NUM_BINS)
 RELIEF_ORD_DIR = reliefs-ord$(NUM_BINS)
 
@@ -165,7 +165,7 @@ $(IMP_RELIEF_DIR)/%.tif:
 
 $(BASE_DIR)/%.png: $(OSM_BURNED_DIR)/%.tif
 	rm -f $@
-	python3 $(SCRIPT_DIR)/project.py $< $@ $(WIDTH)
+	python3 $(SCRIPT_DIR)/project.py $< $@ $(WIDTH) --dstalpha
 
 # Rasterize streets and buildings. Calculate aspect ratio using bbox extent,
 # then calculate height with that.
