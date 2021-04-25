@@ -5,7 +5,6 @@ Masks nv pixels and calculates min/mean/max.
 
 from osgeo.gdal import Warp
 from pathlib import Path
-from ckmeans import ckmeans
 import kmeans1d
 import numpy as np
 import sys

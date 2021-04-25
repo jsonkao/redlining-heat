@@ -54,6 +54,7 @@ SHAPEFILE = holc-shapefile/holc_ad_data_adjusted.shp
 
 tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
 tempmaps_ord: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_ORD_DIR)/$C-$Y.png))
+color_ord: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_ORD_DIR)/$C-$Y.txt))
 tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
 
 basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
@@ -78,7 +79,7 @@ $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 
 # Design color scheme for tif
 $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --nocalc
 
 # Transform temperature data into color reliefs (ord)
 $(RELIEF_ORD_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_ORD_DIR)/%.txt
@@ -230,7 +231,7 @@ city-boundaries.json: $(SHAPEFILE)
 # Utilities
 #
 
-ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR) $(IMP_DESC_DIR) $(IMP_RELIEF_DIR) $(IMP_PCT_DIR)
+ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR) $(IMP_DESC_DIR) $(IMP_RELIEF_DIR) $(IMP_PCT_DIR) $(RELIEF_ORD_DIR) $(COLOR_ORD_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 
@@ -239,7 +240,7 @@ clean:
 clean_temperatures:
 	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
 
-keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.tif))
+keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_ORD_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.tif))
 
 #
 # Temperature mean formatting and statistics

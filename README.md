@@ -29,7 +29,7 @@ To add new cities, append them to the `CITIES` variable in the Makefile. Run `ma
 Prerequisites:
 * Command line: GDAL, Python GDAL/OGR, jq, mapshaper, ndjson-cli, R, Node
 * Files: [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account)
-* Libraries: `npm install`, `osgeo` for Python
+* Libraries: `npm install`, `osgeo` and `kmeans1d` for Python
 
 ## Next Steps
 
