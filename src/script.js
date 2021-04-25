@@ -1,5 +1,5 @@
 // Glob import all assets, then split them into variables and access module default
-const assets = import.meta.globEager('../data/**/*.{png,svg}');
+const assets = import.meta.glob('../data/**/*.{png,svg}');
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
   'reliefs',
   'basemaps',
@@ -10,7 +10,7 @@ const [reliefs, basemaps, boundaries, impReliefs, charts] = [
   Object.keys(assets)
     .filter(k => k.includes(dir))
     .reduce((acc, k) => {
-      acc[k.split('/')[3].slice(0, -4)] = '.' + assets[k].default;
+      acc[k.split('/')[3].slice(0, -4)] = assets[k];
       return acc;
     }, {}),
 );
@@ -38,7 +38,6 @@ const cityNameMods = {
   'St. Louis,East St. Louis': 'St. Louis',
   'Pawtucket and Central Falls': 'Pawtucket',
   'Lower Westchester Co.': 'Westchester',
-
 };
 function getName(rawValue) {
   const value = ('' + rawValue).replace(/_/g, ' ').replace('@', ', ');
@@ -74,48 +73,48 @@ function setYear(year) {
 
 /* Map logic */
 
-function setCityMap(city, year) {
+async function setCityMap(city, year) {
   const [boundarySvg, basemapImg, reliefImg, impDiv] = map.children;
   const boundaryImg = document.createElement('img');
   boundaryImg.setAttribute('onload', 'SVGInject(this, {makeIdsUnique: false})');
-  boundaryImg.src = boundaries[city];
+  boundaryImg.src = (await boundaries[city]()).default;
   map.replaceChild(boundaryImg, boundarySvg);
-  reliefImg.src = reliefs[city + '-' + year];
-  basemapImg.src = basemaps[city];
+  reliefImg.src = (await reliefs[city + '-' + year]()).default;
+  basemapImg.src = (await basemaps[city]()).default;
 
   const [impImg1, impImg2] = impDiv.children;
-  impImg1.src = reliefs[city + '-1,6'];
-  impImg2.src = reliefs[city + '-9,10'];
+  impImg1.src = (await reliefs[city + '-1,6']()).default;
+  impImg2.src = (await reliefs[city + '-9,10']()).default;
 }
 
 /* Chart */
 
-function setCityChart(
+async function setCityChart(
   city,
   chartImg = document.getElementById('chart'),
   chartTkyImg = document.getElementById('chart-tky'),
 ) {
-  chartImg.src = charts[city];
-  chartTkyImg.src = charts[city + '-tky'];
+  chartImg.src = (await charts[city]()).default;
+  chartTkyImg.src = (await charts[city + '-tky']()).default;
 }
 
 /* Dropdown listeners */
 
-citySelector.addEventListener('change', function () {
-  setCity(this.value, yearSelector.value);
+citySelector.addEventListener('change', async function () {
+  await setCity(this.value, yearSelector.value);
 });
 
-yearSelector.addEventListener('change', function () {
-  setYear(this.value);
+yearSelector.addEventListener('change', async function () {
+  await setYear(this.value);
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
   citySelector.value = 'Manhattan,Bronx,Queens,Brooklyn';
   yearSelector.value = 2020;
   citySelector.dispatchEvent(new Event('change'));
 
   // Nation chart stuff
-  setCityChart(
+  await setCityChart(
     'nation',
     document.getElementById('nation-chart'),
     document.getElementById('nation-chart-tky'),
