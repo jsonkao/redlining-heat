@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const ee = require('@google/earthengine');
+const geet = require('./geet.js');
 const { run } = require('./utils.js');
 
 function main() {
@@ -31,7 +32,7 @@ function main() {
 
   // Output download URL
   console.log(
-    temporalTemperatures.mask(mask).reproject(ee.Projection('EPSG:4326')).getDownloadURL({
+    temporalTemperatures.mask(mask).getDownloadURL({
       scale: city === 'Los Angeles' ? 45 : 30,
       region: bbox,
     }),
@@ -62,8 +63,8 @@ function retrieveTemperatures(bbox, boundary, year, city, yearDiff = 1) {
   for (let i = -yearDiff; i <= yearDiff; i++)
     years.push((+year + i).toString());
   const [collection, lst_calc] = {
-    2020: [ee.ImageCollection('LANDSAT/LC08/C01/T1'), lst_calc_ls8],
-    2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), lst_calc_ls7],
+    2020: [ee.ImageCollection('LANDSAT/LC08/C01/T1'), geet.lst_calc_ls8],
+    2000: [ee.ImageCollection('LANDSAT/LE07/C01/T1'), geet.lst_calc_ls7],
     1990: [ee.ImageCollection('LANDSAT/LT05/C01/T1'), geet.lst_calc_ls5],
   }[year];
   const images = collection
