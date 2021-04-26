@@ -147,7 +147,6 @@ comma := ,
 
 # Basename is of the form CITY-LOW,HI.png
 $(IMP_RELIEF_DIR)/%.png: $(IMP_RELIEF_DIR)/%.tif.relief
-	python3 $(SCRIPT_DIR)/project-nlcd.py $< $<.wgs84
 	python3 $(SCRIPT_DIR)/project.py $<.wgs84 $@ $(WIDTH) && rm $@.aux.xml
 	rm $<.wgs84
 
@@ -160,12 +159,14 @@ $(COLOR_IMP_DIR)/%.txt: $(IMP_RELIEF_DIR)/%.tif $(SCRIPT_DIR)/create-color-confi
 
 # Basename is of the form CITY-LOW,HI.tif where we calc LOW <= A and A <= HI
 # Prerequisites are hardcoded bc Im lazy
-$(IMP_RELIEF_DIR)/%.tif:
+$(IMP_RELIEF_DIR)/%.tif: Makefile
 	$(eval BASE := $(notdir $(basename $@)))
 	$(eval CITY := $(shell echo $(BASE) | rev | cut -d "-" -f2- | rev))
 	$(eval RANGE := $(shell echo $(BASE) | rev | cut -d "-" -f1 | rev))
 	gdal_calc.py -A $(IMP_DESC_DIR)/$(CITY).tif -B $(IMP_PCT_DIR)/$(CITY).tif \
-	--calc='B * logical_and($(subst $(comma),<=A$(comma)A<=,$(RANGE)))' --outfile=$@ --NoDataValue=0
+	--calc='B * logical_and($(subst $(comma),<=A$(comma)A<=,$(RANGE)))' --outfile=$@.albers.tif --NoDataValue=0
+	python3 $(SCRIPT_DIR)/project-nlcd.py $@.albers.tif $@
+	rm $@.albers.tif
 
 #
 # Basemaps

@@ -5,6 +5,7 @@ Masks nv pixels and calculates min/mean/max.
 
 from osgeo.gdal import Warp
 from pathlib import Path
+import rasterio
 import kmeans1d
 import numpy as np
 import sys
@@ -33,7 +34,7 @@ if "--nocalc" in sys.argv:
     sys.exit(0)
 
 stem = Path(tif_name).stem
-[city, year] = stem.replace("_", " ").rsplit("-", 1)
+city = stem.replace("_", " ").rsplit("-", 1)[0]
 
 # Cut temperature data according to city boundary
 ds = Warp(
@@ -50,6 +51,8 @@ band = ds.GetRasterBand(1)
 
 # Mask band according to NoData values
 values = np.ma.masked_equal(band.ReadAsArray(), band.GetNoDataValue())
+img_shape = values.shape;
+mask = values.mask;
 
 # Bins and percentiles
 def hsv_to_rgb(h, s, v):
@@ -130,6 +133,23 @@ else:
         cluster = values[clusters == i]
         bounds.append((np.min(cluster), np.max(cluster)))
 
+    if "--labels" in sys.argv:
+        labels = np.zeros(img_shape, dtype=np.uint16)
+        i = 0
+        for r in range(img_shape[0]):
+            for c in range(img_shape[1]):
+                if mask[r, c]:
+                    labels[r, c] = bins
+                else:
+                    labels[r, c] = clusters[i]
+                    i += 1
+        with open(f'{stem}-labels.png', 'wb') as f:
+            f.write(img_shape[0].to_bytes(2, sys.byteorder))
+            f.write(img_shape[1].to_bytes(2, sys.byteorder))
+            f.write(labels.tobytes());
+        print(img_shape)
+
+        sys.exit(0)
 with open(out_file, "w") as f:
     for i in range(bins):
         lwr, upr = bounds[i]

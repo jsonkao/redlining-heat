@@ -1,4 +1,5 @@
 import { makeGradient, getScheme, getColorsRGB } from './color-utils.js';
+import { select } from 'd3-selection';
 
 export const numBins = 6;
 const numImpBins = 4;
@@ -9,7 +10,7 @@ const yAxis = document.getElementById('y-axis');
 const yAxisLabel = document.getElementById('y-axis-label');
 
 export function setLegendVisibility(b) {
-  [impLegend, yAxis, yAxisLabel].forEach(el => el.classList = b && 'visible');
+  [impLegend, yAxis, yAxisLabel].forEach(el => (el.classList = b && 'visible'));
   impLegend.classList = b && 'visible';
 }
 
@@ -71,40 +72,108 @@ yAxis.innerHTML = `<svg viewBox="0 0 ${width} ${arrowMargin}">
     <polygon points="0 0, 6 3, 0 6" />
   </marker>
 </defs>
-<line x1="0" y1="${
+<line x1="0" y1="${arrowMargin / 2}" x2="${width - 9}" y2="${
   arrowMargin / 2
-}" x2="${width - 9}" y2="${arrowMargin / 2}" marker-end="url(#arrowhead)" />
+}" marker-end="url(#arrowhead)" />
 </svg>`;
-
-
 
 /* Canvas stuff */
 
+const labelArrays = {};
+
+const labelState = [];
+for (let r = 0; r < numBins + 1; r++) {
+  labelState.push([]);
+  const d = document.createElement('div');
+  d.style.height = gridSize + 'px';
+  for (let c = 0; c < numImpBins + 1; c++) {
+    labelState[r].push(false);
+    const dd = document.createElement('div');
+    dd.style.width = gridSize + 'px';
+    dd.style.height = gridSize + 'px';
+    if (c < numImpBins) d.append(dd);
+  }
+  if (r < numBins) tempLegend.append(d);
+}
+
+console.log(labelState);
+function anyLabel() {
+  return labelState.some(r => r.some(a => a));
+}
+
+const canvas = document.getElementById('composite');
 export async function composite(assets) {
-  const canvas = document.getElementById('composite');
   const ctx = canvas.getContext('2d');
   const refImg = document.getElementById('temperature-map');
-  const imgUrl = (await assets['../data/Richmond-blend.png']()).default;
-  refImg.onload = () => {
-    canvas.height = refImg.height;
-    canvas.width = refImg.width;
-    const img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
-      console.log(img);
-      const imgData = ctx.getImageData(0, 0, refImg.width, refImg.height);
-      process(imgData);
-    };
-    img.src = imgUrl;
-  }
+  let palette;
+  refImg.onload = async () => {
+    await processLabels(assets['../data/Richmond-2000-labels.png']);
+    await processLabels(assets['../data/Richmond-1,6-labels.png']);
+    const [window, width, height] = await chooseLabels(
+      assets['../data/Richmond-2000-labels.png'],
+      assets['../data/Richmond-1,6-labels.png'],
+      4,
+      2,
+    );
+    palette = ctx.getImageData(0, 0, width, height); //x,y,w,h
+    canvas.height = height;
+    canvas.width = width;
+    canvas.style.height = refImg.height + 'px';
+    canvas.style.width = refImg.width + 'px';
+    palette.data.set(window); // assuming values 0..255, RGBA, pre-mult.
+    // Repost the data.
+    ctx.putImageData(palette, 0, 0);
+  };
+
+  impLegend.addEventListener('click', async function ({ offsetX, offsetY }) {
+    const impLabel = Math.floor(offsetX / gridSize);
+    const tempLabel = numBins - 1 - Math.floor(offsetY / gridSize);
+    const [window, width, height] = await chooseLabels(
+      assets['../data/Richmond-2000-labels.png'],
+      assets['../data/Richmond-1,6-labels.png'],
+      tempLabel,
+      impLabel,
+    );
+    palette.data.set(window);
+    ctx.putImageData(palette, 0, 0);
+  });
 }
 
-function process({ data }) {
-  const set = new Set();
-  for (let i = 0; i < data.length; i += 4) {
-    set.add(`${data[i]},${data[i+1]},${data[i+2]}`);
-  }
-  console.log(set);
+async function processLabels(file) {
+  const labelsUrl = (await file()).default;
+  const response = await fetch(labelsUrl);
+  const buffer = await response.arrayBuffer();
+  const array = new Uint16Array(buffer);
+  labelArrays[labelsUrl] = array;
 }
 
-console.log(getColorsRGB(tempSchemeSL, HUE))
+async function chooseLabels(temp_f, imp_f, temp_l, imp_l) {
+  labelState[temp_l][imp_l] = !labelState[temp_l][imp_l];
+  syncLegendLabels();
+  const tempArray = labelArrays[(await temp_f()).default];
+  const impArray = labelArrays[(await imp_f()).default];
+  const width = tempArray[1];
+  const height = tempArray[0];
+  const t_labels = tempArray.slice(2);
+  const i_labels = impArray.slice(2);
+  const window = new Uint8ClampedArray(width * height * 4);
+  window.fill(255);
+  for (let i = 0; i < width * height; i++) {
+    if (labelState[t_labels[i]][i_labels[i]]) {
+      window[i * 4] = window[i * 4 + 1] = window[i * 4 + 2] = 0;
+    }
+  }
+  return [window, width, height];
+}
+
+function syncLegendLabels() {
+  console.log(labelState)
+  canvas.classList = anyLabel() ? '' : 'invisible';
+  for (let r = 0; r < numBins; r++) {
+    for (let c = 0; c < numImpBins; c++) {
+      let rr = numBins - r - 1;
+      const div = tempLegend.children[rr].children[c];
+      div.classList = labelState[rr][c] ? 'chosen' : '';
+    }
+  }
+}
