@@ -65,13 +65,19 @@ TukeyHSD(aov(prop_road ~ holc_grade, data = data %>% filter(year == 2020)))
 ```
 
 ```{r}
+library(ggpmisc)
+
+formula <- y ~ x
 data %>% 
-  filter(year == 2020 & city == "Birmingham") %>% 
-  ggplot(aes(prop_road, temperature)) +
-  geom_point(alpha = 0.3) +
-  geom_smooth(method = "lm") +
-  facet_wrap(~ holc_grade)
-  ```
+  filter(year == 2020) %>% 
+  ggplot(aes(prop_road, temperature, color = holc_grade)) +
+  geom_smooth(method = "lm", se=FALSE, formula = formula) +
+  geom_point(alpha = 0.6) +
+  stat_poly_eq(formula = formula, 
+               aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+               parse = TRUE) +
+  facet_wrap(~ state)
+```
 
 
 
