@@ -1,1 +1,1 @@
-export default "/boundaries/Richmond.svg";
+export default "./boundaries/Richmond.svg";

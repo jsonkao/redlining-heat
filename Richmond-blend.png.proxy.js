@@ -1,1 +1,1 @@
-export default "/Richmond-blend.png";
+export default "./Richmond-blend.png";

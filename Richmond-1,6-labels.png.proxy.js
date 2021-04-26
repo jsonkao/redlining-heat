@@ -1,1 +1,1 @@
-export default "/Richmond-1,6-labels.png";
+export default "./Richmond-1,6-labels.png";

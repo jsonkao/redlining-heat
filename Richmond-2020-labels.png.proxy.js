@@ -1,1 +1,1 @@
-export default "/Richmond-2020-labels.png";
+export default "./Richmond-2020-labels.png";

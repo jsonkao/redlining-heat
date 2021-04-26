@@ -1,1 +1,1 @@
-export default "/charts/Richmond-tky.png";
+export default "./charts/Richmond-tky.png";
