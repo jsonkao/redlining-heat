@@ -1,9 +1,7 @@
-import { makeGradient, getScheme } from './color-utils.js';
+import { setLegendVisibility, numBins } from './scripts/legend.js';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*.{png,svg}');
-
-const numBins = 8;
 
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
   'reliefs-ord' + numBins,
@@ -80,7 +78,7 @@ function setYear(year) {
 
 /* Map logic */
 
-const impDiv = document.getElementById('impervious-maps');
+const impImg = document.getElementById('impervious-map');
 const reliefImg = document.getElementById('temperature-map');
 async function setCityMap(city, year) {
   const [boundarySvg, basemapImg, _, __] = map.children;
@@ -98,24 +96,19 @@ const impState = {
   road: false,
   nonroad: false,
 };
-const impLegend = document.getElementById('legend-imp');
-const tempLegend = document.getElementById('legend-temp');
 async function updateImpMap(city) {
   const anyVisible = Object.values(impState).some(b => b);
-  impDiv.classList = anyVisible && 'visible';
+  impImg.classList = anyVisible && 'visible';
   reliefImg.classList = !anyVisible && 'multiply';
-  impLegend.classList = anyVisible && 'visible';
+  setLegendVisibility(anyVisible);
 
-  const [roadImg, nonroadImg] = impDiv.children;
-  roadImg.classList = impState['road'] && 'visible';
-  nonroadImg.classList = impState['nonroad'] && 'visible';
   // Never show both images on top of each other. Always use composite to prevent weird overlap coloring issues
   if (Object.values(impState).every(b => b)) {
-    nonroadImg.classList = '';
-    roadImg.src = (await impReliefs[city + '-1,10']()).default;
+    impImg.src = (await impReliefs[city + '-1,10']()).default;
   } else {
-    roadImg.src = (await impReliefs[city + '-1,6']()).default;
-    nonroadImg.src = (await impReliefs[city + '-9,10']()).default;
+    impImg.src = (
+      await impReliefs[city + (impState['road'] ? '-1,6' : '-9,10')]()
+    ).default;
   }
 }
 
@@ -232,13 +225,15 @@ for (const choice of impOptions.children) {
 }
 
 function toggleImp(div) {
-  const choiceOf = el => el.innerHTML.toLowerCase().replace('-', '');
+  const choiceOf = el => el.innerHTML.toLowerCase().replace('-', '').split(' ')[0];
   const choice = choiceOf(div);
   impState[choice] = !impState[choice];
   if (choice === 'impervious') {
     impState['road'] = impState['nonroad'] = impState['impervious'];
   } else {
-    impState['impervious'] = impState['road'] && impState['nonroad'];
+    const compChoice = choice === 'nonroad' ? 'road' : 'nonroad';
+    impState[compChoice] = impState['impervious'];
+    impState['impervious'] = false;
   }
   for (const el of div.parentNode.children) {
     el.classList = impState[choiceOf(el)] && 'chosen';
@@ -246,24 +241,3 @@ function toggleImp(div) {
   updateImpMap(citySelector.value);
 }
 
-/* Hue offset stuff */
-
-// Scheme skeletons (only S and L, no H).
-const tempSchemeSL = getScheme(numBins, true);
-const impSchemeSL = getScheme(5);
-
-const input = document.getElementById('hue-offset');
-const hueLabel = document.getElementById('hue-offset-value');
-function updateHueOffset(h) {
-  tempLegend.style.background = makeGradient(tempSchemeSL, h);
-  impLegend.style.background = makeGradient(impSchemeSL, h + 240, false, 90);
-  reliefImg.style.filter = `hue-rotate(${h}deg)`;
-  for (const img of impDiv.children)
-    img.style.filter = `hue-rotate(${h + 240}deg)`;
-  hueLabel.innerHTML = h;
-}
-input.addEventListener('input', e => {
-  updateHueOffset(+e.target.value);
-});
-
-updateHueOffset(0);

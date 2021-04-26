@@ -1,13 +1,3 @@
-<div>
-  <p class="range-label">Hue offset: <span id="hue-offset-value">0</span>&deg;</p>
-  <input type="range" id="hue-offset" name="hue-offset"
-         min="0" max="359" value="0">
-</div>
-<div id="legend">
-  <div id="legend-temp"></div>
-  <div id="legend-imp"></div>
-</div>
-
 <div id="top-intersect"></div>
 
 <div id="selectors">
@@ -26,13 +16,35 @@
         <div>D</div>
       </div>
     </div>
-    <br/>
+    <br />
     <div id="imp-selector" class="selector-container">
       <p>Layers:</p>
       <div id="imp-options" class="options">
-        <div>Impervious</div>
+        <div>Impervious surfaces</div>
         <div>Road</div>
         <div>Non-road</div>
+      </div>
+    </div>
+    <br />
+    <div id="legend-container-container">
+      <p class="range-label">
+        Hue offset: <span id="hue-offset-value">0</span>&deg;
+      </p>
+      <input
+        type="range"
+        id="hue-offset"
+        name="hue-offset"
+        min="0"
+        max="359"
+        value="0"
+      />
+      <div id="legend-container">
+        <div id="x-axis-labels"></div>
+        <div id="x-axis"></div>
+        <div id="legend">
+          <div id="legend-temp"></div>
+          <div id="legend-imp"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -40,9 +52,6 @@
     <img />
     <img />
     <img id="temperature-map" class="multiply" />
-    <div id="impervious-maps">
-      <img />
-      <img />
-    </div>
+    <img id="impervious-map" />
   </div>
 </div>

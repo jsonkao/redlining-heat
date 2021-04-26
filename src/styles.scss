@@ -90,17 +90,11 @@ select {
     position: relative;
   }
 
-  #impervious-maps {
+  #impervious-map {
     opacity: 0;
     transition-duration: 0.3s;
 
-    img {
-      opacity: 0;
-      transition-duration: 0.3s;
-    }
-
-    &.visible,
-    img.visible {
+    &.visible {
       opacity: 1;
     }
   }
@@ -190,7 +184,7 @@ hr {
   #menu {
     position: sticky;
     top: 13px;
-    left: 13px;
+    transform: translateX(14px);
     z-index: 999;
     opacity: 0;
     transition-duration: 0.2s;
@@ -215,7 +209,7 @@ hr {
           padding: 8px 10px;
           margin: 0;
           font-family: $graphik;
-          font-size: 18px;
+          // font-size: 18px;
           border-radius: 2px;
           cursor: pointer;
           border-left: 1px solid #fff;
@@ -228,6 +222,13 @@ hr {
       }
     }
 
+    #imp-selector {
+      margin-top: 9px;
+      p:first-child {
+        display: none;
+      }
+    }
+
     &.visible {
       opacity: 1;
     }
@@ -235,8 +236,7 @@ hr {
 }
 
 #legend {
-  width: 150px;
-  height: 300px;
+  // width and height defined in JS
   position: relative;
 
   div {
@@ -253,4 +253,41 @@ hr {
   &.visible {
     opacity: 1;
   }
+}
+
+.range-label {
+  font-size: 17px;
+  margin: 0;
+  margin-bottom: 3px;
+  font-family: Inconsolata;
+  font-weight: 500;
+}
+
+.range-label,
+#hue-offset {
+  display: none;
+}
+
+#legend-container-container {
+  margin-top: 9px;
+  height: 0;
+}
+
+#legend-container {
+  padding: 6px;
+  background-color: white;
+  div {
+    display: inline-block;
+  }
+}
+
+.halo {
+  text-shadow: 0px 2px 1px #fff, 0px -1px 1px #fff, 2px 0px 1px #fff, -2px 0px 1px #fff, 1px 0px 1px #fff,
+    -1px 0px 1px #fff;
+}
+
+#x-axis {
+  background: linear-gradient(to top right, #000 50%, transparent 0%) 30px 30px/10px 10px no-repeat,
+  linear-gradient(to top left,  #000 50%, transparent 0%) 20px 30px/10px 10px no-repeat,
+  linear-gradient(#000,#000) 10px 25px/2px calc(100% - 30px) no-repeat;
 }

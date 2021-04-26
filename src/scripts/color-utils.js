@@ -1,6 +1,6 @@
-const sat_i = 0.65;
+const sat_i = 0.85;
 const sat_f = 0;
-const val_i = 0.84;
+const val_i = 0.9;
 const val_f = 0.98;
 // Based on https://stackoverflow.com/a/54116681
 let sv2sl = (s, v, l = v - (v * s) / 2, m = Math.min(l, 1 - l)) => [
