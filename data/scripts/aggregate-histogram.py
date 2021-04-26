@@ -17,5 +17,5 @@ for line in sys.stdin:
         pixel_count += hist[pct]
         weighted_sum += int(pct) * hist[pct]
     print(
-        json.dumps({"id": data["id"], "pct_tree": round(weighted_sum / pixel_count, 3)})
+        json.dumps({"id": data["id"], "prop_tree": round(weighted_sum / pixel_count / 100, 5)})
     )

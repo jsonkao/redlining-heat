@@ -14,14 +14,28 @@ library(data.table)
 # Impervious surfaces + temperature analysis
 
 Reference: https://developers.google.com/earth-engine/datasets/catalog/USGS_NLCD_RELEASES_2016_REL#bands
+I weighted the impervious data so the contribution of each kind of pixel (e.g. road vs nonroad) was weighted by the percentage of that pixel that was impervious. However this means I need to get total counts from the unweighted version.
 ```{r}
+impv_data_unweighted <- fromJSON("../data/task-exports/impervious-2016-unweighted.json") %>% 
+  mutate_all(~replace(., is.na(.), 0)) %>% 
+  mutate(n_total = select(., starts_with("freq")) %>% rowSums()) %>% 
+  select(id, n_total)
+
 impv_data <- fromJSON("../data/task-exports/impervious-2016.json") %>% 
   mutate_all(~replace(., is.na(.), 0)) %>% 
   mutate(n_road = freq1+freq2+freq3+freq4+freq5+freq6, n_nonroad = freq9+freq10, n_energy = freq11) %>% 
-  mutate(n_total = select(., starts_with("freq")) %>% rowSums()) %>% 
+  inner_join(impv_data_unweighted) %>% 
   select(-starts_with("freq"))
 setDT(impv_data)
+impv_data
 ```
+
+```{r}
+tree_data <- fromJSON("../data/task-exports/tree-2016.json")
+setDT(tree_data)
+tree_data
+```
+
 
 # Read and join rest of data
 ```{r}
@@ -30,6 +44,7 @@ data <- inner_join(
     read.dbf('../data/holc-shapefile/holc_ad_data.dbf'),
     impv_data %>% 
       mutate(prop_road = n_road/n_total, prop_nonroad = n_nonroad/n_total, prop_imp = prop_road+prop_nonroad) %>% 
+      inner_join(tree_data) %>% 
       select(id, starts_with("prop")),
       by = c('neighborho' = 'id')
   ),
@@ -51,12 +66,12 @@ TukeyHSD(aov(prop_road ~ holc_grade, data = data %>% filter(year == 2020)))
 
 ```{r}
 data %>% 
-  filter(year == 2020) %>% 
+  filter(year == 2020 & city == "Birmingham") %>% 
   ggplot(aes(prop_road, temperature)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm") +
   facet_wrap(~ holc_grade)
-```
+  ```
 
 
 
