@@ -5,7 +5,22 @@ import { setLegendVisibility, numBins } from './scripts/legend.js';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = {
-
+	"../data/basemaps/Richmond.png": () => import("./basemaps/Richmond.png.proxy.js"),
+	"../data/boundaries/Richmond.svg": () => import("./boundaries/Richmond.svg.proxy.js"),
+	"../data/charts/Richmond-tky.png": () => import("./charts/Richmond-tky.png.proxy.js"),
+	"../data/charts/Richmond.png": () => import("./charts/Richmond.png.proxy.js"),
+	"../data/color-configs-ord5/Richmond-2000.png": () => import("./color-configs-ord5/Richmond-2000.png.proxy.js"),
+	"../data/impervious-reliefs/Richmond-1,10.png": () => import("./impervious-reliefs/Richmond-1,10.png.proxy.js"),
+	"../data/impervious-reliefs/Richmond-1,6.png": () => import("./impervious-reliefs/Richmond-1,6.png.proxy.js"),
+	"../data/impervious-reliefs/Richmond-9,10.png": () => import("./impervious-reliefs/Richmond-9,10.png.proxy.js"),
+	"../data/reliefs-ord5/Richmond-2000.png": () => import("./reliefs-ord5/Richmond-2000.png.proxy.js"),
+	"../data/reliefs-ord6/Richmond-2000.png": () => import("./reliefs-ord6/Richmond-2000.png.proxy.js"),
+	"../data/reliefs-ord7/Richmond-2000.png": () => import("./reliefs-ord7/Richmond-2000.png.proxy.js"),
+	"../data/reliefs-ord8/Richmond-2000.png": () => import("./reliefs-ord8/Richmond-2000.png.proxy.js"),
+	"../data/reliefs-ord9/Richmond-2000.png": () => import("./reliefs-ord9/Richmond-2000.png.proxy.js"),
+	"../data/reliefs/Richmond-1990.png": () => import("./reliefs/Richmond-1990.png.proxy.js"),
+	"../data/reliefs/Richmond-2000.png": () => import("./reliefs/Richmond-2000.png.proxy.js"),
+	"../data/reliefs/Richmond-2020.png": () => import("./reliefs/Richmond-2020.png.proxy.js")
 };
 
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [

@@ -1,0 +1,1 @@
+export default "/reliefs-ord8/Richmond-2000.png";
