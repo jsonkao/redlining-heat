@@ -126,43 +126,30 @@ $(TEMP_DIR)/%-1990.tif:
 $(IMP_DESC_DIR)/%.tif:
 	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json impervious_descriptor \
 	| xargs -n1 wget -O $@.zip \
-	&& unzip -p $@.zip > $@.albers \
+	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-	$(eval CITY := $(notdir $(basename $@)))
-	$(eval BBOX := $(shell jq '.["$(subst _, ,$(CITY))"] | join(" ")' -r city-bbox-index.json))
-	$(eval SIZE := $(shell gdalinfo gee-temperatures/$(CITY)-2020.tif | sed -n 3p | cut -c9- | sed 's/,//g'))
-	gdalwarp -t_srs EPSG:4326 -srcnodata 127 -te $(BBOX) -ts $(SIZE) $@.albers $@
-	rm $@.albers
 
 # Impervious surfaces pixel percentage
 $(IMP_PCT_DIR)/%.tif:
 	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json impervious \
 	| xargs -n1 wget -O $@.zip \
-	&& unzip -p $@.zip > $@.albers \
+	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-	$(eval CITY := $(notdir $(basename $@)))
-	$(eval BBOX := $(shell jq '.["$(subst _, ,$(CITY))"] | join(" ")' -r city-bbox-index.json))
-	$(eval SIZE := $(shell gdalinfo gee-temperatures/$(CITY)-2020.tif | sed -n 3p | cut -c9- | sed 's/,//g'))
-	gdalwarp -t_srs EPSG:4326 -te $(BBOX) -ts $(SIZE) $@.albers $@
-	rm $@.albers
 
 # Impervious surfaces pixel percentage
 $(TREE_DIR)/%.tif:
 	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json percent_tree_cover \
 	| xargs -n1 wget -O $@.zip \
-	&& unzip -p $@.zip > $@.albers \
+	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-	$(eval CITY := $(notdir $(basename $@)))
-	$(eval BBOX := $(shell jq '.["$(subst _, ,$(CITY))"] | join(" ")' -r city-bbox-index.json))
-	$(eval SIZE := $(shell gdalinfo gee-temperatures/$(CITY)-2020.tif | sed -n 3p | cut -c9- | sed 's/,//g'))
-	gdalwarp -t_srs EPSG:4326 -te $(BBOX) -ts $(SIZE) $@.albers $@
-	rm $@.albers
 
 comma := ,
 
 # Basename is of the form CITY-LOW,HI.png
 $(IMP_RELIEF_DIR)/%.png: $(IMP_RELIEF_DIR)/%.tif.relief
-	python3 $(SCRIPT_DIR)/project.py $< $@ $(WIDTH) && rm $@.aux.xml
+	python3 $(SCRIPT_DIR)/project-nlcd.py $< $<.wgs84
+	python3 $(SCRIPT_DIR)/project.py $<.wgs84 $@ $(WIDTH) && rm $@.aux.xml
+	rm $<.wgs84
 
 # Basename is of the form CITY-LOW,HI.tif.relief
 $(IMP_RELIEF_DIR)/%.tif.relief: $(IMP_RELIEF_DIR)/%.tif $(COLOR_IMP_DIR)/%.txt

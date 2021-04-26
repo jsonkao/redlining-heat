@@ -104,9 +104,9 @@ if len(bin_arg) > 0:
 else:
     bins = 7
 
-h1 = 1/2
-h2 = 1/6
-h3 = 5/6
+h1 = 1 / 2
+h2 = 1 / 6
+h3 = 5 / 6
 if "--diverging" in sys.argv:
     if bins % 2 == 1:
         n_seq = int((bins + 1) / 2)

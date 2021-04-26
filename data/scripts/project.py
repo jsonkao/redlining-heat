@@ -13,9 +13,9 @@ output_name = sys.argv[2]
 # Get geographic extent (bbox)
 fname_components = Path(input_name).stem.replace("_", " ").split("-")
 try:
-    if ',' in fname_components[-1]: # CITY-1,6
-        int(fname_components[-1].split(',')[0])
-    else: # CITY-2020
+    if "," in fname_components[-1]:  # CITY-1,6
+        int(fname_components[-1].split(",")[0])
+    else:  # CITY-2020
         int(fname_components[-1])
     city = "-".join(fname_components[:-1])
 except:
@@ -51,7 +51,7 @@ if output_name == "--proj4":
     sys.stdout.write(proj_string)
 else:
     # https://gdal.org/python/osgeo.gdal-module.html#WarpOptions
-    resample_method = [a.split('=')[1] for a in sys.argv if "--resampling" in a]
+    resample_method = [a.split("=")[1] for a in sys.argv if "--resampling" in a]
     if len(resample_method) > 0:
         resample_method = resample_method[0]
     else:
@@ -64,5 +64,5 @@ else:
         dstSRS=proj_string,
         resampleAlg=resample_method,
         callback=progress_callback,
-        dstAlpha="--dstalpha" in sys.argv
+        dstAlpha="--dstalpha" in sys.argv,
     )

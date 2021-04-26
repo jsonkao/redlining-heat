@@ -96,6 +96,7 @@ const impState = {
   road: false,
   nonroad: false,
 };
+let firstCall = true;
 async function updateImpMap(city) {
   const anyVisible = Object.values(impState).some(b => b);
   impImg.classList = anyVisible && 'visible';
@@ -105,7 +106,8 @@ async function updateImpMap(city) {
   // Never show both images on top of each other. Always use composite to prevent weird overlap coloring issues
   if (Object.values(impState).every(b => b)) {
     impImg.src = (await impReliefs[city + '-1,10']()).default;
-  } else {
+  } else if (anyVisible || firstCall) {
+    firstCall = false;
     impImg.src = (
       await impReliefs[city + (impState['road'] ? '-1,6' : '-9,10')]()
     ).default;

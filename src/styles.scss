@@ -183,6 +183,7 @@ hr {
 #map-container {
   #menu {
     position: sticky;
+    display: inline-block;
     top: 13px;
     transform: translateX(14px);
     z-index: 999;
