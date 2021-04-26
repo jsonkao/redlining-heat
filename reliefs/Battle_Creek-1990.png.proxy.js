@@ -1,1 +1,0 @@
-export default "/reliefs/Battle_Creek-1990.png";

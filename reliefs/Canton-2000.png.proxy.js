@@ -1,1 +1,0 @@
-export default "/reliefs/Canton-2000.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Topeka-2000.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Altoona-1990.png";

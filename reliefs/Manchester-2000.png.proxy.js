@@ -1,1 +1,0 @@
-export default "/reliefs/Manchester-2000.png";

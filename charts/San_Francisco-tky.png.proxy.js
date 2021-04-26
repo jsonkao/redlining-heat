@@ -1,1 +1,0 @@
-export default "/charts/San_Francisco-tky.png";

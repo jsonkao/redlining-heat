@@ -1,1 +1,0 @@
-export default "/charts/Pittsburgh-tky.png";

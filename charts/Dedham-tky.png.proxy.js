@@ -1,1 +1,0 @@
-export default "/charts/Dedham-tky.png";

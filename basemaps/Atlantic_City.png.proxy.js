@@ -1,1 +1,0 @@
-export default "/basemaps/Atlantic_City.png";

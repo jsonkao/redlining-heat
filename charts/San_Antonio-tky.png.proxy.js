@@ -1,1 +1,0 @@
-export default "/charts/San_Antonio-tky.png";

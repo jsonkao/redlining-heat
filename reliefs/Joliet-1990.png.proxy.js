@@ -1,1 +1,0 @@
-export default "/reliefs/Joliet-1990.png";

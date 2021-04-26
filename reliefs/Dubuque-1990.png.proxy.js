@@ -1,1 +1,0 @@
-export default "/reliefs/Dubuque-1990.png";

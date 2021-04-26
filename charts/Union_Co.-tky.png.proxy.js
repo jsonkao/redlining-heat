@@ -1,1 +1,0 @@
-export default "/charts/Union_Co.-tky.png";

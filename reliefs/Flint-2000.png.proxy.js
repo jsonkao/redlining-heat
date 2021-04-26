@@ -1,1 +1,0 @@
-export default "/reliefs/Flint-2000.png";

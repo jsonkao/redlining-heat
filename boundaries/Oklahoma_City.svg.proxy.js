@@ -1,1 +1,0 @@
-export default "/boundaries/Oklahoma_City.svg";

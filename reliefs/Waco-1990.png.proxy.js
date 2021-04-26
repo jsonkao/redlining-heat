@@ -1,1 +1,0 @@
-export default "/reliefs/Waco-1990.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Akron-2020.png";

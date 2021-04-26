@@ -1,1 +1,0 @@
-export default "/charts/Wilkes-Barre-tky.png";

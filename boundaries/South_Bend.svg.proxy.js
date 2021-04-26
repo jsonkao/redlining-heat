@@ -1,1 +1,0 @@
-export default "/boundaries/South_Bend.svg";

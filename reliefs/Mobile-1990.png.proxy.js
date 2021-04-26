@@ -1,1 +1,0 @@
-export default "/reliefs/Mobile-1990.png";

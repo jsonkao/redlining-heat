@@ -1,1 +1,0 @@
-export default "/reliefs/Revere-2020.png";

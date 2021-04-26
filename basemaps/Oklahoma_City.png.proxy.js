@@ -1,1 +1,0 @@
-export default "/basemaps/Oklahoma_City.png";

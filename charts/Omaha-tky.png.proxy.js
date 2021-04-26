@@ -1,1 +1,0 @@
-export default "/charts/Omaha-tky.png";

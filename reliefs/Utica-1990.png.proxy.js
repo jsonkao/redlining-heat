@@ -1,1 +1,0 @@
-export default "/reliefs/Utica-1990.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Syracuse-2020.png";

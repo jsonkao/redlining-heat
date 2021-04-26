@@ -1,1 +1,0 @@
-export default "/reliefs/Jackson@MI-2020.png";

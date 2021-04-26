@@ -1,1 +1,0 @@
-export default "/reliefs/Chattanooga-2020.png";

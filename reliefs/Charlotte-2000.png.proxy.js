@@ -1,1 +1,0 @@
-export default "/reliefs/Charlotte-2000.png";

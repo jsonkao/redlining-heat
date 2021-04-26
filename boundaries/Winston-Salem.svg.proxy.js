@@ -1,1 +1,0 @@
-export default "/boundaries/Winston-Salem.svg";

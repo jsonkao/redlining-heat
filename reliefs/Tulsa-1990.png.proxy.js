@@ -1,1 +1,0 @@
-export default "/reliefs/Tulsa-1990.png";

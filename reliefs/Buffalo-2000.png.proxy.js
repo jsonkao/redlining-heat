@@ -1,1 +1,0 @@
-export default "/reliefs/Buffalo-2000.png";

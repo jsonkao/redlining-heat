@@ -1,1 +1,0 @@
-export default "/charts/Oklahoma_City.png";

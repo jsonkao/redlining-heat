@@ -1,1 +1,0 @@
-export default "/reliefs/Beaumont-1990.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Lima-1990.png";

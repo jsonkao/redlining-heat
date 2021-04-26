@@ -1,1 +1,0 @@
-export default "/charts/Utica-tky.png";

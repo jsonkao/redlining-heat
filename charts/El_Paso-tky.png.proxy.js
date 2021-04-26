@@ -1,1 +1,0 @@
-export default "/charts/El_Paso-tky.png";

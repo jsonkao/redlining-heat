@@ -1,1 +1,0 @@
-export default "/reliefs/Milton-2000.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Stamford-2000.png";

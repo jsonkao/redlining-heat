@@ -1,1 +1,0 @@
-export default "/reliefs/Milwaukee_Co.-2000.png";

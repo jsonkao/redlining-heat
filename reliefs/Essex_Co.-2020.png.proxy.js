@@ -1,1 +1,0 @@
-export default "/reliefs/Essex_Co.-2020.png";

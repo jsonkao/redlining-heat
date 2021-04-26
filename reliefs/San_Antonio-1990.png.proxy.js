@@ -1,1 +1,0 @@
-export default "/reliefs/San_Antonio-1990.png";

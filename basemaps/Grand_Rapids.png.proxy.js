@@ -1,1 +1,0 @@
-export default "/basemaps/Grand_Rapids.png";

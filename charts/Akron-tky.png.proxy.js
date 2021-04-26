@@ -1,1 +1,0 @@
-export default "/charts/Akron-tky.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Boston-2000.png";

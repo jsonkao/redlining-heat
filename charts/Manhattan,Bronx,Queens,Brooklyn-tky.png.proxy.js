@@ -1,1 +1,0 @@
-export default "/charts/Manhattan,Bronx,Queens,Brooklyn-tky.png";

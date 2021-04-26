@@ -1,1 +1,0 @@
-export default "/charts/Port_Arthur-tky.png";

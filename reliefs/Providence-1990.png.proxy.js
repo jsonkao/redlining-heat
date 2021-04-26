@@ -1,1 +1,0 @@
-export default "/reliefs/Providence-1990.png";

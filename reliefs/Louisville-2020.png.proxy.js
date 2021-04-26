@@ -1,1 +1,0 @@
-export default "/reliefs/Louisville-2020.png";

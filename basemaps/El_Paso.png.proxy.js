@@ -1,1 +1,0 @@
-export default "/basemaps/El_Paso.png";

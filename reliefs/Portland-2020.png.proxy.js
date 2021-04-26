@@ -1,1 +1,0 @@
-export default "/reliefs/Portland-2020.png";

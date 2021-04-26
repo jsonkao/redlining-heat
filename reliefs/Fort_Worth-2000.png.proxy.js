@@ -1,1 +1,0 @@
-export default "/reliefs/Fort_Worth-2000.png";

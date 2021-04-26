@@ -1,1 +1,0 @@
-export default "/reliefs/Lincoln-2020.png";

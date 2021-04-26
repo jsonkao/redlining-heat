@@ -1,1 +1,0 @@
-export default "/reliefs/Denver-2020.png";

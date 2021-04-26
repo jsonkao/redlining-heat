@@ -1,1 +1,0 @@
-export default "/reliefs/Asheville-1990.png";

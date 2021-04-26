@@ -1,1 +1,0 @@
-export default "/reliefs/Terre_Haute-2000.png";

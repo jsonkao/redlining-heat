@@ -1,1 +1,0 @@
-export default "/reliefs/Indianapolis-2020.png";

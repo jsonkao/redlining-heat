@@ -1,1 +1,0 @@
-export default "/reliefs/Lancaster-2000.png";

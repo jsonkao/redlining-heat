@@ -1,1 +1,0 @@
-export default "/reliefs/Grand_Rapids-1990.png";

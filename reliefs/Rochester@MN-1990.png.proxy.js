@@ -1,1 +1,0 @@
-export default "/reliefs/Rochester@MN-1990.png";

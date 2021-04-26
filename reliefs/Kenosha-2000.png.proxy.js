@@ -1,1 +1,0 @@
-export default "/reliefs/Kenosha-2000.png";

@@ -1,1 +1,0 @@
-export default "/charts/Detroit-tky.png";

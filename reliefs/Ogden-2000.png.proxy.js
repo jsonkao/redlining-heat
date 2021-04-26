@@ -1,1 +1,0 @@
-export default "/reliefs/Ogden-2000.png";

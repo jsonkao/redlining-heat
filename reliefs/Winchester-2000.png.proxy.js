@@ -1,1 +1,0 @@
-export default "/reliefs/Winchester-2000.png";

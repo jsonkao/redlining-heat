@@ -1,1 +1,0 @@
-export default "/charts/St._Joseph-tky.png";

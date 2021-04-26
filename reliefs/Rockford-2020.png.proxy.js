@@ -1,1 +1,0 @@
-export default "/reliefs/Rockford-2020.png";

@@ -1,1 +1,0 @@
-export default "/charts/Lower_Westchester_Co..png";

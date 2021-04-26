@@ -1,1 +1,0 @@
-export default "/reliefs/St._Joseph-2000.png";

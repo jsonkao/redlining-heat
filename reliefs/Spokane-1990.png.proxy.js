@@ -1,1 +1,0 @@
-export default "/reliefs/Spokane-1990.png";

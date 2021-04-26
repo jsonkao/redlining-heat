@@ -1,1 +1,0 @@
-export default "/charts/Pueblo-tky.png";

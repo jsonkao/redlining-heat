@@ -1,1 +1,0 @@
-export default "/reliefs/Waltham-2000.png";

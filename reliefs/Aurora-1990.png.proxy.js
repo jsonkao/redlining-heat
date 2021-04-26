@@ -1,1 +1,0 @@
-export default "/reliefs/Aurora-1990.png";

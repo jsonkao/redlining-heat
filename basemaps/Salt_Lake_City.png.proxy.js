@@ -1,1 +1,0 @@
-export default "/basemaps/Salt_Lake_City.png";

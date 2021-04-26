@@ -1,1 +1,0 @@
-export default "/reliefs/Lansing-1990.png";

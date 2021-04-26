@@ -1,1 +1,0 @@
-export default "/charts/Winston-Salem-tky.png";

@@ -1,1 +1,0 @@
-export default "/charts/Chattanooga-tky.png";

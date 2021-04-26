@@ -1,1 +1,0 @@
-export default "/reliefs/Port_Arthur-2000.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Syracuse-1990.png";

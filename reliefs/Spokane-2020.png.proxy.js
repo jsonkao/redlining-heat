@@ -1,1 +1,0 @@
-export default "/reliefs/Spokane-2020.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Oakland-2000.png";

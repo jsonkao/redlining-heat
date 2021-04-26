@@ -1,1 +1,0 @@
-export default "/reliefs/Lynchburg-2000.png";

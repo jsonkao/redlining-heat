@@ -1,1 +1,0 @@
-export default "/boundaries/Greater_Kansas_City.svg";

@@ -1,1 +1,0 @@
-export default "/reliefs/Los_Angeles-1990.png";

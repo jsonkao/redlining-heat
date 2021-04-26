@@ -1,1 +1,0 @@
-export default "/reliefs/Dallas-1990.png";

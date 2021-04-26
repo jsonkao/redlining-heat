@@ -1,1 +1,0 @@
-export default "/charts/Newport_News-tky.png";

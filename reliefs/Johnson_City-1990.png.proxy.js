@@ -1,1 +1,0 @@
-export default "/reliefs/Johnson_City-1990.png";

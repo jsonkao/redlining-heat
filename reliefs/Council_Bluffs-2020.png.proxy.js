@@ -1,1 +1,0 @@
-export default "/reliefs/Council_Bluffs-2020.png";

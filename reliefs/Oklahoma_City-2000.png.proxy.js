@@ -1,1 +1,0 @@
-export default "/reliefs/Oklahoma_City-2000.png";

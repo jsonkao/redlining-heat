@@ -1,1 +1,0 @@
-export default "/reliefs/Kalamazoo-2000.png";

@@ -1,1 +1,0 @@
-export default "/charts/Hudson_Co.-tky.png";

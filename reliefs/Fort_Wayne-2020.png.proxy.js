@@ -1,1 +1,0 @@
-export default "/reliefs/Fort_Wayne-2020.png";

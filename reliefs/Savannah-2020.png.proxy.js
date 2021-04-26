@@ -1,1 +1,0 @@
-export default "/reliefs/Savannah-2020.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Sioux_City-2020.png";

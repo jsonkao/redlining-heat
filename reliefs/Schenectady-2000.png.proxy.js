@@ -1,1 +1,0 @@
-export default "/reliefs/Schenectady-2000.png";

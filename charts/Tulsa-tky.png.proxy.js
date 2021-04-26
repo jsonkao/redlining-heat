@@ -1,1 +1,0 @@
-export default "/charts/Tulsa-tky.png";

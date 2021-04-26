@@ -1,1 +1,0 @@
-export default "/reliefs/Toledo-2020.png";

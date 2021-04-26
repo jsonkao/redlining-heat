@@ -1,1 +1,0 @@
-export default "/charts/Battle_Creek.png";

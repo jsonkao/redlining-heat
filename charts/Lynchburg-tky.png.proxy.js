@@ -1,1 +1,0 @@
-export default "/charts/Lynchburg-tky.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Cambridge-2020.png";

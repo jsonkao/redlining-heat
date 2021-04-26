@@ -1,1 +1,0 @@
-export default "/reliefs/Pittsburgh-2000.png";

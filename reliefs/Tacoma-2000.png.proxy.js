@@ -1,1 +1,0 @@
-export default "/reliefs/Tacoma-2000.png";

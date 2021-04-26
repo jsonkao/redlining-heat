@@ -1,1 +1,0 @@
-export default "/reliefs/Knoxville-2020.png";

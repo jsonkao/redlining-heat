@@ -1,1 +1,0 @@
-export default "/charts/Los_Angeles-tky.png";

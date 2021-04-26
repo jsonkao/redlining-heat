@@ -1,1 +1,0 @@
-export default "/reliefs/Pawtucket_and_Central_Falls-1990.png";

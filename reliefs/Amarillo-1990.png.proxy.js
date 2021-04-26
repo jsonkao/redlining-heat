@@ -1,1 +1,0 @@
-export default "/reliefs/Amarillo-1990.png";

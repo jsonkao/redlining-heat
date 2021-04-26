@@ -1,1 +1,0 @@
-export default "/charts/New_Britain-tky.png";

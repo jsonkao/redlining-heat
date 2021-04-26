@@ -1,1 +1,0 @@
-export default "/boundaries/Pawtucket_and_Central_Falls.svg";

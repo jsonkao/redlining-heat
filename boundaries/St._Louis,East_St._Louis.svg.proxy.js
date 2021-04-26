@@ -1,1 +1,0 @@
-export default "/boundaries/St._Louis,East_St._Louis.svg";

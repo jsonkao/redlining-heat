@@ -1,1 +1,0 @@
-export default "/reliefs/Warren-2000.png";

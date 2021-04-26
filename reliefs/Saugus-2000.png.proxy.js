@@ -1,1 +1,0 @@
-export default "/reliefs/Saugus-2000.png";

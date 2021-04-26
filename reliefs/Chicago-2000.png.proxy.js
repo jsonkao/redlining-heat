@@ -1,1 +1,0 @@
-export default "/reliefs/Chicago-2000.png";

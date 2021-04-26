@@ -1,1 +1,0 @@
-export default "/basemaps/Port_Arthur.png";

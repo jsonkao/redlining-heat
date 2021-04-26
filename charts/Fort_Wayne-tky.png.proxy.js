@@ -1,1 +1,0 @@
-export default "/charts/Fort_Wayne-tky.png";

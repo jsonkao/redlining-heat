@@ -1,1 +1,0 @@
-export default "/charts/Jackson@MI-tky.png";

@@ -1,1 +1,0 @@
-export default "/boundaries/Essex_Co..svg";

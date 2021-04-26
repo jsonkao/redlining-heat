@@ -1,1 +1,0 @@
-export default "/charts/Columbus@GA-tky.png";

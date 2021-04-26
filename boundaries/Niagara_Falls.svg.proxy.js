@@ -1,1 +1,0 @@
-export default "/boundaries/Niagara_Falls.svg";

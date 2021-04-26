@@ -1,1 +1,0 @@
-export default "/reliefs/Decatur-2000.png";

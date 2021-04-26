@@ -1,1 +1,0 @@
-export default "/charts/Topeka-tky.png";

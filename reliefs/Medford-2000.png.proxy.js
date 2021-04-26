@@ -1,1 +1,0 @@
-export default "/reliefs/Medford-2000.png";

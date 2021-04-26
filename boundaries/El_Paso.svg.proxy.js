@@ -1,1 +1,0 @@
-export default "/boundaries/El_Paso.svg";

@@ -1,1 +1,0 @@
-export default "/reliefs/Winston-Salem-1990.png";

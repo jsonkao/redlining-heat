@@ -1,1 +1,0 @@
-export default "/reliefs/Indianapolis-2000.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Duluth-2020.png";

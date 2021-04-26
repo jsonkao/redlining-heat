@@ -1,1 +1,0 @@
-export default "/reliefs/Waterloo-2000.png";

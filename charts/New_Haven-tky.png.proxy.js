@@ -1,1 +1,0 @@
-export default "/charts/New_Haven-tky.png";

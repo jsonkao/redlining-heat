@@ -1,1 +1,0 @@
-export default "/reliefs/Durham-2020.png";

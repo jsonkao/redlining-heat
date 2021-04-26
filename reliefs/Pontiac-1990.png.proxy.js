@@ -1,1 +1,0 @@
-export default "/reliefs/Pontiac-1990.png";

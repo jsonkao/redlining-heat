@@ -1,1 +1,0 @@
-export default "/reliefs/Atlantic_City-1990.png";

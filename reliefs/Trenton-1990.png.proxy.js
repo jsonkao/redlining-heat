@@ -1,1 +1,0 @@
-export default "/reliefs/Trenton-1990.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Waterbury-1990.png";

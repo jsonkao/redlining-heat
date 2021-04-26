@@ -1,1 +1,0 @@
-export default "/reliefs/Union_Co.-2020.png";

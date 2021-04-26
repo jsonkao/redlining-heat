@@ -1,1 +1,0 @@
-export default "/boundaries/Montgomery.svg";

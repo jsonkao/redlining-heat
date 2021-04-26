@@ -1,1 +1,0 @@
-export default "/charts/Belmont-tky.png";

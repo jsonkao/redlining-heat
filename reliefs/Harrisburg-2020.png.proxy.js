@@ -1,1 +1,0 @@
-export default "/reliefs/Harrisburg-2020.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Lexington@MA-2020.png";

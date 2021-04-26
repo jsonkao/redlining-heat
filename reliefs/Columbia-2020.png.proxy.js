@@ -1,1 +1,0 @@
-export default "/reliefs/Columbia-2020.png";

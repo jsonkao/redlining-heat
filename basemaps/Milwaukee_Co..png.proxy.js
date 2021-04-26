@@ -1,1 +1,0 @@
-export default "/basemaps/Milwaukee_Co..png";

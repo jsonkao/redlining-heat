@@ -1,1 +1,0 @@
-export default "/reliefs/Bergen_Co.-2000.png";

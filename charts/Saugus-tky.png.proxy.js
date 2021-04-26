@@ -1,1 +1,0 @@
-export default "/charts/Saugus-tky.png";

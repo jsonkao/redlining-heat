@@ -1,1 +1,0 @@
-export default "/reliefs/Lorain-2000.png";

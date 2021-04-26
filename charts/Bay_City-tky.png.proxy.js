@@ -1,1 +1,0 @@
-export default "/charts/Bay_City-tky.png";

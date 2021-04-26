@@ -1,1 +1,0 @@
-export default "/reliefs/Wilkes-Barre-1990.png";

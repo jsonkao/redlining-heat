@@ -1,1 +1,0 @@
-export default "/charts/St._Louis,East_St._Louis-tky.png";

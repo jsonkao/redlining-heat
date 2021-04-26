@@ -1,1 +1,0 @@
-export default "/reliefs/Newton-2020.png";

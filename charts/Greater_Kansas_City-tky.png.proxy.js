@@ -1,1 +1,0 @@
-export default "/charts/Greater_Kansas_City-tky.png";

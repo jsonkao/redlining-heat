@@ -1,1 +1,0 @@
-export default "/reliefs/Nashville-2000.png";

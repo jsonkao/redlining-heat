@@ -1,1 +1,0 @@
-export default "/reliefs/Columbia-1990.png";

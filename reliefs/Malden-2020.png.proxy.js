@@ -1,1 +1,0 @@
-export default "/reliefs/Malden-2020.png";

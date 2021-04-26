@@ -1,1 +1,0 @@
-export default "/boundaries/Port_Arthur.svg";

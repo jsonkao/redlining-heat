@@ -1,1 +1,0 @@
-export default "/reliefs/South_Bend-1990.png";

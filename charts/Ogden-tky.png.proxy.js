@@ -1,1 +1,0 @@
-export default "/charts/Ogden-tky.png";

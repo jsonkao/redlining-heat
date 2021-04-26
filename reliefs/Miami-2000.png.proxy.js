@@ -1,1 +1,0 @@
-export default "/reliefs/Miami-2000.png";

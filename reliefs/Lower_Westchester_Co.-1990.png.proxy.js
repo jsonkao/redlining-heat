@@ -1,1 +1,0 @@
-export default "/reliefs/Lower_Westchester_Co.-1990.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Evansville-2020.png";

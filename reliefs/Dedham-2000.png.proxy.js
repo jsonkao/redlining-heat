@@ -1,1 +1,0 @@
-export default "/reliefs/Dedham-2000.png";

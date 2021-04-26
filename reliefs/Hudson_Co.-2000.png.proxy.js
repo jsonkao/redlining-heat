@@ -1,1 +1,0 @@
-export default "/reliefs/Hudson_Co.-2000.png";

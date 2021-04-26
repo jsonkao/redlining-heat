@@ -1,1 +1,0 @@
-export default "/reliefs/Shreveport-1990.png";

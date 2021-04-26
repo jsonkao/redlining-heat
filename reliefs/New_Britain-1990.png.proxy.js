@@ -1,1 +1,0 @@
-export default "/reliefs/New_Britain-1990.png";

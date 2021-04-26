@@ -1,1 +1,0 @@
-export default "/reliefs/Staten_Island-1990.png";

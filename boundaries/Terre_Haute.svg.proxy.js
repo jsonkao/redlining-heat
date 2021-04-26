@@ -1,1 +1,0 @@
-export default "/boundaries/Terre_Haute.svg";

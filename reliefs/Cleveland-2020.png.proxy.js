@@ -1,1 +1,0 @@
-export default "/reliefs/Cleveland-2020.png";

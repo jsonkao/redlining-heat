@@ -1,1 +1,0 @@
-export default "/reliefs/Somerville-1990.png";

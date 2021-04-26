@@ -1,1 +1,0 @@
-export default "/reliefs/Arlington-2000.png";

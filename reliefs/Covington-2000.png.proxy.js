@@ -1,1 +1,0 @@
-export default "/reliefs/Covington-2000.png";

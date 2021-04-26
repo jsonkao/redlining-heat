@@ -1,1 +1,0 @@
-export default "/reliefs/Saginaw-1990.png";

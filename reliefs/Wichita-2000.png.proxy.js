@@ -1,1 +1,0 @@
-export default "/reliefs/Wichita-2000.png";

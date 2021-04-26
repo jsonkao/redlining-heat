@@ -1,1 +1,0 @@
-export default "/reliefs/Haverhill-2020.png";

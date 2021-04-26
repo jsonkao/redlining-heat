@@ -1,1 +1,0 @@
-export default "/reliefs/Macon-1990.png";

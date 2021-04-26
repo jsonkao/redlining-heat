@@ -1,1 +1,0 @@
-export default "/reliefs/Huntington-2000.png";

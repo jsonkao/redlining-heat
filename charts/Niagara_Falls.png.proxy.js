@@ -1,1 +1,0 @@
-export default "/charts/Niagara_Falls.png";

@@ -1,1 +1,0 @@
-export default "/charts/Council_Bluffs.png";

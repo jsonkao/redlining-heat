@@ -1,1 +1,0 @@
-export default "/reliefs/Portland-1990.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Galveston-2020.png";

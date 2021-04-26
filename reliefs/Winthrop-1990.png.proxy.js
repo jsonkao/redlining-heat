@@ -1,1 +1,0 @@
-export default "/reliefs/Winthrop-1990.png";

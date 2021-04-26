@@ -1,1 +1,0 @@
-export default "/reliefs/Bay_City-2020.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Birmingham-1990.png";

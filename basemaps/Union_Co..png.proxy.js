@@ -1,1 +1,0 @@
-export default "/basemaps/Union_Co..png";

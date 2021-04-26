@@ -1,1 +1,0 @@
-export default "/basemaps/Little_Rock.png";

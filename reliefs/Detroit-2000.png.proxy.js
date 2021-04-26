@@ -1,1 +1,0 @@
-export default "/reliefs/Detroit-2000.png";

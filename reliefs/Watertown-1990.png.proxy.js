@@ -1,1 +1,0 @@
-export default "/reliefs/Watertown-1990.png";

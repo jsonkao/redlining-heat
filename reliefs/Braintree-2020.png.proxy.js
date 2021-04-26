@@ -1,1 +1,0 @@
-export default "/reliefs/Braintree-2020.png";

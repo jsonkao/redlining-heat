@@ -1,1 +1,0 @@
-export default "/reliefs/El_Paso-1990.png";

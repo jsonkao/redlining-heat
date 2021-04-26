@@ -1,1 +1,0 @@
-export default "/reliefs/York-2000.png";

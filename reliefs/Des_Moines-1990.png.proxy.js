@@ -1,1 +1,0 @@
-export default "/reliefs/Des_Moines-1990.png";

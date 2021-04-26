@@ -1,1 +1,0 @@
-export default "/charts/Lake_Co._Gary-tky.png";

@@ -1,1 +1,0 @@
-export default "/reliefs/Baltimore-1990.png";

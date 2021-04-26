@@ -1,1 +1,0 @@
-export default "/reliefs/Sacramento-2020.png";

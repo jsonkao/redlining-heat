@@ -1,1 +1,0 @@
-export default "/reliefs/Austin-1990.png";

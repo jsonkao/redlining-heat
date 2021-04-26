@@ -1,1 +1,0 @@
-export default "/reliefs/Roanoke-1990.png";

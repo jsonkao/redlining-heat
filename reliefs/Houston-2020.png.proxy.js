@@ -1,1 +1,0 @@
-export default "/reliefs/Houston-2020.png";

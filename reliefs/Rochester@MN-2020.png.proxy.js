@@ -1,1 +1,0 @@
-export default "/reliefs/Rochester@MN-2020.png";

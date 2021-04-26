@@ -1,1 +1,0 @@
-export default "/reliefs/Melrose-1990.png";

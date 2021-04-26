@@ -1,1 +1,0 @@
-export default "/reliefs/Minneapolis-2000.png";
