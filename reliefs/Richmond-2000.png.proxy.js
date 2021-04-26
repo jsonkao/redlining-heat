@@ -1,1 +1,0 @@
-export default "/reliefs/Richmond-2000.png";
