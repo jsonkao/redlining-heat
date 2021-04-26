@@ -279,6 +279,16 @@ $(TASK_DIR)/impervious-%.json: $(TASK_DIR)/imperviousTask-%.geojson Makefile
 	| jq '.' \
 	> $@
 
+$(TASK_DIR)/tree-%.json: $(TASK_DIR)/treeTask-%.geojson Makefile
+	cat $< \
+	| ndjson-split 'd.features' \
+	| ndjson-map 'd.properties' \
+	| ndjson-map '{id: d.neighborho, histogram: d.histogram}' \
+	| python3 $(SCRIPT_DIR)/aggregate-histogram.py \
+	| ndjson-reduce \
+	| jq '.' \
+	> $@
+
 #
 # Utility for checking whether city names are unique
 #
