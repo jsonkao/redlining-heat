@@ -500,16 +500,28 @@ select {
 
 #map {
   width: 100%;
+  margin-top: -93px;
 }
 #map * {
   position: absolute;
 }
 #map img {
   width: 100%;
+  mix-blend-mode: darken;
+}
+#map img.multiply {
   mix-blend-mode: multiply;
 }
-#map :last-child {
+#map :last-child,
+#map :last-child *:last-child {
   position: relative;
+}
+#map #impervious-map {
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+#map #impervious-map.visible {
+  opacity: 1;
 }
 #map svg {
   width: 100%;
@@ -594,37 +606,138 @@ hr {
   font-family: Graphik, helvetica, arial, sans-serif;
 }
 
-#map-container #grade-selector {
+#map-container #menu {
   position: sticky;
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   top: 13px;
-  left: 13px;
-  background-color: white;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  transform: translateX(14px);
   z-index: 999;
   opacity: 0;
   transition-duration: 0.2s;
 }
-#map-container #grade-selector p {
+#map-container #menu p {
   margin: 0;
   font-family: Graphik, helvetica, arial, sans-serif;
   font-size: 16px;
   padding: 0 10px;
 }
-#map-container #grade-selector #grade-options {
+#map-container #menu .selector-container {
+  background-color: white;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+#map-container #menu .selector-container .options {
   display: inline-flex;
 }
-#map-container #grade-selector #grade-options div {
+#map-container #menu .selector-container .options div {
+  user-select: none;
   padding: 8px 10px;
   margin: 0;
   font-family: Graphik, helvetica, arial, sans-serif;
-  font-size: 18px;
   border-radius: 2px;
   cursor: pointer;
   border-left: 1px solid #fff;
   transition-duration: 0.2s;
 }
-#map-container #grade-selector.visible {
+#map-container #menu .selector-container .options div.chosen {
+  background: #333;
+  color: white;
+}
+#map-container #menu #imp-selector {
+  margin-top: 9px;
+}
+#map-container #menu #imp-selector p:first-child {
+  display: none;
+}
+#map-container #menu #imp-selector .options div:first-child {
+  border: none;
+}
+#map-container #menu.visible {
   opacity: 1;
+}
+
+#legend {
+  position: relative;
+}
+#legend div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: darken;
+}
+
+#legend-temp {
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5);
+}
+
+#legend-imp {
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+#legend-imp.visible {
+  opacity: 1;
+}
+
+.range-label {
+  font-size: 17px;
+  margin: 0;
+  margin-bottom: 3px;
+  font-family: Inconsolata;
+  font-weight: 500;
+}
+
+.range-label,
+#hue-offset {
+  display: none;
+}
+
+#legend-container-container {
+  margin-top: 9px;
+  height: 0;
+}
+
+#legend-container {
+  padding: 6px;
+  display: inline-grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
+}
+#legend-container #x-axis-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+}
+#legend-container #x-axis-labels p {
+  padding: 0;
+  text-align: right;
+}
+#legend-container #x-axis {
+  margin-right: 9px;
+}
+#legend-container svg line {
+  stroke-width: 1.5px;
+  stroke: #121212;
+}
+#legend-container #y-axis {
+  grid-column: 3;
+  grid-row: 2;
+  margin-top: 9px;
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+#legend-container #y-axis-label {
+  grid-column: 3;
+  grid-row: 3;
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+#legend-container .visible {
+  opacity: 1 !important;
+}
+
+.halo {
+  text-shadow: 0px 1px 1px #fff, 0px -1px 1px #fff, 1px 0px 1px #fff, -1px 0px 1px #fff, -1.5px 0px 2px #fff, 1.5px 0px 2px #fff, 0 1.5px 2px #fff, 0 -1.5px 2px #fff;
+  letter-spacing: 0.8px;
 }
