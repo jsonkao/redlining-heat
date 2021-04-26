@@ -1,7 +1,7 @@
 import * as __SNOWPACK_ENV__ from './underscore_snowpack/env.js';
 import.meta.env = __SNOWPACK_ENV__;
 
-import { setLegendVisibility, numBins } from './scripts/legend.js';
+import { setLegendVisibility, numBins, composite } from './scripts/legend.js';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = {
@@ -20,7 +20,13 @@ const assets = {
 	"../data/reliefs-ord9/Richmond-2000.png": () => import("./reliefs-ord9/Richmond-2000.png.proxy.js"),
 	"../data/reliefs/Richmond-1990.png": () => import("./reliefs/Richmond-1990.png.proxy.js"),
 	"../data/reliefs/Richmond-2000.png": () => import("./reliefs/Richmond-2000.png.proxy.js"),
-	"../data/reliefs/Richmond-2020.png": () => import("./reliefs/Richmond-2020.png.proxy.js")
+	"../data/reliefs/Richmond-2020.png": () => import("./reliefs/Richmond-2020.png.proxy.js"),
+	"../data/Richmond-1,6-labels.png": () => import("./Richmond-1,6-labels.png.proxy.js"),
+	"../data/Richmond-2000-labels.png": () => import("./Richmond-2000-labels.png.proxy.js"),
+	"../data/Richmond-2000.png": () => import("./Richmond-2000.png.proxy.js"),
+	"../data/Richmond-2020-labels.png": () => import("./Richmond-2020-labels.png.proxy.js"),
+	"../data/Richmond-blend.png": () => import("./Richmond-blend.png.proxy.js"),
+	"../data/Richmond-labels.png": () => import("./Richmond-labels.png.proxy.js")
 };
 
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
@@ -247,7 +253,8 @@ for (const choice of impOptions.children) {
 }
 
 function toggleImp(div) {
-  const choiceOf = el => el.innerHTML.toLowerCase().replace('-', '').split(' ')[0];
+  const choiceOf = el =>
+    el.innerHTML.toLowerCase().replace('-', '').split(' ')[0];
   const choice = choiceOf(div);
   impState[choice] = !impState[choice];
   if (choice === 'impervious') {
@@ -263,3 +270,6 @@ function toggleImp(div) {
   updateImpMap(citySelector.value);
 }
 
+window.addEventListener('DOMContentLoaded', () =>
+  composite(assets).catch(console.error),
+);
