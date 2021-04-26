@@ -108,10 +108,10 @@ export async function composite(assets) {
   let palette;
   refImg.onload = async () => {
     await processLabels(assets['../data/Richmond-2000-labels.png']);
-    await processLabels(assets['../data/Richmond-1,6-labels.png']);
+    await processLabels(assets['../data/Richmond-1,10-labels.png']);
     const [window, width, height] = await chooseLabels(
       assets['../data/Richmond-2000-labels.png'],
-      assets['../data/Richmond-1,6-labels.png'],
+      assets['../data/Richmond-1,10-labels.png'],
       4,
       2,
       false,
@@ -128,7 +128,7 @@ export async function composite(assets) {
     const tempLabel = numBins - 1 - Math.floor(offsetY / gridSize);
     const [window, width, height] = await chooseLabels(
       assets['../data/Richmond-2000-labels.png'],
-      assets['../data/Richmond-1,6-labels.png'],
+      assets['../data/Richmond-1,10-labels.png'],
       tempLabel,
       impLabel,
     );

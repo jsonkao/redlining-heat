@@ -21,6 +21,7 @@ const assets = {
 	"../data/reliefs/Richmond-1990.png": () => import("./reliefs/Richmond-1990.png.proxy.js"),
 	"../data/reliefs/Richmond-2000.png": () => import("./reliefs/Richmond-2000.png.proxy.js"),
 	"../data/reliefs/Richmond-2020.png": () => import("./reliefs/Richmond-2020.png.proxy.js"),
+	"../data/Richmond-1,10-labels.png": () => import("./Richmond-1,10-labels.png.proxy.js"),
 	"../data/Richmond-1,6-labels.png": () => import("./Richmond-1,6-labels.png.proxy.js"),
 	"../data/Richmond-2000-labels.png": () => import("./Richmond-2000-labels.png.proxy.js"),
 	"../data/Richmond-2000.png": () => import("./Richmond-2000.png.proxy.js"),
