@@ -1,4 +1,4 @@
-import { setLegendVisibility, numBins } from './scripts/legend.js';
+import { setLegendVisibility, numBins, composite } from './scripts/legend.js';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*Richmond*.{png,svg}');
@@ -227,7 +227,8 @@ for (const choice of impOptions.children) {
 }
 
 function toggleImp(div) {
-  const choiceOf = el => el.innerHTML.toLowerCase().replace('-', '').split(' ')[0];
+  const choiceOf = el =>
+    el.innerHTML.toLowerCase().replace('-', '').split(' ')[0];
   const choice = choiceOf(div);
   impState[choice] = !impState[choice];
   if (choice === 'impervious') {
@@ -243,3 +244,6 @@ function toggleImp(div) {
   updateImpMap(citySelector.value);
 }
 
+window.addEventListener('DOMContentLoaded', () =>
+  composite(assets).catch(console.error),
+);

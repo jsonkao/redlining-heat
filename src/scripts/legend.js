@@ -1,4 +1,4 @@
-import { makeGradient, getScheme } from './color-utils.js';
+import { makeGradient, getScheme, getColorsRGB } from './color-utils.js';
 
 export const numBins = 6;
 const numImpBins = 4;
@@ -37,7 +37,8 @@ const height = numBins * gridSize;
 legend.style.width = width + 'px';
 legend.style.height = height + 'px';
 
-updateHueOffset(60);
+const HUE = 60;
+updateHueOffset(HUE);
 
 /* Axis stuff */
 
@@ -74,3 +75,36 @@ yAxis.innerHTML = `<svg viewBox="0 0 ${width} ${arrowMargin}">
   arrowMargin / 2
 }" x2="${width - 9}" y2="${arrowMargin / 2}" marker-end="url(#arrowhead)" />
 </svg>`;
+
+
+
+/* Canvas stuff */
+
+export async function composite(assets) {
+  const canvas = document.getElementById('composite');
+  const ctx = canvas.getContext('2d');
+  const refImg = document.getElementById('temperature-map');
+  const imgUrl = (await assets['../data/Richmond-blend.png']()).default;
+  refImg.onload = () => {
+    canvas.height = refImg.height;
+    canvas.width = refImg.width;
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0);
+      console.log(img);
+      const imgData = ctx.getImageData(0, 0, refImg.width, refImg.height);
+      process(imgData);
+    };
+    img.src = imgUrl;
+  }
+}
+
+function process({ data }) {
+  const set = new Set();
+  for (let i = 0; i < data.length; i += 4) {
+    set.add(`${data[i]},${data[i+1]},${data[i+2]}`);
+  }
+  console.log(set);
+}
+
+console.log(getColorsRGB(tempSchemeSL, HUE))
