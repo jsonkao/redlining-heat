@@ -46,9 +46,12 @@ proto: impervious-reliefs/Richmond-1,10.png reliefs-ord$(NUM_BINS)/Richmond-2000
 
 # Impervious reliefs and surfaces data
 IMP_RELIEF_DIR = impervious-reliefs
-IMP_DESC_DIR = gee-impervious-desc
-IMP_PCT_DIR = gee-impervious-pct
+IMP_DESC_DIR = nlcd-impervious-desc
+IMP_PCT_DIR = nlcd-impervious-pct
 COLOR_IMP_DIR = color-configs-imp
+
+# Trees
+TREE_DIR = nlcd-tree
 
 # Others
 HOLC_DIR = boundaries
@@ -66,6 +69,7 @@ boundaries: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 
 impervious_descriptor: folders $(CITIES:%=$(IMP_DESC_DIR)/%.tif)
 impervious_pct: folders $(CITIES:%=$(IMP_PCT_DIR)/%.tif)
+tree_cover: folders $(CITIES:%=$(TREE_DIR)/%.tif)
 impervious_reliefs: folders $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.png))
 
 all: folders tempmaps basemaps boundaries charts
@@ -115,9 +119,12 @@ $(TEMP_DIR)/%-1990.tif:
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
 
-# Impervious surfaces descriptor layer
+# TODO: All NLCD downloads — impervious surfaces descriptor, impervious surfaces pixel
+# percentage, percent tree cover — are handled by one target because the code
+# is completely the same. The script has the mapping from dir to layer name.
+# But it's hard and not a priority, so maybe do it later.
 $(IMP_DESC_DIR)/%.tif:
-	node $(SCRIPT_DIR)/download-impervious.js $@ city-bbox-index.json impervious_descriptor \
+	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json impervious_descriptor \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@.albers \
 	&& rm $@.zip
@@ -129,7 +136,19 @@ $(IMP_DESC_DIR)/%.tif:
 
 # Impervious surfaces pixel percentage
 $(IMP_PCT_DIR)/%.tif:
-	node $(SCRIPT_DIR)/download-impervious.js $@ city-bbox-index.json impervious \
+	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json impervious \
+	| xargs -n1 wget -O $@.zip \
+	&& unzip -p $@.zip > $@.albers \
+	&& rm $@.zip
+	$(eval CITY := $(notdir $(basename $@)))
+	$(eval BBOX := $(shell jq '.["$(subst _, ,$(CITY))"] | join(" ")' -r city-bbox-index.json))
+	$(eval SIZE := $(shell gdalinfo gee-temperatures/$(CITY)-2020.tif | sed -n 3p | cut -c9- | sed 's/,//g'))
+	gdalwarp -t_srs EPSG:4326 -te $(BBOX) -ts $(SIZE) $@.albers $@
+	rm $@.albers
+
+# Impervious surfaces pixel percentage
+$(TREE_DIR)/%.tif:
+	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json percent_tree_cover \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@.albers \
 	&& rm $@.zip
