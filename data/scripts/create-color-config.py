@@ -80,14 +80,15 @@ def hsv_to_rgb(h, s, v):
         return (v, p, q)
 
 
+sat_i = 0.65
+sat_f = 0
+val_i = 0.84
+val_f = 0.98
+
+
 def seq_colors(n, hue=0):
     """Generate n sequential colors (whitish to a saturated hue)"""
     # Initial (white) and final (saturated hue) values
-    # TODO: variabilize this stuff
-    sat_i = 0.65
-    sat_f = 0
-    val_i = 0.84
-    val_f = 0.98
     return [
         (
             hue,
@@ -100,16 +101,22 @@ def seq_colors(n, hue=0):
 
 if len(bin_arg) > 0:
     bins = int(bin_arg[0].split("=")[-1])
-    assert bins % 2 == 1
 else:
     bins = 7
 
+h1 = 1/2
+h2 = 1/6
+h3 = 5/6
 if "--diverging" in sys.argv:
-    n_seq = int((bins + 1) / 2)
-    colors = seq_colors(n_seq, hue=1 / 3)[:-1] + seq_colors(n_seq, hue=0)[::-1]
+    if bins % 2 == 1:
+        n_seq = int((bins + 1) / 2)
+        colors = seq_colors(n_seq, hue=h1)[:-1] + seq_colors(n_seq, hue=h2)[::-1]
+    else:
+        n_seq = int(bins / 2) + 1
+        colors = seq_colors(n_seq, hue=h1)[:-1] + seq_colors(n_seq, hue=h2)[:-1][::-1]
 else:
-    colors = seq_colors(bins)[::-1]
-print(colors)
+    colors = seq_colors(bins, hue=h3)[::-1]
+
 values = values.compressed()
 bounds = []
 if "--quantile" in sys.argv:

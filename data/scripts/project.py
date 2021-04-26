@@ -64,4 +64,5 @@ else:
         dstSRS=proj_string,
         resampleAlg=resample_method,
         callback=progress_callback,
+        dstAlpha="--dstalpha" in sys.argv
     )

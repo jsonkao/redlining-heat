@@ -38,9 +38,11 @@ COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
 # Color and relief dirs for testing different ordinal scales.
-NUM_BINS = 8
+NUM_BINS = 6
 COLOR_ORD_DIR = color-configs-ord$(NUM_BINS)
 RELIEF_ORD_DIR = reliefs-ord$(NUM_BINS)
+
+proto: impervious-reliefs/Richmond-1,10.png reliefs-ord$(NUM_BINS)/Richmond-2000.png
 
 # Impervious reliefs and surfaces data
 IMP_RELIEF_DIR = impervious-reliefs
@@ -148,7 +150,7 @@ $(IMP_RELIEF_DIR)/%.tif.relief: $(IMP_RELIEF_DIR)/%.tif $(COLOR_IMP_DIR)/%.txt
 	gdaldem color-relief $^ $@ -alpha -of GTiff
 
 $(COLOR_IMP_DIR)/%.txt: $(IMP_RELIEF_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=5
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=4
 
 # Basename is of the form CITY-LOW,HI.tif where we calc LOW <= A and A <= HI
 # Prerequisites are hardcoded bc Im lazy
