@@ -61,24 +61,33 @@ setDT(data)
 
 Scatter plot and linear trendline
 ```{r}
-TukeyHSD(aov(prop_road ~ holc_grade, data = data %>% filter(year == 2020)))
+TukeyHSD(aov(prop_tree ~ holc_grade, data = data %>% filter(year == 2020)))
 ```
 
 ```{r}
 library(ggpmisc)
 
-formula <- y ~ x
+# State facet
 data %>% 
-  filter(year == 2020) %>% 
-  ggplot(aes(prop_road, temperature, color = holc_grade)) +
-  geom_smooth(method = "lm", se=FALSE, formula = formula) +
+  filter(year == 2020 & as.integer(state) < 12) %>% 
+  ggplot(aes(prop_tree, temperature, color = holc_grade)) +
+  geom_smooth(method = "lm", se=FALSE, formula = y ~ x) +
   geom_point(alpha = 0.6) +
-  stat_poly_eq(formula = formula, 
+  stat_poly_eq(formula = y ~ x, 
                aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
                parse = TRUE) +
-  facet_wrap(~ state)
-```
+  facet_wrap(~ state, scales = "free")
 
+# looking at a city to check vibes
+data %>% 
+  filter(year == 2020 & city == "Portland") %>% 
+  ggplot(aes(prop_tree, temperature, color = holc_grade)) +
+  geom_smooth(method = "lm", se=FALSE, formula = y ~ x) +
+  geom_point(alpha = 0.6) +
+  stat_poly_eq(formula = y ~ x, 
+               aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")), 
+               parse = TRUE)
+```
 
 
 
