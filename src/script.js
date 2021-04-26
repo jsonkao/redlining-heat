@@ -1,7 +1,7 @@
 import { setLegendVisibility, numBins } from './scripts/legend.js';
 
 // Glob import all assets, then split them into variables and access module default
-const assets = import.meta.glob('../data/**/*.{png,svg}');
+const assets = import.meta.glob('../data/**/*Richmond*.{png,svg}');
 
 const [reliefs, basemaps, boundaries, impReliefs, charts] = [
   'reliefs-ord' + numBins,

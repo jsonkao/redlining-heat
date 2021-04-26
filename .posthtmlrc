@@ -10,7 +10,7 @@
         "body": [
           {
             "type": "text",
-            "value": "<a name=\"select\">In the</a> following map, see how summertime temperatures affect neighborhoods of different HOLC grades in various cities and decades. Bluer areas are colder than average; redder areas are warmer. HOLC boundaries are also drawn onto the map, colored by their grade: <span class=\"grade-a\">A</span>, <span class=\"grade-b\">B</span>, <span class=\"grade-c\">C</span>, or <span class=\"grade-d\">D</span>. Prototype document available <a href=\"https://jsonkao.github.io/redlining-heat/Prototype.pdf\">here</a>."
+            "value": "<a name=\"select\">In the</a> following map, see how summertime temperatures affect neighborhoods of different HOLC grades in various cities and decades. Bluer areas are colder than average; yellower areas are warmer. You can also toggle HOLC boundaries, which are colored by their grade: <span class=\"grade-a\">A</span>, <span class=\"grade-b\">B</span>, <span class=\"grade-c\">C</span>, or <span class=\"grade-d\">D</span>. Finally, you can toggle the visibility of all impervious surfaces, only non-road impervious surfaces, or only road impervious surfaces. Prototype document available <a href=\"https://jsonkao.github.io/redlining-heat/Prototype.pdf\">here</a>."
           },
           {
             "type": "graphic",
@@ -59,8 +59,8 @@
             "value": "<img class=\"chart\" id=\"nation-chart\" />"
           }
         ],
-        "headline": "Redlining’s Legacy in Heat Inequality: Exploratory Page",
-        "date": "March 25, 2021",
+        "headline": "Redlining’s Legacy in Heat Inequality:  Exploratory Page (prototype submission)",
+        "date": "April 21, 2021",
         "byline": "Jason Kao",
         "footer": "Code to reproduce data and visualizations is on <a href=\"https://github.com/jsonkao/redlining-heat\">GitHub</a>.",
         "USE_NEWS_NAV": true,
