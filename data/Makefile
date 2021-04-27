@@ -7,7 +7,6 @@ MAKEFLAGS += -j4
 # Cities to generate maps/data for. Replace any spaces in city names with
 # underscores. To group cities, use commas.
 CITIES := $(shell cat all_cities.txt)
-CITIES = Richmond Baltimore
 
 # Years to generate temperature maps for
 YEARS = 1990 2000 2020
