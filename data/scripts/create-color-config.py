@@ -130,10 +130,16 @@ else:
         bounds.append((np.min(cluster), np.max(cluster)))
 
     # Generate labels
+    ci = 0;
     labels = np.zeros(img_shape, dtype=np.uint16)
     for r in range(img_shape[0]):
         for c in range(img_shape[1]):
-            labels[r, c] = bins if mask[r, c] else clusters[i]
+            if mask[r, c]:
+                labels[r, c] = bins
+            else:
+                labels[r, c] = clusters[ci]
+                ci += 1
+
     with open(label_file, "wb") as f:
         f.write(img_shape[0].to_bytes(2, sys.byteorder))
         f.write(img_shape[1].to_bytes(2, sys.byteorder))

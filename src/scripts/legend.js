@@ -44,7 +44,7 @@ legend.style.height = height + 'px';
 const labelArrays = {};
 
 // Make (numBins + 1) x (numImpBins + 1) divs
-const labelState = [];
+let labelState = [];
 for (let r = 0; r < numBins + 1; r++) {
   labelState.push([]);
   const d = document.createElement('div');
@@ -60,13 +60,41 @@ for (let r = 0; r < numBins + 1; r++) {
 }
 
 const canvas = document.getElementById('composite');
-export async function updateFilter(city, year, impSetting, labels) {
-  const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
+let palette;
+let labels;
+
+let globalSettings = {};
+
+export async function updateFilter(settings, localLabels) {
+  if (localLabels) {
+    labels = localLabels;
+  }
+  const { city, year, impSetting } = (globalSettings = {
+    ...globalSettings,
+    ...settings,
+  });
+
+
+  if (!impSetting) {
+    labelState = Array.from({ length: numBins + 1 }, () => (
+      Array.from({ length: numImpBins + 1 }, () => false)
+   ))
+   syncLegendLabels();
+    return;
+  }
+
   const refImg = document.getElementById('temperature-map');
   const tempName = city + '-' + year;
   const impName = city + impSetting; // impSetting already has dash
-  let palette;
-  refImg.onload = async () => {
+
+  if (refImg.complete) {
+    await cacheLabels(labels, tempName);
+    await cacheLabels(labels, impName);
+    updateImageData(await chooseLabels(tempName, impName));
+  }
+  refImg.onload = updateDims;
+  async function updateDims() {
     await cacheLabels(labels, tempName);
     await cacheLabels(labels, impName);
     canvas.style.height = refImg.height + 'px';
@@ -75,15 +103,18 @@ export async function updateFilter(city, year, impSetting, labels) {
     palette = ctx.getImageData(0, 0, width, height);
     canvas.height = height;
     canvas.width = width;
-  };
+  }
+  function updateImageData(window) {
+    palette.data.set(window);
+    ctx.putImageData(palette, 0, 0);
+  }
 
-  impLegend.addEventListener('click', async function ({ offsetX, offsetY }) {
+  impLegend.onclick = async function ({ offsetX, offsetY }) {
     const impLabel = Math.floor(offsetX / gridSize);
     const tempLabel = numBins - 1 - Math.floor(offsetY / gridSize);
     const window = await chooseLabels(tempName, impName, tempLabel, impLabel);
-    palette.data.set(window);
-    ctx.putImageData(palette, 0, 0);
-  });
+    updateImageData(window);
+  };
 }
 
 async function cacheLabels(labels, fname) {
@@ -97,23 +128,20 @@ async function cacheLabels(labels, fname) {
 }
 
 async function chooseLabels(tempName, impName, tempLabel, impLabel) {
-  labelState[tempLabel][impLabel] = !labelState[tempLabel][impLabel];
-  syncLegendLabels();
-  console.log(labelState);
+  if (tempLabel !== undefined && impLabel !== undefined) {
+    labelState[tempLabel][impLabel] = !labelState[tempLabel][impLabel];
+    syncLegendLabels();
+  }
   const tempArray = labelArrays[tempName].slice(2);
   const impArray = labelArrays[impName].slice(2);
   const window = new Uint8ClampedArray(tempArray.length * 4);
   window.fill(255); // Fill with all white
-  let t =0;
   for (let i = 0; i < tempArray.length; i++) {
     if (labelState[tempArray[i]][impArray[i]]) {
       // Black pixels means we can see through them using lighten blend
-      t+=1;
       window[i * 4] = window[i * 4 + 1] = window[i * 4 + 2] = 0;
     }
   }
-  console.log(t);
-  document.__hi__ = impArray;
   return window;
 }
 

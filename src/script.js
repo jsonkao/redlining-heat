@@ -87,10 +87,10 @@ async function setCityMap(city, year) {
   boundaryImg.src = (await boundaries[city]()).default;
   map.replaceChild(boundaryImg, boundarySvg);
   basemapImg.src = (await basemaps[city]()).default;
-  const impSetting = await updateImpMap(city);
   reliefImg.src = (await reliefs[city + '-' + year]()).default;
+  const impSetting = await updateImpMap(city);
   // Only update filter when city updates, which is when setCityMap is called
-  await updateFilter(city, year, impSetting, labels);
+  await updateFilter({ city, year, impSetting }, labels);
 }
 
 const impState = {
@@ -110,6 +110,10 @@ async function updateImpMap(city) {
   if (Object.values(impState).every(b => b)) {
     impImg.src = (await impReliefs[city + (impSetting = '-1,10')]()).default;
   } else if (anyVisible || firstCall) {
+    if (firstCall && !anyVisible) {
+      firstCall = false;
+      return '-1,10';
+    }
     firstCall = false;
     impImg.src = (
       await impReliefs[
@@ -229,10 +233,10 @@ function toggleGrade(div) {
 
 const impOptions = document.getElementById('imp-options');
 for (const choice of impOptions.children) {
-  choice.onclick = () => toggleImp(choice);
+  choice.onclick = async () => await toggleImp(choice);
 }
 
-function toggleImp(div) {
+async function toggleImp(div) {
   const choiceOf = el =>
     el.innerHTML.toLowerCase().replace('-', '').split(' ')[0];
   const choice = choiceOf(div);
@@ -247,5 +251,6 @@ function toggleImp(div) {
   for (const el of div.parentNode.children) {
     el.classList = impState[choiceOf(el)] && 'chosen';
   }
-  updateImpMap(citySelector.value);
+  const impSetting = await updateImpMap(citySelector.value);
+  await updateFilter({ impSetting });
 }
