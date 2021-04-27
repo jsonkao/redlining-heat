@@ -7,7 +7,7 @@ MAKEFLAGS += -j4
 # Cities to generate maps/data for. Replace any spaces in city names with
 # underscores. To group cities, use commas.
 CITIES := $(shell cat all_cities.txt)
-CITIES = Richmond
+CITIES = Richmond Baltimore
 
 # Years to generate temperature maps for
 YEARS = 1990 2000 2020
@@ -136,7 +136,7 @@ $(COLOR_IMP_DIR)/%.txt: $(IMP_RELIEF_DIR)/%.tif $(SCRIPT_DIR)/create-color-confi
 # Calculate the values the relief should be based on (PCT * LOW <= DESCRIPTOR <= HI).
 # NLCD is in Albers, so do calculations in Albers then project it into WGS84.
 comma := ,
-$(IMP_RELIEF_DIR)/%.tif: Makefile
+$(IMP_RELIEF_DIR)/%.tif:
 	$(eval BASE := $(notdir $(basename $@)))
 	$(eval CITY := $(shell echo $(BASE) | rev | cut -d "-" -f2- | rev))
 	$(eval RANGE := $(shell echo $(BASE) | rev | cut -d "-" -f1 | rev))

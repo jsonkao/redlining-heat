@@ -71,11 +71,13 @@ export async function updateFilter(settings, forceUpdateDims, localLabels) {
   if (localLabels) {
     labels = localLabels;
   }
+
   const { city, year, impSetting } = (globalSettings = {
     ...globalSettings,
     ...settings,
   });
-  if (impSetting === 'DESELECT') { // Deselect impervious map layers
+
+  if (impSetting === 'DESELECT' && !forceUpdateDims) { // Deselect impervious map layers
     labelState = Array.from({ length: numBins + 1 }, () =>
       Array.from({ length: numImpBins + 1 }, () => false),
     );
@@ -90,12 +92,14 @@ export async function updateFilter(settings, forceUpdateDims, localLabels) {
   if (refImg.complete) {
     await cache();
     if (forceUpdateDims) {
-      updateDims();
+      await updateDims(tempName, impName);
     }
-    updateImageData(await chooseLabels(tempName, impName));
+    if (impSetting !== 'DESELECT') {
+      updateImageData(await chooseLabels(tempName, impName));
+    }
   }
-  refImg.onload = updateDims;
-  async function updateDims() {
+  refImg.onload = async () => updateDims(tempName, impName);
+  async function updateDims(tempName, impName) {
     await cache();
     canvas.style.height = refImg.height + 'px';
     canvas.style.width = refImg.width + 'px';
@@ -127,7 +131,7 @@ export async function updateFilter(settings, forceUpdateDims, localLabels) {
 }
 
 async function cacheLabels(labels, fname) {
-  if (!(fname in labelArrays)) {
+  if (!(fname in labelArrays) && !fname.includes('DESELECT')) {
     const labelsUrl = (await labels[fname]()).default;
     const response = await fetch(labelsUrl);
     const buffer = await response.arrayBuffer();
