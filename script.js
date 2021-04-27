@@ -1,7 +1,7 @@
 import * as __SNOWPACK_ENV__ from './underscore_snowpack/env.js';
 import.meta.env = __SNOWPACK_ENV__;
 
-import { setLegendVisibility, numBins, composite } from './scripts/legend.js';
+import { setLegendVisibility, updateFilter } from './scripts/legend.js';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = {
@@ -9,33 +9,27 @@ const assets = {
 	"../data/boundaries/Richmond.svg": () => import("./boundaries/Richmond.svg.proxy.js"),
 	"../data/charts/Richmond-tky.png": () => import("./charts/Richmond-tky.png.proxy.js"),
 	"../data/charts/Richmond.png": () => import("./charts/Richmond.png.proxy.js"),
-	"../data/color-configs-ord5/Richmond-2000.png": () => import("./color-configs-ord5/Richmond-2000.png.proxy.js"),
 	"../data/impervious-reliefs/Richmond-1,10.png": () => import("./impervious-reliefs/Richmond-1,10.png.proxy.js"),
 	"../data/impervious-reliefs/Richmond-1,6.png": () => import("./impervious-reliefs/Richmond-1,6.png.proxy.js"),
 	"../data/impervious-reliefs/Richmond-9,10.png": () => import("./impervious-reliefs/Richmond-9,10.png.proxy.js"),
-	"../data/reliefs-ord5/Richmond-2000.png": () => import("./reliefs-ord5/Richmond-2000.png.proxy.js"),
-	"../data/reliefs-ord6/Richmond-2000.png": () => import("./reliefs-ord6/Richmond-2000.png.proxy.js"),
-	"../data/reliefs-ord7/Richmond-2000.png": () => import("./reliefs-ord7/Richmond-2000.png.proxy.js"),
-	"../data/reliefs-ord8/Richmond-2000.png": () => import("./reliefs-ord8/Richmond-2000.png.proxy.js"),
-	"../data/reliefs-ord9/Richmond-2000.png": () => import("./reliefs-ord9/Richmond-2000.png.proxy.js"),
+	"../data/labels/Richmond-1,10.png": () => import("./labels/Richmond-1,10.png.proxy.js"),
+	"../data/labels/Richmond-1,6.png": () => import("./labels/Richmond-1,6.png.proxy.js"),
+	"../data/labels/Richmond-1990.png": () => import("./labels/Richmond-1990.png.proxy.js"),
+	"../data/labels/Richmond-2000.png": () => import("./labels/Richmond-2000.png.proxy.js"),
+	"../data/labels/Richmond-2020.png": () => import("./labels/Richmond-2020.png.proxy.js"),
+	"../data/labels/Richmond-9,10.png": () => import("./labels/Richmond-9,10.png.proxy.js"),
 	"../data/reliefs/Richmond-1990.png": () => import("./reliefs/Richmond-1990.png.proxy.js"),
 	"../data/reliefs/Richmond-2000.png": () => import("./reliefs/Richmond-2000.png.proxy.js"),
-	"../data/reliefs/Richmond-2020.png": () => import("./reliefs/Richmond-2020.png.proxy.js"),
-	"../data/Richmond-1,10-labels.png": () => import("./Richmond-1,10-labels.png.proxy.js"),
-	"../data/Richmond-1,6-labels.png": () => import("./Richmond-1,6-labels.png.proxy.js"),
-	"../data/Richmond-2000-labels.png": () => import("./Richmond-2000-labels.png.proxy.js"),
-	"../data/Richmond-2000.png": () => import("./Richmond-2000.png.proxy.js"),
-	"../data/Richmond-2020-labels.png": () => import("./Richmond-2020-labels.png.proxy.js"),
-	"../data/Richmond-blend.png": () => import("./Richmond-blend.png.proxy.js"),
-	"../data/Richmond-labels.png": () => import("./Richmond-labels.png.proxy.js")
+	"../data/reliefs/Richmond-2020.png": () => import("./reliefs/Richmond-2020.png.proxy.js")
 };
 
-const [reliefs, basemaps, boundaries, impReliefs, charts] = [
-  'reliefs-ord' + numBins,
+const [reliefs, basemaps, boundaries, impReliefs, charts, labels] = [
+  'reliefs',
   'basemaps',
   'boundaries',
   'impervious-reliefs',
   'charts',
+  'labels',
 ].map(dir =>
   Object.keys(assets)
     .filter(k => k.includes(dir))
@@ -56,7 +50,6 @@ let years = [
       .map(n => +n[n.length - 1].substring(0, 4)),
   ),
 ];
-years = ['2000'];
 
 const map = document.getElementById('map');
 const variableCitySpans = document.getElementsByClassName('variable-city');
@@ -113,9 +106,11 @@ async function setCityMap(city, year) {
   boundaryImg.setAttribute('onload', 'SVGInject(this, {makeIdsUnique: false})');
   boundaryImg.src = (await boundaries[city]()).default;
   map.replaceChild(boundaryImg, boundarySvg);
-  reliefImg.src = (await reliefs[city + '-' + year]()).default;
   basemapImg.src = (await basemaps[city]()).default;
-  updateImpMap(city);
+  reliefImg.src = (await reliefs[city + '-' + year]()).default;
+  const impSetting = await updateImpMap(city);
+  // Only update filter when city updates, which is when setCityMap is called
+  await updateFilter({ city, year, impSetting }, labels);
 }
 
 const impState = {
@@ -131,14 +126,22 @@ async function updateImpMap(city) {
   setLegendVisibility(anyVisible);
 
   // Never show both images on top of each other. Always use composite to prevent weird overlap coloring issues
+  let impSetting;
   if (Object.values(impState).every(b => b)) {
-    impImg.src = (await impReliefs[city + '-1,10']()).default;
+    impImg.src = (await impReliefs[city + (impSetting = '-1,10')]()).default;
   } else if (anyVisible || firstCall) {
+    if (firstCall && !anyVisible) {
+      firstCall = false;
+      return '-1,10';
+    }
     firstCall = false;
     impImg.src = (
-      await impReliefs[city + (impState['road'] ? '-1,6' : '-9,10')]()
+      await impReliefs[
+        city + (impSetting = impState['road'] ? '-1,6' : '-9,10')
+      ]()
     ).default;
   }
+  return impSetting;
 }
 
 /* Chart */
@@ -250,10 +253,10 @@ function toggleGrade(div) {
 
 const impOptions = document.getElementById('imp-options');
 for (const choice of impOptions.children) {
-  choice.onclick = () => toggleImp(choice);
+  choice.onclick = async () => await toggleImp(choice);
 }
 
-function toggleImp(div) {
+async function toggleImp(div) {
   const choiceOf = el =>
     el.innerHTML.toLowerCase().replace('-', '').split(' ')[0];
   const choice = choiceOf(div);
@@ -268,9 +271,6 @@ function toggleImp(div) {
   for (const el of div.parentNode.children) {
     el.classList = impState[choiceOf(el)] && 'chosen';
   }
-  updateImpMap(citySelector.value);
+  const impSetting = await updateImpMap(citySelector.value);
+  await updateFilter({ impSetting });
 }
-
-window.addEventListener('DOMContentLoaded', () =>
-  composite(assets).catch(console.error),
-);

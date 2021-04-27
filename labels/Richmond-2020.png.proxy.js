@@ -1,0 +1,1 @@
+export default "./labels/Richmond-2020.png";

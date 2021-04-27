@@ -1,1 +1,0 @@
-export default "./color-configs-ord5/Richmond-2000.png";
