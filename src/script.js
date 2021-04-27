@@ -12,7 +12,7 @@ const [reliefs, basemaps, boundaries, impReliefs, charts, labels] = [
   'labels',
 ].map(dir =>
   Object.keys(assets)
-    .filter(k => k.includes(dir))
+    .filter(k => k.includes('/' + dir))
     .reduce((acc, k) => {
       acc[k.split('/')[3].slice(0, -4)] = assets[k];
       return acc;
@@ -65,15 +65,16 @@ const yearSelector = document.getElementById('year-select');
 
 /* Primary change function */
 
-function setCity(city, year) {
-  setCityMap(city, year);
-  setCityChart(city);
+async function setCity(city, year) {
+  await setCityMap(city, year);
+  await setCityChart(city);
   for (const el of variableCitySpans) el.innerHTML = getName(city);
 }
 
 // Just change the temperature layer of the current map
-function setYear(year) {
-  map.children[2].src = reliefs[citySelector.value + '-' + year];
+async function setYear(year) {
+  reliefImg.src = (await reliefs[citySelector.value + '-' + year]()).default;
+  await updateFilter({ year });
 }
 
 /* Map logic */
@@ -90,7 +91,7 @@ async function setCityMap(city, year) {
   reliefImg.src = (await reliefs[city + '-' + year]()).default;
   const impSetting = await updateImpMap(city);
   // Only update filter when city updates, which is when setCityMap is called
-  await updateFilter({ city, year, impSetting }, labels);
+  await updateFilter({ city, year, impSetting }, true, labels);
 }
 
 const impState = {
@@ -106,21 +107,17 @@ async function updateImpMap(city) {
   setLegendVisibility(anyVisible);
 
   // Never show both images on top of each other. Always use composite to prevent weird overlap coloring issues
-  let impSetting;
-  if (Object.values(impState).every(b => b)) {
+  let impSetting = 'DESELECT';
+  if (Object.values(impState).every(b => b) || firstCall && !anyVisible) {
     impImg.src = (await impReliefs[city + (impSetting = '-1,10')]()).default;
   } else if (anyVisible || firstCall) {
-    if (firstCall && !anyVisible) {
-      firstCall = false;
-      return '-1,10';
-    }
-    firstCall = false;
     impImg.src = (
       await impReliefs[
         city + (impSetting = impState['road'] ? '-1,6' : '-9,10')
       ]()
     ).default;
   }
+  firstCall = false;
   return impSetting;
 }
 

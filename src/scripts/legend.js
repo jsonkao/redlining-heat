@@ -66,7 +66,8 @@ let labels;
 
 let globalSettings = {};
 
-export async function updateFilter(settings, localLabels) {
+export async function updateFilter(settings, forceUpdateDims, localLabels) {
+
   if (localLabels) {
     labels = localLabels;
   }
@@ -74,13 +75,11 @@ export async function updateFilter(settings, localLabels) {
     ...globalSettings,
     ...settings,
   });
-
-
-  if (!impSetting) {
-    labelState = Array.from({ length: numBins + 1 }, () => (
-      Array.from({ length: numImpBins + 1 }, () => false)
-   ))
-   syncLegendLabels();
+  if (impSetting === 'DESELECT') { // Deselect impervious map layers
+    labelState = Array.from({ length: numBins + 1 }, () =>
+      Array.from({ length: numImpBins + 1 }, () => false),
+    );
+    syncLegendLabels();
     return;
   }
 
@@ -89,24 +88,34 @@ export async function updateFilter(settings, localLabels) {
   const impName = city + impSetting; // impSetting already has dash
 
   if (refImg.complete) {
-    await cacheLabels(labels, tempName);
-    await cacheLabels(labels, impName);
+    await cache();
+    if (forceUpdateDims) {
+      updateDims();
+    }
     updateImageData(await chooseLabels(tempName, impName));
   }
   refImg.onload = updateDims;
   async function updateDims() {
-    await cacheLabels(labels, tempName);
-    await cacheLabels(labels, impName);
+    await cache();
     canvas.style.height = refImg.height + 'px';
     canvas.style.width = refImg.width + 'px';
     const [height, width] = labelArrays[tempName].slice(0, 2);
     palette = ctx.getImageData(0, 0, width, height);
     canvas.height = height;
     canvas.width = width;
+    if (labelState.some(r => r.some(a => a))) {
+      updateImageData(await chooseLabels(tempName, impName));
+    }
+  }
+  async function cache() {
+    await cacheLabels(labels, tempName);
+    await cacheLabels(labels, impName);
   }
   function updateImageData(window) {
-    palette.data.set(window);
-    ctx.putImageData(palette, 0, 0);
+    if (palette !== undefined) {
+      palette.data.set(window);
+      ctx.putImageData(palette, 0, 0);
+    }
   }
 
   impLegend.onclick = async function ({ offsetX, offsetY }) {
