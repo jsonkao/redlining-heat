@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Dedham-9,10.png";

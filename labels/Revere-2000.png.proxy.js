@@ -1,0 +1,1 @@
+export default "./labels/Revere-2000.png";

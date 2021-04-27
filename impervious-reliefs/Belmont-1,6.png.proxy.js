@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Belmont-1,6.png";

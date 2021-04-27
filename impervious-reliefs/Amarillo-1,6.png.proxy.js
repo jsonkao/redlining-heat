@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Amarillo-1,6.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Sacramento-1990.png";

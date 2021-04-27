@@ -1,0 +1,1 @@
+export default "./labels/Omaha-2020.png";

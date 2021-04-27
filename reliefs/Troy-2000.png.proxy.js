@@ -1,0 +1,1 @@
+export default "./reliefs/Troy-2000.png";

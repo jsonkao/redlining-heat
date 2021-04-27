@@ -1,0 +1,1 @@
+export default "./reliefs/Akron-1990.png";

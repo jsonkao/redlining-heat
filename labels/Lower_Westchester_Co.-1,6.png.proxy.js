@@ -1,0 +1,1 @@
+export default "./labels/Lower_Westchester_Co.-1,6.png";

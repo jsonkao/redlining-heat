@@ -1,0 +1,1 @@
+export default "./labels/St._Petersburg-2000.png";

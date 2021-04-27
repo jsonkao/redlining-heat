@@ -1,0 +1,1 @@
+export default "./reliefs/Canton-1990.png";

@@ -1,0 +1,1 @@
+export default "./charts/nation-tky.png";

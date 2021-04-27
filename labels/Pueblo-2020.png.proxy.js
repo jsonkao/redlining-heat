@@ -1,0 +1,1 @@
+export default "./labels/Pueblo-2020.png";

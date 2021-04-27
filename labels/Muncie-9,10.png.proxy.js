@@ -1,0 +1,1 @@
+export default "./labels/Muncie-9,10.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Trenton-1,10.png";

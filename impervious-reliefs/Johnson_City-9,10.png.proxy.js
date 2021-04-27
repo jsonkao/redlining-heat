@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Johnson_City-9,10.png";

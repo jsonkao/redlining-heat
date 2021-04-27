@@ -1,0 +1,1 @@
+export default "./reliefs/New_Haven-1990.png";

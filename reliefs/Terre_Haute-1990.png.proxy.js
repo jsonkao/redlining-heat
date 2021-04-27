@@ -1,0 +1,1 @@
+export default "./reliefs/Terre_Haute-1990.png";

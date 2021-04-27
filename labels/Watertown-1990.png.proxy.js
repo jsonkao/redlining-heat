@@ -1,0 +1,1 @@
+export default "./labels/Watertown-1990.png";

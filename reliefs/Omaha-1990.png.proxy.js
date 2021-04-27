@@ -1,0 +1,1 @@
+export default "./reliefs/Omaha-1990.png";

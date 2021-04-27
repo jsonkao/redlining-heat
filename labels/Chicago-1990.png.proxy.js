@@ -1,0 +1,1 @@
+export default "./labels/Chicago-1990.png";

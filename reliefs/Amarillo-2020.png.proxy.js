@@ -1,0 +1,1 @@
+export default "./reliefs/Amarillo-2020.png";

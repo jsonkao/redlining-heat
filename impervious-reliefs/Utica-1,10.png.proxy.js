@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Utica-1,10.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Manchester-1,6.png";

@@ -1,0 +1,1 @@
+export default "./labels/Columbus@GA-9,10.png";

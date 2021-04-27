@@ -1,0 +1,1 @@
+export default "./labels/Salt_Lake_City-9,10.png";

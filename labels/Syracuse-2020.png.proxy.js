@@ -1,0 +1,1 @@
+export default "./labels/Syracuse-2020.png";

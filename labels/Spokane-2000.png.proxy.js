@@ -1,0 +1,1 @@
+export default "./labels/Spokane-2000.png";

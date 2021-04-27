@@ -1,0 +1,1 @@
+export default "./reliefs/Bethlehem-2020.png";

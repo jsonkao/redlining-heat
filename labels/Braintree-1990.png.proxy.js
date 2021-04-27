@@ -1,0 +1,1 @@
+export default "./labels/Braintree-1990.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Fresno-2020.png";

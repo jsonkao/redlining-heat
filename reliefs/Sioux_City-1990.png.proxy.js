@@ -1,0 +1,1 @@
+export default "./reliefs/Sioux_City-1990.png";

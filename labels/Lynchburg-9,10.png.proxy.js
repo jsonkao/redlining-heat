@@ -1,0 +1,1 @@
+export default "./labels/Lynchburg-9,10.png";

@@ -1,0 +1,1 @@
+export default "./charts/Wilkes-Barre.png";

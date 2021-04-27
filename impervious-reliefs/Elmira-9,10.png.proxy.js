@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Elmira-9,10.png";

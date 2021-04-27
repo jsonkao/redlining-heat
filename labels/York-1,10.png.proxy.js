@@ -1,0 +1,1 @@
+export default "./labels/York-1,10.png";

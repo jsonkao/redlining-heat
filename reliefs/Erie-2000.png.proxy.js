@@ -1,0 +1,1 @@
+export default "./reliefs/Erie-2000.png";

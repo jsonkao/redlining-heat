@@ -1,0 +1,1 @@
+export default "./labels/Manchester-2020.png";

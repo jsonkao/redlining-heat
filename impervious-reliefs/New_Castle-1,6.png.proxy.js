@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/New_Castle-1,6.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Pueblo-9,10.png";

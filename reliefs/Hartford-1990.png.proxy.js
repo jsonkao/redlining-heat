@@ -1,0 +1,1 @@
+export default "./reliefs/Hartford-1990.png";

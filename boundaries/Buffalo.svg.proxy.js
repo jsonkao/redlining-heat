@@ -1,0 +1,1 @@
+export default "./boundaries/Buffalo.svg";

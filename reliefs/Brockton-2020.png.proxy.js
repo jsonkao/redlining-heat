@@ -1,0 +1,1 @@
+export default "./reliefs/Brockton-2020.png";

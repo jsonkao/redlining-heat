@@ -1,0 +1,1 @@
+export default "./labels/Waltham-9,10.png";

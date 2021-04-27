@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Milton-1,10.png";

@@ -1,0 +1,1 @@
+export default "./labels/Lansing-1,10.png";

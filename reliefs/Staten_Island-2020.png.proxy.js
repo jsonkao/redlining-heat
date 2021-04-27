@@ -1,0 +1,1 @@
+export default "./reliefs/Staten_Island-2020.png";

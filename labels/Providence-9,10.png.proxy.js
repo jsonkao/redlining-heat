@@ -1,0 +1,1 @@
+export default "./labels/Providence-9,10.png";

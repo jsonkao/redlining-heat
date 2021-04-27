@@ -1,0 +1,1 @@
+export default "./reliefs/New_Orleans-1990.png";

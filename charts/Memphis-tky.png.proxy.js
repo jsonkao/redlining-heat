@@ -1,0 +1,1 @@
+export default "./charts/Memphis-tky.png";

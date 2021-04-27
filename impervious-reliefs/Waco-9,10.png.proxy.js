@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Waco-9,10.png";

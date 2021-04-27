@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Malden-9,10.png";

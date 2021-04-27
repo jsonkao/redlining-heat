@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Kalamazoo-9,10.png";

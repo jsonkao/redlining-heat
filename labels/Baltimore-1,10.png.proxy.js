@@ -1,0 +1,1 @@
+export default "./labels/Baltimore-1,10.png";

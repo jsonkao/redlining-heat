@@ -1,0 +1,1 @@
+export default "./boundaries/Muncie.svg";

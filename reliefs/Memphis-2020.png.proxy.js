@@ -1,0 +1,1 @@
+export default "./reliefs/Memphis-2020.png";

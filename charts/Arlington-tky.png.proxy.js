@@ -1,0 +1,1 @@
+export default "./charts/Arlington-tky.png";

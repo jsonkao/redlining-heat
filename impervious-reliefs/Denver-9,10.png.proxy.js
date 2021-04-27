@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Denver-9,10.png";

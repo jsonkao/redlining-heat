@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Lansing-9,10.png";

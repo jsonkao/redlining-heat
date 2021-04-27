@@ -1,0 +1,1 @@
+export default "./labels/Memphis-2000.png";

@@ -1,0 +1,1 @@
+export default "./labels/Chattanooga-2020.png";

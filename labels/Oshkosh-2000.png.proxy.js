@@ -1,0 +1,1 @@
+export default "./labels/Oshkosh-2000.png";

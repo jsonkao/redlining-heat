@@ -1,0 +1,1 @@
+export default "./reliefs/Racine-1990.png";

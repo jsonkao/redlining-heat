@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Lexington@KY-1,6.png";

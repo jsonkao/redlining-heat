@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Augusta-1,10.png";

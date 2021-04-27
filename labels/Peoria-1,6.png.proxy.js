@@ -1,0 +1,1 @@
+export default "./labels/Peoria-1,6.png";

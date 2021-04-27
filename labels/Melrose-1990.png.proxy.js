@@ -1,0 +1,1 @@
+export default "./labels/Melrose-1990.png";

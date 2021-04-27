@@ -1,0 +1,1 @@
+export default "./labels/Philadelphia-1,6.png";

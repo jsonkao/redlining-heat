@@ -1,0 +1,1 @@
+export default "./labels/Haverhill-9,10.png";

@@ -1,0 +1,1 @@
+export default "./labels/Lake_Co._Gary-2020.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Port_Arthur-1990.png";

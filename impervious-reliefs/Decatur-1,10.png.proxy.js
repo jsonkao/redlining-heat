@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Decatur-1,10.png";

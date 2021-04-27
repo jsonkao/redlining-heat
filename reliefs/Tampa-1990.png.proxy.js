@@ -1,0 +1,1 @@
+export default "./reliefs/Tampa-1990.png";

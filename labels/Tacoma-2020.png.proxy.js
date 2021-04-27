@@ -1,0 +1,1 @@
+export default "./labels/Tacoma-2020.png";

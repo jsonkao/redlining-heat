@@ -1,0 +1,1 @@
+export default "./labels/Providence-2020.png";

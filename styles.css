@@ -756,7 +756,7 @@ canvas {
   width: 100%;
   mix-blend-mode: lighten;
   opacity: 0.9;
-  transition-duration: 0.3s;
+  transition: opacity 0.3s;
 }
 canvas.invisible {
   opacity: 0;

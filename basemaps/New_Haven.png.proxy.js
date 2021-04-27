@@ -1,0 +1,1 @@
+export default "./basemaps/New_Haven.png";

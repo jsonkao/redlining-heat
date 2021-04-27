@@ -1,0 +1,1 @@
+export default "./reliefs/Springfield@IL-2020.png";

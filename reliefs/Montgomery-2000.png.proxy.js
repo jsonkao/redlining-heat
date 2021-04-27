@@ -1,0 +1,1 @@
+export default "./reliefs/Montgomery-2000.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Chattanooga-9,10.png";

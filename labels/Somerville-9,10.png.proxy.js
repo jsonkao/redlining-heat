@@ -1,0 +1,1 @@
+export default "./labels/Somerville-9,10.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Winston-Salem-9,10.png";

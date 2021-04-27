@@ -1,0 +1,1 @@
+export default "./charts/Covington-tky.png";

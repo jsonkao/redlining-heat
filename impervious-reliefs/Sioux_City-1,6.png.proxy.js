@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Sioux_City-1,6.png";

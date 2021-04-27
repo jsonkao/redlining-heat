@@ -1,0 +1,1 @@
+export default "./labels/Warren-2000.png";

@@ -1,0 +1,1 @@
+export default "./labels/Minneapolis-2020.png";

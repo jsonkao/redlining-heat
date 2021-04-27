@@ -1,0 +1,1 @@
+export default "./reliefs/Fort_Wayne-1990.png";

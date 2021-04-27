@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Terre_Haute-1,6.png";

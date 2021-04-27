@@ -1,0 +1,1 @@
+export default "./labels/Bergen_Co.-2000.png";

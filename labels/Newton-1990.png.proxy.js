@@ -1,0 +1,1 @@
+export default "./labels/Newton-1990.png";

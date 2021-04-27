@@ -1,0 +1,1 @@
+export default "./labels/Tacoma-1990.png";

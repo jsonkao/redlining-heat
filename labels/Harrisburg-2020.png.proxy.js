@@ -1,0 +1,1 @@
+export default "./labels/Harrisburg-2020.png";

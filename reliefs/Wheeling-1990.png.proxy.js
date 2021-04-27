@@ -1,0 +1,1 @@
+export default "./reliefs/Wheeling-1990.png";

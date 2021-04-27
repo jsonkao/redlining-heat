@@ -1,0 +1,1 @@
+export default "./labels/El_Paso-2020.png";

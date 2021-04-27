@@ -1,0 +1,1 @@
+export default "./reliefs/Savannah-2000.png";

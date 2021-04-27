@@ -1,0 +1,1 @@
+export default "./reliefs/Norfolk-1990.png";

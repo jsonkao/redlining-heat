@@ -1,0 +1,1 @@
+export default "./labels/Hudson_Co.-2020.png";

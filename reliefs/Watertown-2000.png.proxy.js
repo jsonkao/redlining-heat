@@ -1,0 +1,1 @@
+export default "./reliefs/Watertown-2000.png";

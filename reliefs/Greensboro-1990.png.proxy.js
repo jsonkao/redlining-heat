@@ -1,0 +1,1 @@
+export default "./reliefs/Greensboro-1990.png";

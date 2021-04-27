@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Galveston-9,10.png";

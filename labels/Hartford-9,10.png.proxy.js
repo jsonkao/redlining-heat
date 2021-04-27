@@ -1,0 +1,1 @@
+export default "./labels/Hartford-9,10.png";

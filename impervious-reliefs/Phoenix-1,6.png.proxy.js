@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Phoenix-1,6.png";

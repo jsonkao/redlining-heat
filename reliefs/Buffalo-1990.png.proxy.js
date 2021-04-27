@@ -1,0 +1,1 @@
+export default "./reliefs/Buffalo-1990.png";

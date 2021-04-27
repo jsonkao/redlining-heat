@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Providence-1,6.png";

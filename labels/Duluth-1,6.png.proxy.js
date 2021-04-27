@@ -1,0 +1,1 @@
+export default "./labels/Duluth-1,6.png";

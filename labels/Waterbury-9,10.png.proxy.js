@@ -1,0 +1,1 @@
+export default "./labels/Waterbury-9,10.png";

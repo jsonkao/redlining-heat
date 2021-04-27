@@ -1,0 +1,1 @@
+export default "./labels/New_Haven-9,10.png";

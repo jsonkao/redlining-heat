@@ -1,0 +1,1 @@
+export default "./labels/Battle_Creek-2020.png";

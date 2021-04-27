@@ -1,0 +1,1 @@
+export default "./labels/Durham-1,6.png";

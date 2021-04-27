@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Savannah-9,10.png";

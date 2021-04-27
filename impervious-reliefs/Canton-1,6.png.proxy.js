@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Canton-1,6.png";

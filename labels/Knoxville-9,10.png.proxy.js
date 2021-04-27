@@ -1,0 +1,1 @@
+export default "./labels/Knoxville-9,10.png";

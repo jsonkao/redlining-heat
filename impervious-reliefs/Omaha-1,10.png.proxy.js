@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Omaha-1,10.png";

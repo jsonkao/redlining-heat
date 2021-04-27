@@ -1,0 +1,1 @@
+export default "./labels/Beaumont-2020.png";

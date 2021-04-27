@@ -1,0 +1,1 @@
+export default "./labels/Portland-1,6.png";

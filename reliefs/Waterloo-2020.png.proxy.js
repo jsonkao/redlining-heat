@@ -1,0 +1,1 @@
+export default "./reliefs/Waterloo-2020.png";

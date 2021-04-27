@@ -1,0 +1,1 @@
+export default "./labels/Omaha-1,10.png";

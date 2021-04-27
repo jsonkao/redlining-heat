@@ -1,0 +1,1 @@
+export default "./labels/Schenectady-1990.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Albany-2020.png";

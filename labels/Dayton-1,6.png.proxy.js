@@ -1,0 +1,1 @@
+export default "./labels/Dayton-1,6.png";

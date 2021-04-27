@@ -1,0 +1,1 @@
+export default "./reliefs/Wilkes-Barre-2020.png";

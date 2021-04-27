@@ -1,0 +1,1 @@
+export default "./labels/Union_Co.-9,10.png";

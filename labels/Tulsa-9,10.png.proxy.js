@@ -1,0 +1,1 @@
+export default "./labels/Tulsa-9,10.png";

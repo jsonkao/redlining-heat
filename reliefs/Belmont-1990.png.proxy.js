@@ -1,0 +1,1 @@
+export default "./reliefs/Belmont-1990.png";

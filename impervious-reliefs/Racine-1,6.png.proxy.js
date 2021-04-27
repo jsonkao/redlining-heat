@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Racine-1,6.png";

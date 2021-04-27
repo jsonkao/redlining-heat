@@ -1,0 +1,1 @@
+export default "./labels/Terre_Haute-2020.png";

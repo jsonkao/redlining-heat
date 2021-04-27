@@ -1,0 +1,1 @@
+export default "./labels/Columbus@OH-2000.png";

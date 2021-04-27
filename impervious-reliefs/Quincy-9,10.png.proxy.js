@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Quincy-9,10.png";

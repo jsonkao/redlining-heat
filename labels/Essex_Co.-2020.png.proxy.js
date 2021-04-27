@@ -1,0 +1,1 @@
+export default "./labels/Essex_Co.-2020.png";

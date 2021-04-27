@@ -1,0 +1,1 @@
+export default "./reliefs/Schenectady-2020.png";

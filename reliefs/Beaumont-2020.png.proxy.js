@@ -1,0 +1,1 @@
+export default "./reliefs/Beaumont-2020.png";

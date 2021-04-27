@@ -1,0 +1,1 @@
+export default "./labels/Fort_Worth-1,6.png";

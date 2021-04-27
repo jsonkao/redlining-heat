@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/York-1,10.png";

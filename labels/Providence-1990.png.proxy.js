@@ -1,0 +1,1 @@
+export default "./labels/Providence-1990.png";

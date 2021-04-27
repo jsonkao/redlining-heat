@@ -1,0 +1,1 @@
+export default "./reliefs/Toledo-2000.png";

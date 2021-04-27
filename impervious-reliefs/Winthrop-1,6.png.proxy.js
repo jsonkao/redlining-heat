@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Winthrop-1,6.png";

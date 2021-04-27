@@ -1,0 +1,1 @@
+export default "./labels/Decatur-1,6.png";

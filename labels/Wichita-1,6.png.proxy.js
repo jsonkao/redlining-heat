@@ -1,0 +1,1 @@
+export default "./labels/Wichita-1,6.png";

@@ -1,0 +1,1 @@
+export default "./basemaps/Pawtucket_and_Central_Falls.png";

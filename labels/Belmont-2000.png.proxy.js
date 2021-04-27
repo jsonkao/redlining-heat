@@ -1,0 +1,1 @@
+export default "./labels/Belmont-2000.png";

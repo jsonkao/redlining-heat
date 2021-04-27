@@ -1,0 +1,1 @@
+export default "./labels/Minneapolis-1,6.png";

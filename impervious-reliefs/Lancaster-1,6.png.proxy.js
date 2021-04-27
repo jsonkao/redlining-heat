@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Lancaster-1,6.png";

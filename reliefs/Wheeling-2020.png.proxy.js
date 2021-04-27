@@ -1,0 +1,1 @@
+export default "./reliefs/Wheeling-2020.png";

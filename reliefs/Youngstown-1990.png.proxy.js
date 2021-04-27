@@ -1,0 +1,1 @@
+export default "./reliefs/Youngstown-1990.png";

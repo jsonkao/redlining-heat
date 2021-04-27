@@ -1,0 +1,1 @@
+export default "./labels/Cleveland-1,10.png";

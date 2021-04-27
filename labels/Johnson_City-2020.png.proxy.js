@@ -1,0 +1,1 @@
+export default "./labels/Johnson_City-2020.png";

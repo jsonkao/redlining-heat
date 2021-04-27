@@ -1,0 +1,1 @@
+export default "./labels/Rochester@MN-2020.png";

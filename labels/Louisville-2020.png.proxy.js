@@ -1,0 +1,1 @@
+export default "./labels/Louisville-2020.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Youngstown-1,6.png";

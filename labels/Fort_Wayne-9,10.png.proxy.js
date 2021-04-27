@@ -1,0 +1,1 @@
+export default "./labels/Fort_Wayne-9,10.png";

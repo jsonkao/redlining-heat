@@ -1,0 +1,1 @@
+export default "./reliefs/Fresno-1990.png";

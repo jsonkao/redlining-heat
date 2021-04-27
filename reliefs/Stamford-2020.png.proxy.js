@@ -1,0 +1,1 @@
+export default "./reliefs/Stamford-2020.png";

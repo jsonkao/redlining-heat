@@ -1,0 +1,1 @@
+export default "./charts/Niagara_Falls-tky.png";

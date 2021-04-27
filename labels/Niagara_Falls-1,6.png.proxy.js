@@ -1,0 +1,1 @@
+export default "./labels/Niagara_Falls-1,6.png";

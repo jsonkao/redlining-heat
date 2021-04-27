@@ -1,0 +1,1 @@
+export default "./labels/St._Joseph-1990.png";

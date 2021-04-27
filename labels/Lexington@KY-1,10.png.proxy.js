@@ -1,0 +1,1 @@
+export default "./labels/Lexington@KY-1,10.png";

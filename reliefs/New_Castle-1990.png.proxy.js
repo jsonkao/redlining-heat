@@ -1,0 +1,1 @@
+export default "./reliefs/New_Castle-1990.png";

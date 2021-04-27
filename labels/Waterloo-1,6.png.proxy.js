@@ -1,0 +1,1 @@
+export default "./labels/Waterloo-1,6.png";

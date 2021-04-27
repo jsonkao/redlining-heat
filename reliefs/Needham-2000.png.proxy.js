@@ -1,0 +1,1 @@
+export default "./reliefs/Needham-2000.png";

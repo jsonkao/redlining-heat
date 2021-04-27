@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Charlotte-1,10.png";

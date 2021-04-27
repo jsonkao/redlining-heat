@@ -1,0 +1,1 @@
+export default "./labels/Staten_Island-1,6.png";

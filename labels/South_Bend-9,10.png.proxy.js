@@ -1,0 +1,1 @@
+export default "./labels/South_Bend-9,10.png";

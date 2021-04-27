@@ -1,0 +1,1 @@
+export default "./reliefs/Des_Moines-2020.png";

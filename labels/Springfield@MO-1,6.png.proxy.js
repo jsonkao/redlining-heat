@@ -1,0 +1,1 @@
+export default "./labels/Springfield@MO-1,6.png";

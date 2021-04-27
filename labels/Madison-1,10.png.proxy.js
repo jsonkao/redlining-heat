@@ -1,0 +1,1 @@
+export default "./labels/Madison-1,10.png";

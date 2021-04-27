@@ -1,0 +1,1 @@
+export default "./labels/Indianapolis-2020.png";

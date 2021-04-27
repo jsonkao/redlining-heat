@@ -1,0 +1,1 @@
+export default "./reliefs/Atlanta-1990.png";

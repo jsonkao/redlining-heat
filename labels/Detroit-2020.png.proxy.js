@@ -1,0 +1,1 @@
+export default "./labels/Detroit-2020.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Lake_Co._Gary-9,10.png";

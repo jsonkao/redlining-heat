@@ -1,0 +1,1 @@
+export default "./labels/Muskegon-2020.png";

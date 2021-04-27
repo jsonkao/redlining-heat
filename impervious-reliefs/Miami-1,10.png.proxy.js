@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Miami-1,10.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Belmont-2020.png";

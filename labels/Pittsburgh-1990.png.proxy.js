@@ -1,0 +1,1 @@
+export default "./labels/Pittsburgh-1990.png";

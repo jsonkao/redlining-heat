@@ -1,0 +1,1 @@
+export default "./reliefs/Seattle-1990.png";

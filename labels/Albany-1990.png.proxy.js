@@ -1,0 +1,1 @@
+export default "./labels/Albany-1990.png";

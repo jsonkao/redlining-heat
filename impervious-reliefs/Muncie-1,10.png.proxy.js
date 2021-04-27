@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Muncie-1,10.png";

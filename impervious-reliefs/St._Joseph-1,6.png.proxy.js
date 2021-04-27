@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/St._Joseph-1,6.png";

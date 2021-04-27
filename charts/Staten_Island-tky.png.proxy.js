@@ -1,0 +1,1 @@
+export default "./charts/Staten_Island-tky.png";

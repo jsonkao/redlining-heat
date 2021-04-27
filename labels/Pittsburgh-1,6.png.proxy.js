@@ -1,0 +1,1 @@
+export default "./labels/Pittsburgh-1,6.png";

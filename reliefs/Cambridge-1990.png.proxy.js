@@ -1,0 +1,1 @@
+export default "./reliefs/Cambridge-1990.png";

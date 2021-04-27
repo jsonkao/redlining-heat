@@ -1,0 +1,1 @@
+export default "./labels/Roanoke-9,10.png";

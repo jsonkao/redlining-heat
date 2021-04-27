@@ -1,0 +1,1 @@
+export default "./labels/Evansville-9,10.png";

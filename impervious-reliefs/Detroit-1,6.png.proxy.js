@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Detroit-1,6.png";

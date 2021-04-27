@@ -66,21 +66,22 @@ let labels;
 
 let globalSettings = {};
 
-export async function updateFilter(settings, localLabels) {
+export async function updateFilter(settings, forceUpdateDims, localLabels) {
+
   if (localLabels) {
     labels = localLabels;
   }
+
   const { city, year, impSetting } = (globalSettings = {
     ...globalSettings,
     ...settings,
   });
 
-
-  if (!impSetting) {
-    labelState = Array.from({ length: numBins + 1 }, () => (
-      Array.from({ length: numImpBins + 1 }, () => false)
-   ))
-   syncLegendLabels();
+  if (impSetting === 'DESELECT' && !forceUpdateDims) { // Deselect impervious map layers
+    labelState = Array.from({ length: numBins + 1 }, () =>
+      Array.from({ length: numImpBins + 1 }, () => false),
+    );
+    syncLegendLabels();
     return;
   }
 
@@ -89,24 +90,36 @@ export async function updateFilter(settings, localLabels) {
   const impName = city + impSetting; // impSetting already has dash
 
   if (refImg.complete) {
-    await cacheLabels(labels, tempName);
-    await cacheLabels(labels, impName);
-    updateImageData(await chooseLabels(tempName, impName));
+    await cache();
+    if (forceUpdateDims) {
+      await updateDims(tempName, impName);
+    }
+    if (impSetting !== 'DESELECT') {
+      updateImageData(await chooseLabels(tempName, impName));
+    }
   }
-  refImg.onload = updateDims;
-  async function updateDims() {
-    await cacheLabels(labels, tempName);
-    await cacheLabels(labels, impName);
+  refImg.onload = async () => updateDims(tempName, impName);
+  async function updateDims(tempName, impName) {
+    await cache();
     canvas.style.height = refImg.height + 'px';
     canvas.style.width = refImg.width + 'px';
     const [height, width] = labelArrays[tempName].slice(0, 2);
     palette = ctx.getImageData(0, 0, width, height);
     canvas.height = height;
     canvas.width = width;
+    if (labelState.some(r => r.some(a => a))) {
+      updateImageData(await chooseLabels(tempName, impName));
+    }
+  }
+  async function cache() {
+    await cacheLabels(labels, tempName);
+    await cacheLabels(labels, impName);
   }
   function updateImageData(window) {
-    palette.data.set(window);
-    ctx.putImageData(palette, 0, 0);
+    if (palette !== undefined) {
+      palette.data.set(window);
+      ctx.putImageData(palette, 0, 0);
+    }
   }
 
   impLegend.onclick = async function ({ offsetX, offsetY }) {
@@ -118,7 +131,7 @@ export async function updateFilter(settings, localLabels) {
 }
 
 async function cacheLabels(labels, fname) {
-  if (!(fname in labelArrays)) {
+  if (!(fname in labelArrays) && !fname.includes('DESELECT')) {
     const labelsUrl = (await labels[fname]()).default;
     const response = await fetch(labelsUrl);
     const buffer = await response.arrayBuffer();
@@ -128,7 +141,7 @@ async function cacheLabels(labels, fname) {
 }
 
 async function chooseLabels(tempName, impName, tempLabel, impLabel) {
-  if (tempLabel !== null && impLabel !== null) {
+  if (tempLabel !== undefined && impLabel !== undefined) {
     labelState[tempLabel][impLabel] = !labelState[tempLabel][impLabel];
     syncLegendLabels();
   }

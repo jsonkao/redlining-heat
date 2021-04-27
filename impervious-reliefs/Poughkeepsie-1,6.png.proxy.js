@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Poughkeepsie-1,6.png";

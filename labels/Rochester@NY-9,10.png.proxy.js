@@ -1,0 +1,1 @@
+export default "./labels/Rochester@NY-9,10.png";

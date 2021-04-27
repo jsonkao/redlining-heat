@@ -1,0 +1,1 @@
+export default "./labels/Covington-2000.png";

@@ -1,0 +1,1 @@
+export default "./labels/Chelsea-1990.png";

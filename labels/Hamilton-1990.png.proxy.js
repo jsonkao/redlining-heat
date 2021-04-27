@@ -1,0 +1,1 @@
+export default "./labels/Hamilton-1990.png";

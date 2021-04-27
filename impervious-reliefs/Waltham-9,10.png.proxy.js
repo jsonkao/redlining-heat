@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Waltham-9,10.png";

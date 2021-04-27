@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Newton-9,10.png";

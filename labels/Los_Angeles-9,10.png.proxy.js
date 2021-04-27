@@ -1,0 +1,1 @@
+export default "./labels/Los_Angeles-9,10.png";

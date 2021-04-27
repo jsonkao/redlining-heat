@@ -1,0 +1,1 @@
+export default "./labels/Portsmouth-1,10.png";

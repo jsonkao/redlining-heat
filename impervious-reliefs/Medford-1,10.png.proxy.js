@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Medford-1,10.png";

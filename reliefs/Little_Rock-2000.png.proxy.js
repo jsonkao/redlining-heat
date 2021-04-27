@@ -1,0 +1,1 @@
+export default "./reliefs/Little_Rock-2000.png";

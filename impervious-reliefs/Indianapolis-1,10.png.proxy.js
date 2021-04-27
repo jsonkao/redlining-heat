@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Indianapolis-1,10.png";

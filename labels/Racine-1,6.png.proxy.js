@@ -1,0 +1,1 @@
+export default "./labels/Racine-1,6.png";

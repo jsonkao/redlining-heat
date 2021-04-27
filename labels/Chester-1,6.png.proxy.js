@@ -1,0 +1,1 @@
+export default "./labels/Chester-1,6.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Atlanta-1,6.png";

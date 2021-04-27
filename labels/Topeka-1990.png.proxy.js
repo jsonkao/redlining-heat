@@ -1,0 +1,1 @@
+export default "./labels/Topeka-1990.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Providence-2000.png";

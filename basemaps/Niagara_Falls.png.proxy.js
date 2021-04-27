@@ -1,0 +1,1 @@
+export default "./basemaps/Niagara_Falls.png";

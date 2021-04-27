@@ -1,0 +1,1 @@
+export default "./reliefs/Knoxville-1990.png";

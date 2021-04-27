@@ -1,0 +1,1 @@
+export default "./labels/San_Antonio-1,10.png";

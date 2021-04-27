@@ -1,0 +1,1 @@
+export default "./labels/Harrisburg-2000.png";

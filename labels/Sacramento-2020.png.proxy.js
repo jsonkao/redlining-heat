@@ -1,0 +1,1 @@
+export default "./labels/Sacramento-2020.png";

@@ -1,0 +1,1 @@
+export default "./basemaps/Malden.png";

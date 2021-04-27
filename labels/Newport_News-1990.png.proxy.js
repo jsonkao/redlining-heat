@@ -1,0 +1,1 @@
+export default "./labels/Newport_News-1990.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/St._Joseph-2020.png";

@@ -1,0 +1,1 @@
+export default "./labels/Augusta-1990.png";

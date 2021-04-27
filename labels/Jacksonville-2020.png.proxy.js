@@ -1,0 +1,1 @@
+export default "./labels/Jacksonville-2020.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Lake_Co._Gary-1990.png";

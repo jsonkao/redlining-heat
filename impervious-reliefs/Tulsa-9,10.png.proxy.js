@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Tulsa-9,10.png";

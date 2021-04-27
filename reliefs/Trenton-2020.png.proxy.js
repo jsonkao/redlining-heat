@@ -1,0 +1,1 @@
+export default "./reliefs/Trenton-2020.png";

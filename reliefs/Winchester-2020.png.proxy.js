@@ -1,0 +1,1 @@
+export default "./reliefs/Winchester-2020.png";

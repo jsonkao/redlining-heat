@@ -1,0 +1,1 @@
+export default "./labels/Aurora-2020.png";

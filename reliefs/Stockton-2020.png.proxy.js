@@ -1,0 +1,1 @@
+export default "./reliefs/Stockton-2020.png";

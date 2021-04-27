@@ -1,0 +1,1 @@
+export default "./reliefs/Madison-1990.png";

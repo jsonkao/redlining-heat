@@ -1,0 +1,1 @@
+export default "./labels/Stockton-1,6.png";

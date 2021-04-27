@@ -1,0 +1,1 @@
+export default "./charts/Davenport-tky.png";

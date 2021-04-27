@@ -1,0 +1,1 @@
+export default "./labels/Evansville-2020.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Duluth-1990.png";

@@ -1,0 +1,1 @@
+export default "./labels/Charlotte-2020.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Lincoln-1990.png";

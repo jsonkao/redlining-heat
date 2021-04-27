@@ -1,0 +1,1 @@
+export default "./labels/Youngstown-1,10.png";

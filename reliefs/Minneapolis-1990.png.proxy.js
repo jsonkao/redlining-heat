@@ -1,0 +1,1 @@
+export default "./reliefs/Minneapolis-1990.png";

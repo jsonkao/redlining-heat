@@ -1,0 +1,1 @@
+export default "./labels/Malden-9,10.png";

@@ -1,0 +1,1 @@
+export default "./labels/Cambridge-2000.png";

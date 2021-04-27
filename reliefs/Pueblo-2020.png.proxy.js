@@ -1,0 +1,1 @@
+export default "./reliefs/Pueblo-2020.png";

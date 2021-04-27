@@ -1,0 +1,1 @@
+export default "./labels/Atlantic_City-2000.png";

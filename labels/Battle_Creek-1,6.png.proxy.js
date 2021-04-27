@@ -1,0 +1,1 @@
+export default "./labels/Battle_Creek-1,6.png";

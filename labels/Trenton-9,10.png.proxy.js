@@ -1,0 +1,1 @@
+export default "./labels/Trenton-9,10.png";

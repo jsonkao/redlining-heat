@@ -1,0 +1,1 @@
+export default "./reliefs/Youngstown-2020.png";

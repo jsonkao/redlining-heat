@@ -1,0 +1,1 @@
+export default "./reliefs/Niagara_Falls-2000.png";

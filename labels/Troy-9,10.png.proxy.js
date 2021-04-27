@@ -1,0 +1,1 @@
+export default "./labels/Troy-9,10.png";

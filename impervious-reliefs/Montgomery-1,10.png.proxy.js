@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Montgomery-1,10.png";

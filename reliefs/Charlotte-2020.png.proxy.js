@@ -1,0 +1,1 @@
+export default "./reliefs/Charlotte-2020.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Covington-1,6.png";

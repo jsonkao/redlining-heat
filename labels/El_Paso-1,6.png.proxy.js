@@ -1,0 +1,1 @@
+export default "./labels/El_Paso-1,6.png";

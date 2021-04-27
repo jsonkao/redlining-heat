@@ -1,0 +1,1 @@
+export default "./reliefs/Grand_Rapids-2020.png";

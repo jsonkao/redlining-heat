@@ -1,0 +1,1 @@
+export default "./reliefs/San_Jose-2020.png";

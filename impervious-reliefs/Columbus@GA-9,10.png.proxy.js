@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Columbus@GA-9,10.png";

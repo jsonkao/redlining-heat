@@ -1,0 +1,1 @@
+export default "./labels/Pueblo-9,10.png";

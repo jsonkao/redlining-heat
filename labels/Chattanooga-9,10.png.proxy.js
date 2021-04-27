@@ -1,0 +1,1 @@
+export default "./labels/Chattanooga-9,10.png";

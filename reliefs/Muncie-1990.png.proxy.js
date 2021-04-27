@@ -1,0 +1,1 @@
+export default "./reliefs/Muncie-1990.png";

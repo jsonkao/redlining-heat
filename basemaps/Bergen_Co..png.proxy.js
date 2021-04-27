@@ -1,0 +1,1 @@
+export default "./basemaps/Bergen_Co..png";

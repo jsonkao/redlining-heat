@@ -1,0 +1,1 @@
+export default "./labels/Brookline-1,10.png";

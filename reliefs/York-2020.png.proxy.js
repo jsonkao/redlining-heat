@@ -1,0 +1,1 @@
+export default "./reliefs/York-2020.png";

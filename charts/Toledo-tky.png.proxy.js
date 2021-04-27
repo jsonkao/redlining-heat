@@ -1,0 +1,1 @@
+export default "./charts/Toledo-tky.png";

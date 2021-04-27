@@ -1,0 +1,1 @@
+export default "./labels/Knoxville-2020.png";

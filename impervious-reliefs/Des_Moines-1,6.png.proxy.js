@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Des_Moines-1,6.png";

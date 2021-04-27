@@ -1,0 +1,1 @@
+export default "./labels/Greensboro-1,6.png";

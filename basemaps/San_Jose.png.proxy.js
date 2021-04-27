@@ -1,0 +1,1 @@
+export default "./basemaps/San_Jose.png";

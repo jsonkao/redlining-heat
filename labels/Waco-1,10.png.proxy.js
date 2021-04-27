@@ -1,0 +1,1 @@
+export default "./labels/Waco-1,10.png";

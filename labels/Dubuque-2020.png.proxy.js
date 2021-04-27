@@ -1,0 +1,1 @@
+export default "./labels/Dubuque-2020.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Minneapolis-2020.png";

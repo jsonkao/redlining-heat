@@ -1,0 +1,1 @@
+export default "./labels/Greater_Kansas_City-2000.png";
