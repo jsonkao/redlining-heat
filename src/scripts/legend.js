@@ -108,21 +108,19 @@ export async function composite(assets) {
   let palette;
   refImg.onload = async () => {
     await processLabels(assets['../data/Richmond-2000-labels.png']);
-    await processLabels(assets['../data/Richmond-1,6-labels.png']);
+    await processLabels(assets['../data/Richmond-1,10-labels.png']);
     const [window, width, height] = await chooseLabels(
       assets['../data/Richmond-2000-labels.png'],
-      assets['../data/Richmond-1,6-labels.png'],
+      assets['../data/Richmond-1,10-labels.png'],
       4,
       2,
+      false,
     );
     palette = ctx.getImageData(0, 0, width, height); //x,y,w,h
     canvas.height = height;
     canvas.width = width;
     canvas.style.height = refImg.height + 'px';
     canvas.style.width = refImg.width + 'px';
-    palette.data.set(window); // assuming values 0..255, RGBA, pre-mult.
-    // Repost the data.
-    ctx.putImageData(palette, 0, 0);
   };
 
   impLegend.addEventListener('click', async function ({ offsetX, offsetY }) {
@@ -130,7 +128,7 @@ export async function composite(assets) {
     const tempLabel = numBins - 1 - Math.floor(offsetY / gridSize);
     const [window, width, height] = await chooseLabels(
       assets['../data/Richmond-2000-labels.png'],
-      assets['../data/Richmond-1,6-labels.png'],
+      assets['../data/Richmond-1,10-labels.png'],
       tempLabel,
       impLabel,
     );
@@ -147,9 +145,11 @@ async function processLabels(file) {
   labelArrays[labelsUrl] = array;
 }
 
-async function chooseLabels(temp_f, imp_f, temp_l, imp_l) {
-  labelState[temp_l][imp_l] = !labelState[temp_l][imp_l];
-  syncLegendLabels();
+async function chooseLabels(temp_f, imp_f, temp_l, imp_l, doShit = true) {
+  if (doShit) {
+    labelState[temp_l][imp_l] = !labelState[temp_l][imp_l];
+    syncLegendLabels();
+  }
   const tempArray = labelArrays[(await temp_f()).default];
   const impArray = labelArrays[(await imp_f()).default];
   const width = tempArray[1];

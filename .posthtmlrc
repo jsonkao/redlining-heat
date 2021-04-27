@@ -59,8 +59,8 @@
             "value": "<img class=\"chart\" id=\"nation-chart\" />"
           }
         ],
-        "headline": "Redlining’s Legacy in Heat Inequality:  Exploratory Page (prototype submission)",
-        "date": "April 21, 2021",
+        "headline": "Redlining’s Legacy in Heat Inequality:  Exploratory Page",
+        "date": "April 26, 2021",
         "byline": "Jason Kao",
         "footer": "Code to reproduce data and visualizations is on <a href=\"https://github.com/jsonkao/redlining-heat\">GitHub</a>.",
         "USE_NEWS_NAV": true,

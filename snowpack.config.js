@@ -17,7 +17,8 @@ module.exports = {
     '/Users/jasonkao/Development/redlining-heat/src/partials/*.html',
   ],
   buildOptions: {
-    metaUrlPath: 'underscore_snowpack'
+    metaUrlPath: 'underscore_snowpack',
+    baseUrl: './'
   },
   devOptions: {
     port: 5000

@@ -48,7 +48,7 @@ data <- inner_join(
       select(id, starts_with("prop")),
       by = c('neighborho' = 'id')
   ),
-  rbind(fromJSON('../data/task-exports/temperatures-2020.json'), fromJSON('../data/task-exports/temperatures-2000.json')),
+  rbind(fromJSON('../data/task-exports/temperatures-2020.json'), fromJSON('../data/task-exports/temperatures-2000.json'), fromJSON('../data/task-exports/temperatures-2000.json')),
   by = c('neighborho' = 'id')
 ) %>% 
   rename(holc_grade = holc_grade.x) %>% 
@@ -61,7 +61,7 @@ setDT(data)
 
 Scatter plot and linear trendline
 ```{r}
-TukeyHSD(aov(prop_tree ~ holc_grade, data = data %>% filter(year == 2020)))
+TukeyHSD(aov(temperature ~ holc_grade, data = data %>% filter(year == 2020)))
 ```
 
 ```{r}

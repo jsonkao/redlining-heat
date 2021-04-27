@@ -7,6 +7,7 @@ MAKEFLAGS += -j4
 # Cities to generate maps/data for. Replace any spaces in city names with
 # underscores. To group cities, use commas.
 CITIES := $(shell cat all_cities.txt)
+CITIES = Richmond
 
 # Years to generate temperature maps for
 YEARS = 2000 2020 1990
@@ -39,6 +40,7 @@ RELIEF_DIR = reliefs
 
 # Color and relief dirs for testing different ordinal scales.
 NUM_BINS = 6
+NUM_IMP_BINS = 4
 COLOR_ORD_DIR = color-configs-ord$(NUM_BINS)
 RELIEF_ORD_DIR = reliefs-ord$(NUM_BINS)
 
@@ -154,11 +156,14 @@ $(IMP_RELIEF_DIR)/%.png: $(IMP_RELIEF_DIR)/%.tif.relief
 $(IMP_RELIEF_DIR)/%.tif.relief: $(IMP_RELIEF_DIR)/%.tif $(COLOR_IMP_DIR)/%.txt
 	gdaldem color-relief $^ $@ -alpha -of GTiff
 
+# Create color configuration for
 $(COLOR_IMP_DIR)/%.txt: $(IMP_RELIEF_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=4
+	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=$(NUM_IMP_BINS)
 
-# Basename is of the form CITY-LOW,HI.tif where we calc LOW <= A and A <= HI
-# Prerequisites are hardcoded bc Im lazy
+# Basename is of the form CITY-LOW,HI.tif where we calc LOW <= A and A <= HI.
+# Prerequisites should exist but I couldn't figure out how to write them.
+# Calculate the values the relief should be based on (PCT * LOW <= DESCRIPTOR <= HI).
+# NLCD is in Albers, so do calculations in Albers then project it into WGS84.
 $(IMP_RELIEF_DIR)/%.tif: Makefile
 	$(eval BASE := $(notdir $(basename $@)))
 	$(eval CITY := $(shell echo $(BASE) | rev | cut -d "-" -f2- | rev))

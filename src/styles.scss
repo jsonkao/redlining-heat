@@ -244,7 +244,7 @@ hr {
   // width and height defined in JS
   position: relative;
 
-  &> div {
+  & > div {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -253,18 +253,19 @@ hr {
 }
 
 #legend-temp {
-  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.50);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.5);
 
   & > div {
     & > div {
       display: inline-block;
       box-sizing: border-box;
-      transition-duration: .2s;
+      transition-duration: 0.2s;
       &.chosen {
         border: 1px solid black;
       }
     }
-  }display: flex;
+  }
+  display: flex;
   flex-direction: column-reverse;
 }
 
@@ -326,14 +327,14 @@ hr {
     grid-row: 2;
     margin-top: 9px;
     opacity: 0;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
   }
 
   #y-axis-label {
     grid-column: 3;
     grid-row: 3;
     opacity: 0;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
   }
 
   .visible {
@@ -342,14 +343,15 @@ hr {
 }
 
 .halo {
-  text-shadow: 0px 1px 1px #fff, 0px -1px 1px #fff, 1px 0px 1px #fff, -1px 0px 1px #fff, -1.5px 0px 2px #fff, 1.5px 0px 2px #fff, 0 1.5px 2px #fff, 0 -1.5px 2px #fff;
+  text-shadow: 0px 1px 1px #fff, 0px -1px 1px #fff, 1px 0px 1px #fff, -1px 0px 1px #fff, -1.5px 0px 2px #fff,
+    1.5px 0px 2px #fff, 0 1.5px 2px #fff, 0 -1.5px 2px #fff;
   letter-spacing: 0.8px;
 }
 canvas {
   width: 100%;
   mix-blend-mode: lighten;
   opacity: 0.9;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   &.invisible {
     opacity: 0;
   }
