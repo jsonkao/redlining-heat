@@ -1,14 +1,15 @@
-import { setLegendVisibility, numBins, composite } from './scripts/legend.js';
+import { setLegendVisibility, updateFilter } from './scripts/legend.js';
 
 // Glob import all assets, then split them into variables and access module default
 const assets = import.meta.glob('../data/**/*Richmond*.{png,svg}');
 
-const [reliefs, basemaps, boundaries, impReliefs, charts] = [
-  'reliefs-ord' + numBins,
+const [reliefs, basemaps, boundaries, impReliefs, charts, labels] = [
+  'reliefs',
   'basemaps',
   'boundaries',
   'impervious-reliefs',
   'charts',
+  'labels',
 ].map(dir =>
   Object.keys(assets)
     .filter(k => k.includes(dir))
@@ -29,7 +30,6 @@ let years = [
       .map(n => +n[n.length - 1].substring(0, 4)),
   ),
 ];
-years = ['2000'];
 
 const map = document.getElementById('map');
 const variableCitySpans = document.getElementsByClassName('variable-city');
@@ -86,9 +86,11 @@ async function setCityMap(city, year) {
   boundaryImg.setAttribute('onload', 'SVGInject(this, {makeIdsUnique: false})');
   boundaryImg.src = (await boundaries[city]()).default;
   map.replaceChild(boundaryImg, boundarySvg);
-  reliefImg.src = (await reliefs[city + '-' + year]()).default;
   basemapImg.src = (await basemaps[city]()).default;
-  updateImpMap(city);
+  const impSetting = await updateImpMap(city);
+  reliefImg.src = (await reliefs[city + '-' + year]()).default;
+  // Only update filter when city updates, which is when setCityMap is called
+  await updateFilter(city, year, impSetting, labels);
 }
 
 const impState = {
@@ -104,14 +106,18 @@ async function updateImpMap(city) {
   setLegendVisibility(anyVisible);
 
   // Never show both images on top of each other. Always use composite to prevent weird overlap coloring issues
+  let impSetting;
   if (Object.values(impState).every(b => b)) {
-    impImg.src = (await impReliefs[city + '-1,10']()).default;
+    impImg.src = (await impReliefs[city + (impSetting = '-1,10')]()).default;
   } else if (anyVisible || firstCall) {
     firstCall = false;
     impImg.src = (
-      await impReliefs[city + (impState['road'] ? '-1,6' : '-9,10')]()
+      await impReliefs[
+        city + (impSetting = impState['road'] ? '-1,6' : '-9,10')
+      ]()
     ).default;
   }
+  return impSetting;
 }
 
 /* Chart */
@@ -243,7 +249,3 @@ function toggleImp(div) {
   }
   updateImpMap(citySelector.value);
 }
-
-window.addEventListener('DOMContentLoaded', () =>
-  composite(assets).catch(console.error),
-);
