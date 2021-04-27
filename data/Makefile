@@ -40,6 +40,7 @@ NUM_IMP_BINS = 4
 TEMP_DIR = gee-temperatures
 COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
+LABEL_DIR = labels
 
 # Impervious reliefs and surfaces data
 IMP_RELIEF_DIR = impervious-reliefs
@@ -56,109 +57,85 @@ CHART_DIR = charts
 SHAPEFILE = holc-shapefile/holc_ad_data_adjusted.shp
 
 
-tempmaps: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
-tempmaps_ord: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_ORD_DIR)/$C-$Y.png))
-color_ord: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_ORD_DIR)/$C-$Y.txt))
-tempdownloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
+temp_reliefs: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(RELIEF_DIR)/$C-$Y.png))
+temp_downloads: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(TEMP_DIR)/$C-$Y.tif))
 
-basemaps: folders $(CITIES:%=$(BASE_DIR)/%.png)
+base_reliefs: folders $(CITIES:%=$(BASE_DIR)/%.png)
 boundaries: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 
-impervious_descriptor: folders $(CITIES:%=$(IMP_DESC_DIR)/%.tif)
-impervious_pct: folders $(CITIES:%=$(IMP_PCT_DIR)/%.tif)
-tree_cover: folders $(CITIES:%=$(TREE_DIR)/%.tif)
+impervious_prerelief: folders $(CITIES:%=$(IMP_DESC_DIR)/%.tif) $(CITIES:%=$(IMP_PCT_DIR)/%.tif)
 impervious_reliefs: folders $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.png))
 
-all: folders tempmaps basemaps boundaries charts
+tree_cover: folders $(CITIES:%=$(TREE_DIR)/%.tif)
 
 #
 # GEE temperature reliefs
 #
 
-# Transform temperature data into color reliefs
+# Transform temperature data into color relief (PNG). Project to local Albers.
 $(RELIEF_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_DIR)/%.txt
 	rm -f $@
 	gdaldem color-relief $^ $(patsubst %.png,%.tif,$@) -alpha
 	python3 $(SCRIPT_DIR)/project.py $(patsubst %.png,%.tif,$@) $@ $(WIDTH)
 	rm $(patsubst %.png,%.tif,$@)
 
-# Design color scheme for tif
+# Make diverging ordinal color scale from relief.
+# Also makes a pixel cluster label file.
 $(COLOR_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --diverging
+	python3 $(SCRIPT_DIR)/create-color-config.py $< $@ $(patsubst $(COLOR_DIR)/%.txt,$(LABEL_DIR)/%.png,$@) --bins=$(NUM_BINS) --diverging
 
-# Transform temperature data into color reliefs (ord)
-$(RELIEF_ORD_DIR)/%.png: $(TEMP_DIR)/%.tif $(COLOR_ORD_DIR)/%.txt
-	rm -f $@
-	gdaldem color-relief $^ $(patsubst %.png,%.tif,$@) -alpha
-	python3 $(SCRIPT_DIR)/project.py $(patsubst %.png,%.tif,$@) $@ $(WIDTH)
-	rm $(patsubst %.png,%.tif,$@)
-
-# Design color scheme for tif
-$(COLOR_ORD_DIR)/%.txt: $(TEMP_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=$(NUM_BINS) --diverging
-
-# Download temperature data for 2000
+# Temperature data for the three years. How do I do double wildcard?
 $(TEMP_DIR)/%-2000.tif:
 	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 2000 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-# Haven't figured out how to do the double wildcard on years yet
 $(TEMP_DIR)/%-2020.tif:
 	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 2020 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-# Haven't figured out how to do the double wildcard on years yet
 $(TEMP_DIR)/%-1990.tif:
 	node $(SCRIPT_DIR)/download-temperatures.js $@ city-bbox-index.json city-boundaries.json 1990 \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
 
-# TODO: All NLCD downloads — impervious surfaces descriptor, impervious surfaces pixel
-# percentage, percent tree cover — are handled by one target because the code
-# is completely the same. The script has the mapping from dir to layer name.
-# But it's hard and not a priority, so maybe do it later.
+# All NLCD downloads: impervious surfaces descriptor, impervious percentage, tree cover.
 $(IMP_DESC_DIR)/%.tif:
 	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json impervious_descriptor \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-
-# Impervious surfaces pixel percentage
 $(IMP_PCT_DIR)/%.tif:
 	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json impervious \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
-
-# Impervious surfaces pixel percentage
 $(TREE_DIR)/%.tif:
 	node $(SCRIPT_DIR)/download-nlcd.js $@ city-bbox-index.json percent_tree_cover \
 	| xargs -n1 wget -O $@.zip \
 	&& unzip -p $@.zip > $@ \
 	&& rm $@.zip
 
-comma := ,
-
 # Basename is of the form CITY-LOW,HI.png
 $(IMP_RELIEF_DIR)/%.png: $(IMP_RELIEF_DIR)/%.tif.relief
-	python3 $(SCRIPT_DIR)/project.py $<.wgs84 $@ $(WIDTH) && rm $@.aux.xml
-	rm $<.wgs84
+	python3 $(SCRIPT_DIR)/project.py $< $@ $(WIDTH)
 
-# Basename is of the form CITY-LOW,HI.tif.relief
+# Do color relief.
 $(IMP_RELIEF_DIR)/%.tif.relief: $(IMP_RELIEF_DIR)/%.tif $(COLOR_IMP_DIR)/%.txt
 	gdaldem color-relief $^ $@ -alpha -of GTiff
 
-# Create color configuration for
+# Make sequential ordinal color scale from impervious surfaces relief.
+# Also makes a pixel cluster label file.
 $(COLOR_IMP_DIR)/%.txt: $(IMP_RELIEF_DIR)/%.tif $(SCRIPT_DIR)/create-color-config.py
-	python3 $(SCRIPT_DIR)/create-color-config.py $< city-boundaries.json $@ --bins=$(NUM_IMP_BINS)
+	python3 $(SCRIPT_DIR)/create-color-config.py $< $@ $(patsubst $(COLOR_IMP_DIR)/%.txt,$(LABEL_DIR)/%.png,$@) --bins=$(NUM_IMP_BINS)
 
 # Basename is of the form CITY-LOW,HI.tif where we calc LOW <= A and A <= HI.
 # Prerequisites should exist but I couldn't figure out how to write them.
 # Calculate the values the relief should be based on (PCT * LOW <= DESCRIPTOR <= HI).
 # NLCD is in Albers, so do calculations in Albers then project it into WGS84.
+comma := ,
 $(IMP_RELIEF_DIR)/%.tif: Makefile
 	$(eval BASE := $(notdir $(basename $@)))
 	$(eval CITY := $(shell echo $(BASE) | rev | cut -d "-" -f2- | rev))
@@ -245,16 +222,11 @@ city-boundaries.json: $(SHAPEFILE)
 # Utilities
 #
 
-ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR) $(IMP_DESC_DIR) $(IMP_RELIEF_DIR) $(IMP_PCT_DIR) $(RELIEF_ORD_DIR) $(COLOR_ORD_DIR)
+ALL_FOLDERS = $(OSM_GEO_DIR) $(OSM_BURNED_DIR) $(TEMP_DIR) $(RELIEF_DIR) $(BASE_DIR) $(HOLC_DIR) $(CHART_DIR) $(COLOR_DIR) $(IMP_DESC_DIR) $(IMP_RELIEF_DIR) $(IMP_PCT_DIR) $(LABEL_DIR) $(COLOR_IMP_DIR)
 folders:
 	mkdir -p $(ALL_FOLDERS)
 
-clean:
-	rm -rf $(ALL_FOLDERS)
-clean_temperatures:
-	rm -rf $(TEMP_DIR) $(RELIEF_DIR)
-
-keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_ORD_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.tif)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(COLOR_IMP_DIR)/$C-$B.txt))
+keep: $(CITIES:%=$(TEMP_DIR)/%-2000.tif) $(CITIES:%=$(TEMP_DIR)/%-2020.tif) $(CITIES:%=$(OSM_BURNED_DIR)/%.tif) $(CITIES:%=$(OSM_GEO_DIR)/%.geojson) $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(COLOR_IMP_DIR)/$C-$B.txt))
 
 #
 # Temperature mean formatting and statistics

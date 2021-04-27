@@ -12,8 +12,9 @@ import sys
 import os
 
 script_name = sys.argv[0]  # Self
-tif_name = sys.argv[1]
-out_file = sys.argv[3]
+tif_name = sys.argv[1]  # Input TIF
+out_file = sys.argv[2]  # Output text file name
+label_file = sys.argv[3]  # Output labels PNG name
 
 bin_arg = [a for a in sys.argv if "--bins" in a]
 if "--nocalc" in sys.argv:
@@ -41,7 +42,7 @@ ds = Warp(
     "",
     tif_name,
     format="VRT",
-    cutlineDSName=sys.argv[2],
+    cutlineDSName="./city-boundaries.json",
     cutlineWhere=f"city = '{city}'",
     cropToCutline=True,
 )
@@ -51,8 +52,8 @@ band = ds.GetRasterBand(1)
 
 # Mask band according to NoData values
 values = np.ma.masked_equal(band.ReadAsArray(), band.GetNoDataValue())
-img_shape = values.shape;
-mask = values.mask;
+img_shape = values.shape
+mask = values.mask
 
 # Bins and percentiles
 def hsv_to_rgb(h, s, v):
@@ -83,15 +84,13 @@ def hsv_to_rgb(h, s, v):
         return (v, p, q)
 
 
-sat_i = 0.65
-sat_f = 0
-val_i = 0.84
-val_f = 0.98
-
-
 def seq_colors(n, hue=0):
     """Generate n sequential colors (whitish to a saturated hue)"""
     # Initial (white) and final (saturated hue) values
+    sat_i = 0.65
+    sat_f = 0
+    val_i = 0.84
+    val_f = 0.98
     return [
         (
             hue,
@@ -102,10 +101,7 @@ def seq_colors(n, hue=0):
     ]
 
 
-if len(bin_arg) > 0:
-    bins = int(bin_arg[0].split("=")[-1])
-else:
-    bins = 7
+bins = int(bin_arg[0].split("=")[-1])
 
 h1 = 1 / 2
 h2 = 1 / 6
@@ -133,23 +129,16 @@ else:
         cluster = values[clusters == i]
         bounds.append((np.min(cluster), np.max(cluster)))
 
-    if "--labels" in sys.argv:
-        labels = np.zeros(img_shape, dtype=np.uint16)
-        i = 0
-        for r in range(img_shape[0]):
-            for c in range(img_shape[1]):
-                if mask[r, c]:
-                    labels[r, c] = bins
-                else:
-                    labels[r, c] = clusters[i]
-                    i += 1
-        with open(f'{stem}-labels.png', 'wb') as f:
-            f.write(img_shape[0].to_bytes(2, sys.byteorder))
-            f.write(img_shape[1].to_bytes(2, sys.byteorder))
-            f.write(labels.tobytes());
-        print(img_shape)
+    # Generate labels
+    labels = np.zeros(img_shape, dtype=np.uint16)
+    for r in range(img_shape[0]):
+        for c in range(img_shape[1]):
+            labels[r, c] = bins if mask[r, c] else clusters[i]
+    with open(label_file, "wb") as f:
+        f.write(img_shape[0].to_bytes(2, sys.byteorder))
+        f.write(img_shape[1].to_bytes(2, sys.byteorder))
+        f.write(labels.tobytes())
 
-        sys.exit(0)
 with open(out_file, "w") as f:
     for i in range(bins):
         lwr, upr = bounds[i]
