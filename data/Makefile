@@ -10,13 +10,14 @@ CITIES := $(shell cat all_cities.txt)
 CITIES = Richmond
 
 # Years to generate temperature maps for
-YEARS = 2000 2020 1990
-# Group bounds of imperivous surfaces descriptor layer
+YEARS = 1990 2000 2020
+# Group bounds of imperivous surfaces descriptor layer: road, nonroad, combined
 IMP_GRP_BOUNDS = 1,6 9,10 1,10
 
 # Width of PNG assets
 WIDTH = 3000
 
+# Header and query for OSM request
 HEADER = [bbox] # [maxsize:2000000000][timeout:900]
 OVERPASS_QUERY = https://overpass-api.de/api/interpreter?data=$(strip $(HEADER))\;\(way[highway][highway!=footway][highway!=cycleway][highway!=steps]\;way[building]\;\)\;._\;out%20geom\;
 
@@ -34,26 +35,20 @@ OSM_BURNED_DIR = osm-burned
 BASE_DIR = basemaps
 
 # Reliefs and temperature data
+NUM_BINS = 6
+NUM_IMP_BINS = 4
 TEMP_DIR = gee-temperatures
 COLOR_DIR = color-configs
 RELIEF_DIR = reliefs
 
-# Color and relief dirs for testing different ordinal scales.
-NUM_BINS = 6
-NUM_IMP_BINS = 4
-COLOR_ORD_DIR = color-configs-ord$(NUM_BINS)
-RELIEF_ORD_DIR = reliefs-ord$(NUM_BINS)
-
-proto: impervious-reliefs/Richmond-1,10.png reliefs-ord$(NUM_BINS)/Richmond-2000.png
-
 # Impervious reliefs and surfaces data
 IMP_RELIEF_DIR = impervious-reliefs
-IMP_DESC_DIR = nlcd-impervious-desc
-IMP_PCT_DIR = nlcd-impervious-pct
+IMP_DESC_DIR = impervious-desc
+IMP_PCT_DIR = impervious-pct
 COLOR_IMP_DIR = color-configs-imp
 
 # Trees
-TREE_DIR = nlcd-tree
+TREE_DIR = tree-cover
 
 # Others
 HOLC_DIR = boundaries
