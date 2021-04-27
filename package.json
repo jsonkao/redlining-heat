@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@google/earthengine": "^0.1.257",
-    "d3-selection": "^2.0.0",
     "intersection-observer": "^0.10.0",
     "snowpack": "^3.2.1"
   },

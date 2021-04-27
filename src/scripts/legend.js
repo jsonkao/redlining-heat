@@ -1,5 +1,4 @@
-import { makeGradient, getScheme, getColorsRGB } from './color-utils.js';
-import { select } from 'd3-selection';
+import { makeGradient, getScheme } from './color-utils.js';
 
 export const numBins = 6;
 const numImpBins = 4;
@@ -23,8 +22,6 @@ const hueLabel = document.getElementById('hue-offset-value');
 function updateHueOffset(h) {
   tempLegend.style.background = makeGradient(tempSchemeSL, h);
   impLegend.style.background = makeGradient(impSchemeSL, h + 240, false, 90);
-  // reliefImg.style.filter = `hue-rotate(${h}deg)`;
-  // impImg.style.filter = `hue-rotate(${h + 240}deg)`;
   hueLabel.innerHTML = h;
 }
 input.addEventListener('input', e => {
@@ -167,7 +164,7 @@ async function chooseLabels(temp_f, imp_f, temp_l, imp_l, doShit = true) {
 }
 
 function syncLegendLabels() {
-  console.log(labelState)
+  console.log(labelState);
   canvas.classList = anyLabel() ? '' : 'invisible';
   for (let r = 0; r < numBins; r++) {
     for (let c = 0; c < numImpBins; c++) {
