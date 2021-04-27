@@ -13,7 +13,5 @@ build
 
 # Mapping files
 osm-raw/
+osm-geojson/
 privatekey.json
-
-# OSM data is too big
-data/osm-*
