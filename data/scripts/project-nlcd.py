@@ -21,7 +21,7 @@ try:
 except:  # CITY
     city = "-".join(fname_components)
 
-temp_name = f"./gee-temperatures/{city}-2000.tif"
+temp_name = f"./gee-temperatures/{city.replace(' ', '_')}-2000.tif"
 
 def combine_meta(f1, f2):
     """Combine metadata of two files but keep count of input"""
