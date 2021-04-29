@@ -103,7 +103,8 @@ export async function updateFilter(settings, forceUpdateDims, localLabels) {
     await cache();
     canvas.style.height = refImg.height + 'px';
     canvas.style.width = refImg.width + 'px';
-    const [height, width] = labelArrays[tempName].slice(0, 2);
+    // First 4 bytes store 2 Uint16 ints (width and height)
+    const [height, width] = new Uint16Array(labelArrays[tempName].slice(0, 4).buffer);
     palette = ctx.getImageData(0, 0, width, height);
     canvas.height = height;
     canvas.width = width;
@@ -135,7 +136,7 @@ async function cacheLabels(labels, fname) {
     const labelsUrl = (await labels[fname]()).default;
     const response = await fetch(labelsUrl);
     const buffer = await response.arrayBuffer();
-    const array = new Uint16Array(buffer);
+    const array = new Uint8Array(buffer);
     labelArrays[fname] = array;
   }
 }
@@ -145,8 +146,9 @@ async function chooseLabels(tempName, impName, tempLabel, impLabel) {
     labelState[tempLabel][impLabel] = !labelState[tempLabel][impLabel];
     syncLegendLabels();
   }
-  const tempArray = labelArrays[tempName].slice(2);
-  const impArray = labelArrays[impName].slice(2);
+  // First 4 bytes store 2 Uint16 ints (width and height)
+  const tempArray = labelArrays[tempName].slice(4);
+  const impArray = labelArrays[impName].slice(4);
   const window = new Uint8ClampedArray(tempArray.length * 4);
   window.fill(255); // Fill with all white
   for (let i = 0; i < tempArray.length; i++) {
