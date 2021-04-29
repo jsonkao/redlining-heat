@@ -131,7 +131,7 @@ else:
 
     # Generate labels
     ci = 0;
-    labels = np.zeros(img_shape, dtype=np.uint16)
+    labels = np.zeros(img_shape, dtype=np.uint8)
     for r in range(img_shape[0]):
         for c in range(img_shape[1]):
             if mask[r, c]:
