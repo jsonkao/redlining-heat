@@ -65,6 +65,8 @@ boundaries: folders $(CITIES:%=$(HOLC_DIR)/%.svg)
 impervious_prerelief: folders $(CITIES:%=$(IMP_DESC_DIR)/%.tif) $(CITIES:%=$(IMP_PCT_DIR)/%.tif)
 impervious_reliefs: folders $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(IMP_RELIEF_DIR)/$C-$B.png))
 
+only_labels: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-$Y.txt)) $(foreach C,$(CITIES),$(foreach B,$(IMP_GRP_BOUNDS),$(COLOR_IMP_DIR)/$C-$B.txt))
+
 tree_cover: folders $(CITIES:%=$(TREE_DIR)/%.tif)
 
 REMOVEME: folders $(CITIES:%=$(OSM_BURNED_DIR)/%.tif)
