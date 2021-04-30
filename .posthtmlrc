@@ -10,7 +10,15 @@
         "body": [
           {
             "type": "text",
-            "value": "<a name=\"select\">In the</a> following map, see how summertime temperatures affect neighborhoods of different HOLC grades in various cities and decades. Bluer areas are colder than average; yellower areas are warmer. You can also toggle HOLC boundaries, which are colored by their grade: <span class=\"grade-a\">A</span>, <span class=\"grade-b\">B</span>, <span class=\"grade-c\">C</span>, or <span class=\"grade-d\">D</span>. Finally, you can toggle the visibility of all impervious surfaces, only non-road impervious surfaces, or only road impervious surfaces. Final research document available <a href=\"https://jsonkao.github.io/redlining-heat/Final.pdf\">here</a>."
+            "value": "<a name=\"select\">In the</a> following map, explore how summertime temperatures affect neighborhoods of different HOLC grades in various cities and decades. When you scroll into the map, a layers interface appears. You can toggle HOLC boundaries. You can also toggle the visibility of impervious surfaces, as well as the visibility of two categories of imperviousness."
+          },
+          {
+            "type": "text",
+            "value": "When any impervious surface is visible, the color legend becomes a bivariate matrix of colors. Clicking on any square in the legend filters the map to show only HOLC areas with that color."
+          },
+          {
+            "type": "text",
+            "value": "The final research document is available <a href=\"https://jsonkao.github.io/redlining-heat/Final.pdf\">here</a>."
           },
           {
             "type": "graphic",
