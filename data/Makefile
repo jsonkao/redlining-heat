@@ -297,7 +297,8 @@ shapefile: rm-shapefile $(SHAPEFILE)
 rm-shapefile:
 	rm $(SHAPEFILE)
 
-# Modifies original shapefile to remove commas from Stamford, rename Johnson, and disambiguate some cities
+# Modifies original shapefile to remove commas from Stamford, rename Johnson, and disambiguate some cities.
+# Run `make check-unique` to see whiich cities need to be modified.
 $(SHAPEFILE): holc-shapefile/holc_ad_data.shp rm-shapefile
 	mapshaper $< \
 	-each 'city = city.includes("Stamford") ? "Stamford" : city' \
