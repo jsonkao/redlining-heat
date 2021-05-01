@@ -17,22 +17,6 @@ out_file = sys.argv[2]  # Output text file name
 label_file = sys.argv[3]  # Output labels PNG name
 
 bin_arg = [a for a in sys.argv if "--bins" in a]
-if "--nocalc" in sys.argv:
-    # We're here because we modified this script, not any temperature values,
-    # so I'm probably just trying to change the color scheme.
-    # Just rewrite the file with these new values:
-    with open(out_file) as f:
-        lines = f.readlines()
-    colors = [
-        "0   255 255 255",  # max is 180° (#00FFFF)
-        "255 255 255 255",  # median is saturation 0 (white)
-        "255 0   0   255",  # min is hue angle 0° (#FF0000)
-    ]
-    for i, c in enumerate(colors):
-        lines[i] = lines[i].split(" ")[0] + f" {c}\n"
-    with open(out_file, "w") as f:
-        f.write("".join(lines))
-    sys.exit(0)
 
 stem = Path(tif_name).stem
 city = stem.replace("_", " ").rsplit("-", 1)[0]
