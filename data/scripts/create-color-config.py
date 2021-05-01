@@ -102,33 +102,30 @@ else:
 
 values = values.compressed()
 bounds = []
-if "--quantile" in sys.argv:
-    percentiles = np.percentile(values, [b / bins * 100 for b in range(bins + 1)])
-    for i in range(bins):
-        bounds.append((percentiles[i], percentiles[i + 1] - 0.1))
-else:
-    clusters, _ = kmeans1d.cluster(values, bins)
-    clusters = np.array(clusters)
-    for i in range(bins):
-        cluster = values[clusters == i]
-        bounds.append((np.min(cluster), np.max(cluster)))
 
-    # Generate labels
-    ci = 0;
-    labels = np.zeros(img_shape, dtype=np.uint8)
-    for r in range(img_shape[0]):
-        for c in range(img_shape[1]):
-            if mask[r, c]:
-                labels[r, c] = bins
-            else:
-                labels[r, c] = clusters[ci]
-                ci += 1
+# Get clusters
+clusters, _ = kmeans1d.cluster(values, bins)
+clusters = np.array(clusters)
+for i in range(bins):
+    cluster = values[clusters == i]
+    bounds.append((np.min(cluster), np.max(cluster)))
 
-    with open(label_file, "wb") as f:
-        f.write(img_shape[0].to_bytes(2, sys.byteorder))
-        f.write(img_shape[1].to_bytes(2, sys.byteorder))
-        f.write(labels.tobytes())
+# Generate labels
+ci = 0;
+labels = np.zeros(img_shape, dtype=np.uint8)
+for r in range(img_shape[0]):
+    for c in range(img_shape[1]):
+        if mask[r, c]:
+            labels[r, c] = bins
+        else:
+            labels[r, c] = clusters[ci]
+            ci += 1
+with open(label_file, "wb") as f:
+    f.write(img_shape[0].to_bytes(2, sys.byteorder))
+    f.write(img_shape[1].to_bytes(2, sys.byteorder))
+    f.write(labels.tobytes())
 
+# Output colors
 with open(out_file, "w") as f:
     for i in range(bins):
         lwr, upr = bounds[i]
