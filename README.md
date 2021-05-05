@@ -1,3 +1,7 @@
+See [`data/README.md`](./data/README.md) for open-source datasets. See [`Final.pdf`](./Final.pdf) for the research writeup.
+
+## Code structure
+
 The Makefile (`/data/Makefile`) handles all data processing. It has the following functions.
 
 0. Uses mapshaper to create necessary prerequisite files: `city-bbox-index.json` (maps city to bounding box), `city-boundaries.json` (maps city to dissolved bounary).
@@ -16,10 +20,10 @@ The Makefile (`/data/Makefile`) handles all data processing. It has the followin
 
 Every relief is projected into a local Albers.
 
-## Prerequisites
+## Local setup
 
 * Command line tools: GDAL, jq, mapshaper, ndjson-cli, R
-* Files: [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account)
+* [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account) must exist
 * Libraries: `npm install`; `osgeo`, `kmeans1d`, `rasterio` for Python
 
 ## Reference material
