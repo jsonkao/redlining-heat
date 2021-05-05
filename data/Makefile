@@ -69,8 +69,6 @@ only_labels: folders $(foreach C,$(CITIES),$(foreach Y,$(YEARS),$(COLOR_DIR)/$C-
 
 tree_cover: folders $(CITIES:%=$(TREE_DIR)/%.tif)
 
-REMOVEME: folders $(CITIES:%=$(OSM_BURNED_DIR)/%.tif)
-
 #
 # GEE temperature reliefs
 #
