@@ -5,8 +5,7 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && gh-pages -d build"
   },
   "devDependencies": {
     "@jsonkao/snowpack-plugin-posthtml": "^0.3.0",
