@@ -142,8 +142,11 @@ yearSelector.addEventListener('change', async function () {
 });
 
 document.addEventListener('DOMContentLoaded', async function () {
-  // citySelector.value = 'Manhattan,Bronx,Queens,Brooklyn';
-  citySelector.value = 'Richmond';
+  if (window.location.hash.length > 0) {
+    citySelector.value = window.location.hash.slice(1);
+  } else {
+    citySelector.value = 'Richmond';
+}
   yearSelector.value = 2000;
   citySelector.dispatchEvent(new Event('change'));
 
