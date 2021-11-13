@@ -23,8 +23,12 @@ Every relief is projected into a local Albers.
 ## Local setup
 
 * Command line tools: GDAL, jq, mapshaper, ndjson-cli, R
-* [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account) must exist
 * Libraries: `npm install`; `osgeo`, `kmeans1d`, `rasterio` for Python
+
+Large and private files that are ignored:
+* [`data/scripts/privatekey.json`](https://developers.google.com/earth-engine/guides/service_account) must exist
+* `data/osm-raw` is in [Google Drive](https://drive.google.com/drive/u/0/folders/1N8PlmcjQnJE_F49jrO2y5-M_kg-yGGuo)
+* `data/osm-geojson` is in [Google Drive](https://drive.google.com/drive/u/0/folders/1N8PlmcjQnJE_F49jrO2y5-M_kg-yGGuo)
 
 ## Reference material
 
