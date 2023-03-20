@@ -1,0 +1,1 @@
+export default "./labels/Lancaster-1,6.png";

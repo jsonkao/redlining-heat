@@ -1,0 +1,1 @@
+export default "./reliefs/Oshkosh-1990.png";

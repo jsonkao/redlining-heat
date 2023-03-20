@@ -1,0 +1,1 @@
+export default "./labels/Macon-9,10.png";

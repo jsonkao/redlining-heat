@@ -1,0 +1,1 @@
+export default "./labels/Davenport-1,6.png";

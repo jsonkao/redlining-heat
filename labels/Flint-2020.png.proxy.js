@@ -1,0 +1,1 @@
+export default "./labels/Flint-2020.png";

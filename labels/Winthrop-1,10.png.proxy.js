@@ -1,0 +1,1 @@
+export default "./labels/Winthrop-1,10.png";

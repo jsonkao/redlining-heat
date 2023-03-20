@@ -1,0 +1,1 @@
+export default "./labels/Mobile-1990.png";

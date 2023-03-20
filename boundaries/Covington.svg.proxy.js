@@ -1,0 +1,1 @@
+export default "./boundaries/Covington.svg";

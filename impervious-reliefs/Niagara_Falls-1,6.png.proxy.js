@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Niagara_Falls-1,6.png";

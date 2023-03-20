@@ -1,0 +1,1 @@
+export default "./labels/Kalamazoo-2000.png";

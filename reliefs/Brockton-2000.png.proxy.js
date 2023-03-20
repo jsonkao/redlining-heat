@@ -1,0 +1,1 @@
+export default "./reliefs/Brockton-2000.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Pontiac-1,10.png";

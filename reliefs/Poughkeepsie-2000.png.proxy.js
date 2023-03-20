@@ -1,0 +1,1 @@
+export default "./reliefs/Poughkeepsie-2000.png";

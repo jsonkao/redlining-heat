@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Memphis-1,6.png";

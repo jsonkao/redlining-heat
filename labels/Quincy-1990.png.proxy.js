@@ -1,0 +1,1 @@
+export default "./labels/Quincy-1990.png";

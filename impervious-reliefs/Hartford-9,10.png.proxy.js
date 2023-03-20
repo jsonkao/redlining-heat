@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Hartford-9,10.png";

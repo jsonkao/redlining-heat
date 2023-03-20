@@ -1,0 +1,1 @@
+export default "./reliefs/Miami-2020.png";

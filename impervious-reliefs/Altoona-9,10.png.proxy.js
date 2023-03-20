@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Altoona-9,10.png";

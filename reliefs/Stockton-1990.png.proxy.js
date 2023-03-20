@@ -1,0 +1,1 @@
+export default "./reliefs/Stockton-1990.png";

@@ -1,0 +1,1 @@
+export default "./labels/Muskegon-1,6.png";

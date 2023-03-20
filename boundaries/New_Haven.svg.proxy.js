@@ -1,0 +1,1 @@
+export default "./boundaries/New_Haven.svg";

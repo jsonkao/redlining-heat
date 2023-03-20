@@ -1,0 +1,1 @@
+export default "./reliefs/St._Paul-2020.png";

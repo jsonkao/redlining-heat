@@ -1,0 +1,1 @@
+export default "./labels/Lincoln-1990.png";

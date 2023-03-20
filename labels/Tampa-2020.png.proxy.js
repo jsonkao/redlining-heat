@@ -1,0 +1,1 @@
+export default "./labels/Tampa-2020.png";

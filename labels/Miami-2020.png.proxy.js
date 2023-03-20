@@ -1,0 +1,1 @@
+export default "./labels/Miami-2020.png";

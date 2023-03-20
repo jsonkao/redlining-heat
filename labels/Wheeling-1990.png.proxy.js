@@ -1,0 +1,1 @@
+export default "./labels/Wheeling-1990.png";

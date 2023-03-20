@@ -1,0 +1,1 @@
+export default "./labels/Los_Angeles-2020.png";

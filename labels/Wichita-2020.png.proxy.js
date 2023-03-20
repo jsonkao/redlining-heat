@@ -1,0 +1,1 @@
+export default "./labels/Wichita-2020.png";

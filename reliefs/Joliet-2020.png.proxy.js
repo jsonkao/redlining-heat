@@ -1,0 +1,1 @@
+export default "./reliefs/Joliet-2020.png";

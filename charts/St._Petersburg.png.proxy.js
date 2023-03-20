@@ -1,0 +1,1 @@
+export default "./charts/St._Petersburg.png";

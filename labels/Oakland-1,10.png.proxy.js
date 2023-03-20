@@ -1,0 +1,1 @@
+export default "./labels/Oakland-1,10.png";

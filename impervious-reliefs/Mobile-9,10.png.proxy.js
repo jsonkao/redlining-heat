@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Mobile-9,10.png";

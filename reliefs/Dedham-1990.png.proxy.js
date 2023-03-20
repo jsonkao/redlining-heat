@@ -1,0 +1,1 @@
+export default "./reliefs/Dedham-1990.png";

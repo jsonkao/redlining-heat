@@ -1,0 +1,1 @@
+export default "./labels/Utica-2000.png";

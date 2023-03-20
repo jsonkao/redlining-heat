@@ -1,0 +1,1 @@
+export default "./reliefs/Peoria-2020.png";

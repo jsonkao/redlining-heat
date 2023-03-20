@@ -1,0 +1,1 @@
+export default "./labels/New_Britain-1,6.png";

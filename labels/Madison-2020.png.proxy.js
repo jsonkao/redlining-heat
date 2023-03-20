@@ -1,0 +1,1 @@
+export default "./labels/Madison-2020.png";

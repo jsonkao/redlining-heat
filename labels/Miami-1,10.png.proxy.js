@@ -1,0 +1,1 @@
+export default "./labels/Miami-1,10.png";

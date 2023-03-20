@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Erie-1,6.png";

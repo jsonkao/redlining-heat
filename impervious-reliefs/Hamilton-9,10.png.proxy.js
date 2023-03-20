@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Hamilton-9,10.png";

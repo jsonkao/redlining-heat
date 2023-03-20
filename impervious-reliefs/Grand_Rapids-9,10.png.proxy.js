@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Grand_Rapids-9,10.png";

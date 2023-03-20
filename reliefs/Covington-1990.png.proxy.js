@@ -1,0 +1,1 @@
+export default "./reliefs/Covington-1990.png";

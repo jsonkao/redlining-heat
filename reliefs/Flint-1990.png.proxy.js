@@ -1,0 +1,1 @@
+export default "./reliefs/Flint-1990.png";

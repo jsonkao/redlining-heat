@@ -1,0 +1,1 @@
+export default "./labels/Asheville-2000.png";

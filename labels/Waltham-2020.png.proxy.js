@@ -1,0 +1,1 @@
+export default "./labels/Waltham-2020.png";

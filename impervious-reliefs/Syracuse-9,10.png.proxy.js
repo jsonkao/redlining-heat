@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Syracuse-9,10.png";

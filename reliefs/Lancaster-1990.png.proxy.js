@@ -1,0 +1,1 @@
+export default "./reliefs/Lancaster-1990.png";

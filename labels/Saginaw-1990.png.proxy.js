@@ -1,0 +1,1 @@
+export default "./labels/Saginaw-1990.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Lima-9,10.png";

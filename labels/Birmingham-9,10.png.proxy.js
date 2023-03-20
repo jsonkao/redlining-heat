@@ -1,0 +1,1 @@
+export default "./labels/Birmingham-9,10.png";

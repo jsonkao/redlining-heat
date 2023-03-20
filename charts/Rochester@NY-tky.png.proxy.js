@@ -1,0 +1,1 @@
+export default "./charts/Rochester@NY-tky.png";

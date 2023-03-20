@@ -1,0 +1,1 @@
+export default "./labels/Des_Moines-1990.png";

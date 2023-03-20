@@ -1,0 +1,1 @@
+export default "./labels/Milton-1,6.png";

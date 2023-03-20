@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/El_Paso-1,6.png";

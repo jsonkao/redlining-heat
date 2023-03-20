@@ -1,0 +1,1 @@
+export default "./reliefs/Mobile-2000.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Columbus@GA-2020.png";

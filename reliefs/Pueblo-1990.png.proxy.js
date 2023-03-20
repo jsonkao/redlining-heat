@@ -1,0 +1,1 @@
+export default "./reliefs/Pueblo-1990.png";

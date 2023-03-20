@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Tampa-1,10.png";

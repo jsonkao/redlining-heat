@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Greensboro-9,10.png";

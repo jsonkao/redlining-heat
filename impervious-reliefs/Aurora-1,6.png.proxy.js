@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Aurora-1,6.png";

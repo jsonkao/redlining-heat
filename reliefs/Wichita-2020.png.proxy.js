@@ -1,0 +1,1 @@
+export default "./reliefs/Wichita-2020.png";

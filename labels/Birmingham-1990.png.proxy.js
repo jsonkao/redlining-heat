@@ -1,0 +1,1 @@
+export default "./labels/Birmingham-1990.png";

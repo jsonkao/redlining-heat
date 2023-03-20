@@ -1,0 +1,1 @@
+export default "./reliefs/Columbus@GA-1990.png";

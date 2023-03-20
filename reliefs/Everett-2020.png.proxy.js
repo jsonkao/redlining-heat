@@ -1,0 +1,1 @@
+export default "./reliefs/Everett-2020.png";

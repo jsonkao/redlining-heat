@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/St._Louis,East_St._Louis-1,6.png";

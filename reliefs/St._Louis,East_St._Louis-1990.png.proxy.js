@@ -1,0 +1,1 @@
+export default "./reliefs/St._Louis,East_St._Louis-1990.png";

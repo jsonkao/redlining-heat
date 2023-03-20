@@ -1,0 +1,1 @@
+export default "./labels/Rockford-2020.png";

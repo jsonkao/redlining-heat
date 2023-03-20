@@ -1,0 +1,1 @@
+export default "./reliefs/Pontiac-2020.png";

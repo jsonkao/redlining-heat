@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Huntington-1,10.png";

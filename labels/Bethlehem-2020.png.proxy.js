@@ -1,0 +1,1 @@
+export default "./labels/Bethlehem-2020.png";

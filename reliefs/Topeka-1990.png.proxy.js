@@ -1,0 +1,1 @@
+export default "./reliefs/Topeka-1990.png";

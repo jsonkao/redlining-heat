@@ -1,0 +1,1 @@
+export default "./charts/Jackson@MI.png";

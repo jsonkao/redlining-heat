@@ -1,0 +1,39 @@
+{
+  "name": "redlining-heat",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "deploy": "npm run build && gh-pages -d build"
+  },
+  "devDependencies": {
+    "@jsonkao/snowpack-plugin-posthtml": "^0.3.0",
+    "@snowpack/plugin-sass": "^1.4.0",
+    "eslint": "^7.25.0",
+    "gh-pages": "^3.1.0",
+    "posthtml-expressions": "^1.4.0",
+    "posthtml-include": "^1.4.3",
+    "sass": "^1.26.5"
+  },
+  "dependencies": {
+    "@google/earthengine": "^0.1.257",
+    "intersection-observer": "^0.10.0",
+    "snowpack": "^3.2.1"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "avoid"
+  },
+  "spectate": {
+    "USE_NEWS_NAV": true,
+    "USE_EYE_NAV": false,
+    "USE_COVER_HED": false,
+    "IS_EMBED": false,
+    "DOC_URL": "https://docs.google.com/document/d/1W8mgGgVzw98WqZy8MBZQ_2IcCHyBtZh7uTZjAIDLKOc/edit"
+  }
+}

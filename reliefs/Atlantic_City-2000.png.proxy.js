@@ -1,0 +1,1 @@
+export default "./reliefs/Atlantic_City-2000.png";

@@ -1,0 +1,1 @@
+export default "./labels/Dedham-2020.png";

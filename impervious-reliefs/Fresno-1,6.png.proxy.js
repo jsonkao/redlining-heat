@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Fresno-1,6.png";

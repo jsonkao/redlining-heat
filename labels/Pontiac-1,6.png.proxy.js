@@ -1,0 +1,1 @@
+export default "./labels/Pontiac-1,6.png";

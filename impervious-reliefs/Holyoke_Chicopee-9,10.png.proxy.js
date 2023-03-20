@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Holyoke_Chicopee-9,10.png";

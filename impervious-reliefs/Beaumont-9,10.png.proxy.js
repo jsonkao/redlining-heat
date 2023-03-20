@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Beaumont-9,10.png";

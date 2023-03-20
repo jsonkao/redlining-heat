@@ -1,0 +1,1 @@
+export default "./labels/San_Diego-2020.png";

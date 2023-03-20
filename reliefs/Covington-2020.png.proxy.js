@@ -1,0 +1,1 @@
+export default "./reliefs/Covington-2020.png";

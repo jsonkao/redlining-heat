@@ -1,0 +1,1 @@
+export default "./labels/Holyoke_Chicopee-1990.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Columbus@OH-2020.png";

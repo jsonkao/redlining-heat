@@ -1,0 +1,1 @@
+export default "./labels/St._Paul-9,10.png";

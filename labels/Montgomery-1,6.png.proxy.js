@@ -1,0 +1,1 @@
+export default "./labels/Montgomery-1,6.png";

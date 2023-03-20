@@ -1,0 +1,1 @@
+export default "./labels/Medford-9,10.png";

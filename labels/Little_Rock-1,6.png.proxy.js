@@ -1,0 +1,1 @@
+export default "./labels/Little_Rock-1,6.png";

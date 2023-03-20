@@ -1,0 +1,1 @@
+export default "./labels/Durham-2000.png";

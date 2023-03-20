@@ -1,0 +1,1 @@
+export default "./charts/Richmond-tky.png";

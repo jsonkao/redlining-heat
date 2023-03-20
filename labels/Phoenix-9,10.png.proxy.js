@@ -1,0 +1,1 @@
+export default "./labels/Phoenix-9,10.png";

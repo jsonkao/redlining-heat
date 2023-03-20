@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Rochester@NY-9,10.png";

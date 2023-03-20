@@ -1,0 +1,1 @@
+export default "./reliefs/Woonsocket-1990.png";

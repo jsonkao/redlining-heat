@@ -1,0 +1,1 @@
+export default "./labels/Elmira-1,10.png";

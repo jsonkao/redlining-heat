@@ -1,0 +1,1 @@
+export default "./labels/Haverhill-2020.png";

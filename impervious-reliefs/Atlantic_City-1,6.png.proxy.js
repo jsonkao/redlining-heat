@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Atlantic_City-1,6.png";

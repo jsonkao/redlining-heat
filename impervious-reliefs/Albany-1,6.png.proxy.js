@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Albany-1,6.png";

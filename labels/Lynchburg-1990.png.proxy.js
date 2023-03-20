@@ -1,0 +1,1 @@
+export default "./labels/Lynchburg-1990.png";

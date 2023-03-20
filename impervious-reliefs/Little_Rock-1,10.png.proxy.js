@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Little_Rock-1,10.png";

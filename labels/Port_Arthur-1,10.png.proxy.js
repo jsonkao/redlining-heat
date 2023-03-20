@@ -1,0 +1,1 @@
+export default "./labels/Port_Arthur-1,10.png";

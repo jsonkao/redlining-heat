@@ -1,0 +1,1 @@
+export default "./reliefs/Kalamazoo-1990.png";

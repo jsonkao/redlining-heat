@@ -1,0 +1,1 @@
+export default "./labels/Newton-9,10.png";

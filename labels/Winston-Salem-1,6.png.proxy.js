@@ -1,0 +1,1 @@
+export default "./labels/Winston-Salem-1,6.png";

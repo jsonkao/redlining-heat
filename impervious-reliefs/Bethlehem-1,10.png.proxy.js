@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Bethlehem-1,10.png";

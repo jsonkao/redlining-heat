@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Ogden-9,10.png";

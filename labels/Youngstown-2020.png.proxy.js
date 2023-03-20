@@ -1,0 +1,1 @@
+export default "./labels/Youngstown-2020.png";

@@ -1,0 +1,1 @@
+export default "./labels/Winchester-2020.png";

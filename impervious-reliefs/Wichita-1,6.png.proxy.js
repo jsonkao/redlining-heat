@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Wichita-1,6.png";

@@ -1,0 +1,1 @@
+export default "./labels/Toledo-1,10.png";

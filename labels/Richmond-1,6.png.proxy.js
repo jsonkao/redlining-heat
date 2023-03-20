@@ -1,0 +1,1 @@
+export default "./labels/Richmond-1,6.png";

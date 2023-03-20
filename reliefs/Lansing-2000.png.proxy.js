@@ -1,0 +1,1 @@
+export default "./reliefs/Lansing-2000.png";

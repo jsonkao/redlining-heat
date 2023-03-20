@@ -1,0 +1,1 @@
+export default "./charts/Sioux_City-tky.png";

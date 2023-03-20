@@ -1,0 +1,1 @@
+export default "./labels/Duluth-2020.png";

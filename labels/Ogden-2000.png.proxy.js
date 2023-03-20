@@ -1,0 +1,1 @@
+export default "./labels/Ogden-2000.png";

@@ -1,0 +1,1 @@
+export default "./labels/Roanoke-2020.png";

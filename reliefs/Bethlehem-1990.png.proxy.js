@@ -1,0 +1,1 @@
+export default "./reliefs/Bethlehem-1990.png";

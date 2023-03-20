@@ -1,0 +1,1 @@
+export default "./labels/Buffalo-9,10.png";

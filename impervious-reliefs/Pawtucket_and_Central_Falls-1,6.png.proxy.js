@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Pawtucket_and_Central_Falls-1,6.png";

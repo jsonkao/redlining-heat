@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Springfield@IL-1,10.png";

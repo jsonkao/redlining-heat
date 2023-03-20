@@ -1,0 +1,1 @@
+export default "./reliefs/Macon-2020.png";

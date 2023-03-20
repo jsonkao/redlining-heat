@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Lynchburg-9,10.png";

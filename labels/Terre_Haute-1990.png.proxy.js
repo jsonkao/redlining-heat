@@ -1,0 +1,1 @@
+export default "./labels/Terre_Haute-1990.png";

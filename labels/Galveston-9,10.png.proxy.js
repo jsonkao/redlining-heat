@@ -1,0 +1,1 @@
+export default "./labels/Galveston-9,10.png";

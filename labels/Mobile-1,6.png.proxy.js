@@ -1,0 +1,1 @@
+export default "./labels/Mobile-1,6.png";

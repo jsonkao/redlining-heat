@@ -1,0 +1,1 @@
+export default "./labels/Fresno-9,10.png";

@@ -1,0 +1,1 @@
+export default "./labels/Pawtucket_and_Central_Falls-9,10.png";

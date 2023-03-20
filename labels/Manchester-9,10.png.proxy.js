@@ -1,0 +1,1 @@
+export default "./labels/Manchester-9,10.png";

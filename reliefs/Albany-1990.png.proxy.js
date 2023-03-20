@@ -1,0 +1,1 @@
+export default "./reliefs/Albany-1990.png";

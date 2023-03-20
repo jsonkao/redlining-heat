@@ -1,0 +1,1 @@
+export default "./reliefs/Winston-Salem-2000.png";

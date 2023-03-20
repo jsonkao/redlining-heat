@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Braintree-1,6.png";

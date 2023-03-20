@@ -1,0 +1,1 @@
+export default "./labels/Lima-9,10.png";

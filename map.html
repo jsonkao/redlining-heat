@@ -1,0 +1,56 @@
+<div id="top-intersect"></div>
+
+<div id="selectors">
+  <span id="select-wrap"><select id="city-select"></select></span>
+  <span id="select-wrap"><select id="year-select"></select></span>
+</div>
+
+<div id="map-container">
+  <div id="menu">
+    <div id="grade-selector" class="selector-container">
+      <p>Toggle grades:</p>
+      <div id="grade-options" class="options">
+        <div>A</div>
+        <div>B</div>
+        <div>C</div>
+        <div>D</div>
+      </div>
+    </div>
+    <br>
+    <div id="imp-selector" class="selector-container">
+      <p>Layers:</p>
+      <div id="imp-options" class="options">
+        <div>Impervious surfaces</div>
+        <div>Road</div>
+        <div>Non-road</div>
+      </div>
+    </div>
+    <br>
+    <div id="legend-container-container">
+      <p class="range-label">
+        Hue offset: <span id="hue-offset-value">0</span>&deg;
+      </p>
+      <input type="range" id="hue-offset" name="hue-offset" min="0" max="359" value="0">
+      <div id="legend-container">
+        <div id="x-axis-labels">
+          <p class="halo">Hotter</p>
+          <p class="halo">Colder</p>
+        </div>
+        <div id="x-axis"></div>
+        <div id="legend">
+          <div id="legend-temp"></div>
+          <div id="legend-imp"></div>
+        </div>
+        <div id="y-axis"></div>
+        <div id="y-axis-label"><p class="halo">% Imperviousness</p></div>
+      </div>
+    </div>
+  </div>
+  <div id="map">
+    <img>
+    <img>
+    <img id="temperature-map" class="multiply">
+    <img id="impervious-map">
+    <canvas class="invisible" id="composite"></canvas>
+  </div>
+</div>

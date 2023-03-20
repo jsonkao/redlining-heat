@@ -1,0 +1,1 @@
+export default "./reliefs/Chester-1990.png";

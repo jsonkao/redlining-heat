@@ -1,0 +1,1 @@
+export default "./reliefs/Haverhill-1990.png";

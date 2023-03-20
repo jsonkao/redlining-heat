@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Los_Angeles-9,10.png";

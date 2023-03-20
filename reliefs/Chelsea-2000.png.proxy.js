@@ -1,0 +1,1 @@
+export default "./reliefs/Chelsea-2000.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Chicago-2020.png";

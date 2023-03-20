@@ -1,0 +1,1 @@
+export default "./labels/Seattle-2020.png";

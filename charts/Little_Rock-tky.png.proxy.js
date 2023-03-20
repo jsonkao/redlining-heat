@@ -1,0 +1,1 @@
+export default "./charts/Little_Rock-tky.png";

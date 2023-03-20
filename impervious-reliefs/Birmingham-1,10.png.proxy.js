@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Birmingham-1,10.png";

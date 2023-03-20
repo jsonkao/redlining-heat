@@ -1,0 +1,1 @@
+export default "./labels/Charleston-1990.png";

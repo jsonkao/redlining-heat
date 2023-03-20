@@ -1,0 +1,1 @@
+export default "./reliefs/Phoenix-2020.png";

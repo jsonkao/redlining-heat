@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Kenosha-1,10.png";

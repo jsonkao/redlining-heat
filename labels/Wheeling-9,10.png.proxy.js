@@ -1,0 +1,1 @@
+export default "./labels/Wheeling-9,10.png";

@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Redlining’s Legacy in Heat Inequality:  Exploratory Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <script src="./scripts/svg-inject.min.js"></script>
+    <style id="layering"></style>
+
+    <meta property="og:image" content="https://user-images.githubusercontent.com/15334952/121265294-996a8580-c886-11eb-96f2-d70e480e973f.png">
+    <meta name="twitter:image" content="https://user-images.githubusercontent.com/15334952/121265294-996a8580-c886-11eb-96f2-d70e480e973f.png">
+  </head>
+
+  <body>
+
+    <header class="g-body">
+  <h1 id="headline">Redlining’s Legacy in Heat Inequality:  Exploratory Page</h1>
+  
+    <p class="deck"></p>
+  <p class="byline inline-credits">
+    
+      <span>Jason Kao</span>
+    
+  </p>
+  <p class="pub-date">April 26, 2021</p>
+</header>
+
+
+    <div class="story">
+      
+        
+            <p class="g-body paragraph ">
+  <a name="select">In the</a> following map, explore how summertime temperatures affect neighborhoods of different HOLC grades in various cities and decades. When you scroll into the map, a layers interface appears. You can toggle HOLC boundaries. You can also toggle the visibility of impervious surfaces, as well as the visibility of two categories of imperviousness.
+</p>
+
+          
+      
+        
+            <p class="g-body paragraph ">
+  When any impervious surface is visible, the color legend becomes a bivariate matrix of colors. Clicking on any square in the legend filters the map to show only HOLC areas with that color.
+</p>
+
+          
+      
+        
+            <p class="g-body paragraph ">
+  The final research document is available <a href="https://jsonkao.github.io/redlining-heat/Final.pdf">here</a>.
+</p>
+
+          
+      
+        
+            <div class="graphic">
+              
+                <div id="top-intersect"></div>
+
+<div id="selectors">
+  <span id="select-wrap"><select id="city-select"></select></span>
+  <span id="select-wrap"><select id="year-select"></select></span>
+</div>
+
+<div id="map-container">
+  <div id="menu">
+    <div id="grade-selector" class="selector-container">
+      <p>Toggle grades:</p>
+      <div id="grade-options" class="options">
+        <div>A</div>
+        <div>B</div>
+        <div>C</div>
+        <div>D</div>
+      </div>
+    </div>
+    <br>
+    <div id="imp-selector" class="selector-container">
+      <p>Layers:</p>
+      <div id="imp-options" class="options">
+        <div>Impervious surfaces</div>
+        <div>Road</div>
+        <div>Non-road</div>
+      </div>
+    </div>
+    <br>
+    <div id="legend-container-container">
+      <p class="range-label">
+        Hue offset: <span id="hue-offset-value">0</span>&deg;
+      </p>
+      <input type="range" id="hue-offset" name="hue-offset" min="0" max="359" value="0">
+      <div id="legend-container">
+        <div id="x-axis-labels">
+          <p class="halo">Hotter</p>
+          <p class="halo">Colder</p>
+        </div>
+        <div id="x-axis"></div>
+        <div id="legend">
+          <div id="legend-temp"></div>
+          <div id="legend-imp"></div>
+        </div>
+        <div id="y-axis"></div>
+        <div id="y-axis-label"><p class="halo">% Imperviousness</p></div>
+      </div>
+    </div>
+  </div>
+  <div id="map">
+    <img>
+    <img>
+    <img id="temperature-map" class="multiply">
+    <img id="impervious-map">
+    <canvas class="invisible" id="composite"></canvas>
+  </div>
+</div>
+
+              </div>
+          
+      
+        
+            <p class="g-body paragraph ">
+  The temperature distribution in <span class="variable-city"></span> by HOLC grade is visualized in the density plot below.
+</p>
+
+          
+      
+        
+            <p class="g-body paragraph ">
+  <img class="chart" id="chart">
+</p>
+
+          
+      
+        
+            <p class="g-body paragraph ">
+  After running Tukey’s Test at a 95% confidence interval for <span class="variable-city"></span>, we can observe in both years which HOLC grades’ neighborhoods were significantly cooler or hotter than neighborhoods in other grades.
+</p>
+
+          
+      
+        
+            <img class="chart chart-tky" id="chart-tky">
+          
+      
+        
+            <p class="g-body paragraph ">
+  <a href="#select">Go back up</a> to view the map.
+</p>
+
+          
+      
+        
+            <p class="g-body paragraph ">
+  </p><hr>
+<p></p>
+
+          
+      
+        
+            <p class="g-body paragraph ">
+  Nationwide, the distribution of temperatures for each HOLC grade shows that formerly redlined neighborhoods experience hotter summers, both in 2000 and 2020. Applying Tukey’s Honestly Significant Differences Test at a 95% confidence interval gets us the results below.
+</p>
+
+          
+      
+        
+            <img class="chart chart-tky" id="nation-chart-tky">
+          
+      
+        
+            <p class="g-body paragraph ">
+  The individual per-polygon temperature means are shown in the following density plot.
+</p>
+
+          
+      
+        
+            <p class="g-body paragraph ">
+  <img class="chart" id="nation-chart">
+</p>
+
+          
+      
+    </div>
+
+    <div class="footer g-body">
+  <div class="article-credits">
+    
+      <p>Code to reproduce data and visualizations is on <a href="https://github.com/jsonkao/redlining-heat">GitHub</a>.</p>
+    
+  </div>
+</div>
+
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

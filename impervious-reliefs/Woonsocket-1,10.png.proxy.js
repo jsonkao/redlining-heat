@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Woonsocket-1,10.png";

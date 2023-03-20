@@ -1,0 +1,1 @@
+export default "./labels/Pittsburgh-2020.png";

@@ -1,0 +1,1 @@
+export default "./labels/Austin-2000.png";

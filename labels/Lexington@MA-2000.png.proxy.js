@@ -1,0 +1,1 @@
+export default "./labels/Lexington@MA-2000.png";

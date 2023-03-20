@@ -1,0 +1,1 @@
+export default "./reliefs/Detroit-1990.png";

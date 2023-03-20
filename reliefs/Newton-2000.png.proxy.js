@@ -1,0 +1,1 @@
+export default "./reliefs/Newton-2000.png";

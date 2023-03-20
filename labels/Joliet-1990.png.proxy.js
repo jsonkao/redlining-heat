@@ -1,0 +1,1 @@
+export default "./labels/Joliet-1990.png";

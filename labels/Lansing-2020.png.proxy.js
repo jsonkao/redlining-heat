@@ -1,0 +1,1 @@
+export default "./labels/Lansing-2020.png";

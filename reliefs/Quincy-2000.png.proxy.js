@@ -1,0 +1,1 @@
+export default "./reliefs/Quincy-2000.png";

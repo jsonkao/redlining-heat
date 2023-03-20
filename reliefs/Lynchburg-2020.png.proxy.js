@@ -1,0 +1,1 @@
+export default "./reliefs/Lynchburg-2020.png";

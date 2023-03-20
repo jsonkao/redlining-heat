@@ -1,0 +1,1 @@
+export default "./reliefs/Springfield@MO-1990.png";

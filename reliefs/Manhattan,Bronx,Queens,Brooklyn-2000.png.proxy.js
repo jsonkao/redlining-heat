@@ -1,0 +1,1 @@
+export default "./reliefs/Manhattan,Bronx,Queens,Brooklyn-2000.png";

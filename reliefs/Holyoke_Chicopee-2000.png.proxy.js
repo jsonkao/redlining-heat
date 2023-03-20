@@ -1,0 +1,1 @@
+export default "./reliefs/Holyoke_Chicopee-2000.png";

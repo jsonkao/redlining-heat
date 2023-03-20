@@ -1,0 +1,1 @@
+export default "./labels/Bay_City-1,6.png";

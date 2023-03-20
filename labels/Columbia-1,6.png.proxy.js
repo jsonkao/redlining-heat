@@ -1,0 +1,1 @@
+export default "./labels/Columbia-1,6.png";

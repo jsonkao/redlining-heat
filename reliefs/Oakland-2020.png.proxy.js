@@ -1,0 +1,1 @@
+export default "./reliefs/Oakland-2020.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Chester-2020.png";

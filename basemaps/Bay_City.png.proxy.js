@@ -1,0 +1,1 @@
+export default "./basemaps/Bay_City.png";

@@ -1,0 +1,1 @@
+export default "./labels/New_Castle-2020.png";

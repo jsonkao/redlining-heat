@@ -1,0 +1,1 @@
+export default "./labels/Syracuse-1,10.png";

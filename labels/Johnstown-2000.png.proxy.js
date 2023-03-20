@@ -1,0 +1,1 @@
+export default "./labels/Johnstown-2000.png";

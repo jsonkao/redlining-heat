@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Schenectady-1,6.png";

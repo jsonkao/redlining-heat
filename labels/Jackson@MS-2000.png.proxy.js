@@ -1,0 +1,1 @@
+export default "./labels/Jackson@MS-2000.png";

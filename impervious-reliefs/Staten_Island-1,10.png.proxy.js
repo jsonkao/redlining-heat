@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Staten_Island-1,10.png";

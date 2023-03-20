@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Troy-9,10.png";

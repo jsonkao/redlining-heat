@@ -1,0 +1,1 @@
+export default "./reliefs/Augusta-1990.png";

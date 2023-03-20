@@ -1,0 +1,1 @@
+export default "./labels/Oklahoma_City-2020.png";

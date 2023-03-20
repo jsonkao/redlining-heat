@@ -1,0 +1,1 @@
+export default "./labels/Brockton-1990.png";

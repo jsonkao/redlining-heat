@@ -1,0 +1,1 @@
+export default "./boundaries/Minneapolis.svg";

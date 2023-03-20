@@ -1,0 +1,1 @@
+export default "./reliefs/Denver-2000.png";

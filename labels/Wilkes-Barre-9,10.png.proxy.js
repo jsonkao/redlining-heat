@@ -1,0 +1,1 @@
+export default "./labels/Wilkes-Barre-9,10.png";

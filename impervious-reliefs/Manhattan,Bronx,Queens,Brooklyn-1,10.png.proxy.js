@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Manhattan,Bronx,Queens,Brooklyn-1,10.png";

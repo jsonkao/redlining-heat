@@ -1,0 +1,1 @@
+export default "./labels/Lorain-1,6.png";

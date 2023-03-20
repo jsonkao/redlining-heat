@@ -1,0 +1,1 @@
+export default "./charts/Holyoke_Chicopee.png";

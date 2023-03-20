@@ -1,0 +1,1 @@
+export default "./reliefs/Lancaster-2020.png";

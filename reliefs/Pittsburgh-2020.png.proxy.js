@@ -1,0 +1,1 @@
+export default "./reliefs/Pittsburgh-2020.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Stamford-1,6.png";

@@ -1,0 +1,1 @@
+export default "./charts/Terre_Haute-tky.png";

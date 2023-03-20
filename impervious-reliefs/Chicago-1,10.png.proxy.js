@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Chicago-1,10.png";

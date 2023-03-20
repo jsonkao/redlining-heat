@@ -1,0 +1,1 @@
+export default "./labels/Grand_Rapids-9,10.png";

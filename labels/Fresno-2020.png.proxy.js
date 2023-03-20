@@ -1,0 +1,1 @@
+export default "./labels/Fresno-2020.png";

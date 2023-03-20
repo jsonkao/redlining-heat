@@ -1,0 +1,1 @@
+export default "./labels/Camden-9,10.png";

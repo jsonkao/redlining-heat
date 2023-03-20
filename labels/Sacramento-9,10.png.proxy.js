@@ -1,0 +1,1 @@
+export default "./labels/Sacramento-9,10.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Hamilton-2000.png";

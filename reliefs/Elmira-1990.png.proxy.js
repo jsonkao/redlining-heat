@@ -1,0 +1,1 @@
+export default "./reliefs/Elmira-1990.png";

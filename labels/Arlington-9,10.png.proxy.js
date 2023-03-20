@@ -1,0 +1,1 @@
+export default "./labels/Arlington-9,10.png";

@@ -1,0 +1,1 @@
+export default "./basemaps/Canton.png";

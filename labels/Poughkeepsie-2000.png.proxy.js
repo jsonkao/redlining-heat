@@ -1,0 +1,1 @@
+export default "./labels/Poughkeepsie-2000.png";

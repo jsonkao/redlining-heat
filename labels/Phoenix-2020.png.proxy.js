@@ -1,0 +1,1 @@
+export default "./labels/Phoenix-2020.png";

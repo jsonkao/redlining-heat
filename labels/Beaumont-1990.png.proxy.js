@@ -1,0 +1,1 @@
+export default "./labels/Beaumont-1990.png";

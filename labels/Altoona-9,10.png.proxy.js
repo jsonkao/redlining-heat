@@ -1,0 +1,1 @@
+export default "./labels/Altoona-9,10.png";

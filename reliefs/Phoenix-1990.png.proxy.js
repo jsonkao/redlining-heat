@@ -1,0 +1,1 @@
+export default "./reliefs/Phoenix-1990.png";

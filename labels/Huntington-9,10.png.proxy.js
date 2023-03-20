@@ -1,0 +1,1 @@
+export default "./labels/Huntington-9,10.png";

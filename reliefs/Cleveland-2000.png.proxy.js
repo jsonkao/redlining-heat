@@ -1,0 +1,1 @@
+export default "./reliefs/Cleveland-2000.png";

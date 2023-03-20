@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Lorain-9,10.png";

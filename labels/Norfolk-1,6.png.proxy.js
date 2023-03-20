@@ -1,0 +1,1 @@
+export default "./labels/Norfolk-1,6.png";

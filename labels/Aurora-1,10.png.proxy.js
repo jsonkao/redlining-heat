@@ -1,0 +1,1 @@
+export default "./labels/Aurora-1,10.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Cambridge-1,10.png";

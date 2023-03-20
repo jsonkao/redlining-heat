@@ -1,0 +1,1 @@
+export default "./labels/Saugus-9,10.png";

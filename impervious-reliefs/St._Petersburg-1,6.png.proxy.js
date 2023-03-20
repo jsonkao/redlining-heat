@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/St._Petersburg-1,6.png";

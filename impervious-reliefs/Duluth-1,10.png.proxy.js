@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Duluth-1,10.png";

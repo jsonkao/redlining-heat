@@ -1,0 +1,1 @@
+export default "./labels/Kenosha-9,10.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Muskegon-1,6.png";

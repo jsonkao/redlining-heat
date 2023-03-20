@@ -1,0 +1,1 @@
+export default "./labels/Manhattan,Bronx,Queens,Brooklyn-2000.png";

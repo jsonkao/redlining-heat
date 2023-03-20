@@ -1,0 +1,1 @@
+export default "./reliefs/Decatur-2020.png";

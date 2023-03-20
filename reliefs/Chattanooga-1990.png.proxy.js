@@ -1,0 +1,1 @@
+export default "./reliefs/Chattanooga-1990.png";

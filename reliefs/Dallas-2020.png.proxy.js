@@ -1,0 +1,1 @@
+export default "./reliefs/Dallas-2020.png";

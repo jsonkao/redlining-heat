@@ -1,0 +1,1 @@
+export default "./labels/Woonsocket-1990.png";

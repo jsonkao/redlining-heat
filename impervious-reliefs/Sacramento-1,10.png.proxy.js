@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Sacramento-1,10.png";

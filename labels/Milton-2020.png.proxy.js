@@ -1,0 +1,1 @@
+export default "./labels/Milton-2020.png";

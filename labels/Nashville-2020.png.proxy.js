@@ -1,0 +1,1 @@
+export default "./labels/Nashville-2020.png";

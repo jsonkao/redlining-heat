@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Joliet-9,10.png";

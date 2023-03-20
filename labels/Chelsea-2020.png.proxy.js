@@ -1,0 +1,1 @@
+export default "./labels/Chelsea-2020.png";

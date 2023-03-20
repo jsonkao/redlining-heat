@@ -1,0 +1,1 @@
+export default "./labels/Amarillo-1990.png";

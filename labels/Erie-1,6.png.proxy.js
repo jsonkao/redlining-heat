@@ -1,0 +1,1 @@
+export default "./labels/Erie-1,6.png";

@@ -1,0 +1,1 @@
+export default "./reliefs/Indianapolis-1990.png";

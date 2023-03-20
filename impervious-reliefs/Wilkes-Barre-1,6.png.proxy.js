@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Wilkes-Barre-1,6.png";

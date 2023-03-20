@@ -1,0 +1,1 @@
+export default "./charts/Oklahoma_City-tky.png";

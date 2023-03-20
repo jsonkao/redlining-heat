@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Buffalo-9,10.png";

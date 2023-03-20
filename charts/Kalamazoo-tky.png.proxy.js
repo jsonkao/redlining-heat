@@ -1,0 +1,1 @@
+export default "./charts/Kalamazoo-tky.png";

@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Waterloo-1,10.png";

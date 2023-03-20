@@ -1,0 +1,1 @@
+export default "./labels/Austin-2020.png";

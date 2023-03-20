@@ -1,0 +1,1 @@
+export default "./labels/Greensboro-2020.png";

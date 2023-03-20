@@ -1,0 +1,1 @@
+export default "./reliefs/Everett-1990.png";

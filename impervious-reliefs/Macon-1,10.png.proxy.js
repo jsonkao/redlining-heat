@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Macon-1,10.png";

@@ -1,0 +1,1 @@
+export default "./labels/Oakland-2000.png";

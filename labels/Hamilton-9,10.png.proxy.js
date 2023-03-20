@@ -1,0 +1,1 @@
+export default "./labels/Hamilton-9,10.png";

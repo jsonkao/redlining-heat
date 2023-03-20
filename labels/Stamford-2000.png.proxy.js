@@ -1,0 +1,1 @@
+export default "./labels/Stamford-2000.png";

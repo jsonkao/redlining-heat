@@ -1,0 +1,1 @@
+export default "./labels/Cleveland-2020.png";

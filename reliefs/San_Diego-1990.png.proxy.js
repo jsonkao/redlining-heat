@@ -1,0 +1,1 @@
+export default "./reliefs/San_Diego-1990.png";

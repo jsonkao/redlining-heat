@@ -1,0 +1,1 @@
+export default "./reliefs/Tampa-2020.png";

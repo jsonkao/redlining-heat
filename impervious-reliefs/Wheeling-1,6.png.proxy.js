@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Wheeling-1,6.png";

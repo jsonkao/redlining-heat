@@ -1,0 +1,1 @@
+export default "./labels/Tulsa-2020.png";

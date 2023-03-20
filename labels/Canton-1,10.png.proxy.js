@@ -1,0 +1,1 @@
+export default "./labels/Canton-1,10.png";

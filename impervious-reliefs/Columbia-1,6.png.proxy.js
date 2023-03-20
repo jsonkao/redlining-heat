@@ -1,0 +1,1 @@
+export default "./impervious-reliefs/Columbia-1,6.png";

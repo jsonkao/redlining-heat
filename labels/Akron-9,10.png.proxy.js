@@ -1,0 +1,1 @@
+export default "./labels/Akron-9,10.png";

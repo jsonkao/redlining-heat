@@ -1,0 +1,1 @@
+export default "./labels/Milwaukee_Co.-2000.png";

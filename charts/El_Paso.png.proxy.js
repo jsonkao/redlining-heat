@@ -1,0 +1,1 @@
+export default "./charts/El_Paso.png";

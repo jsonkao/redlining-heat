@@ -1,0 +1,1 @@
+export default "./reliefs/Muskegon-2020.png";
